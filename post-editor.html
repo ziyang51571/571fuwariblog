@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Fuwari 一键发帖器</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;margin:0;padding:2rem;background:#f7f7f7;color:#333}
+    h1{margin-bottom:1rem;font-size:1.5rem}
+    .box{background:#fff;padding:1.5rem;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+    .row{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+    .row>label{flex:1 1 200px;display:flex;flex-direction:column;font-size:.875rem}
+    input,textarea,select{width:100%;padding:.5rem;border:1px solid #ccc;border-radius:4px;font-size:.875rem}
+    textarea{resize:vertical;min-height:120px}
+    button{cursor:pointer;background:#0066ff;color:#fff;border:0;padding:.5rem 1.2rem;border-radius:4px;font-size:.875rem}
+    button:hover{background:#0053e4}
+    #out{margin-top:1rem;background:#f0f0f0;padding:1rem;border-radius:4px;font-size:.8125rem;line-height:1.45;white-space:pre-wrap;word-break:break-all}
+    .cmd{margin-top:.5rem;color:#d63031;font-weight:600}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🍀 Fuwari 一键发帖器</h1>
+    <form id="postForm">
+      <div class="row">
+        <label>标题
+          <input type="text" name="title" placeholder="My New Post" required>
+        </label>
+        <label>文件名（不含 .md）
+          <input type="text" name="slug" placeholder="my-new-post" required>
+        </label>
+      </div>
+      <div class="row">
+        <label>分类
+          <input type="text" name="category" value="Life">
+        </label>
+        <label>标签（逗号分隔）
+          <input type="text" name="tags" placeholder="life, tutorial">
+        </label>
+      </div>
+      <div class="row">
+        <label>封面图路径（可选）
+          <input type="text" name="cover" placeholder="/assets/images/cover.jpg">
+        </label>
+        <label>草稿？
+          <select name="draft">
+            <option value="false">发布</option>
+            <option value="true">草稿</option>
+          </select>
+        </label>
+      </div>
+      <div class="row">
+        <label>摘要（可选）
+          <textarea name="description" placeholder=""></textarea>
+        </label>
+      </div>
+      <label>正文（Markdown）
+        <textarea name="body" required placeholder="写正文～"></textarea>
+      </label>
+      <button type="submit">生成并复制终端命令</button>
+    </form>
+    <div id="out" style="display:none;"></div>
+    <div class="cmd" id="cmd" style="display:none;"></div>
+  </div>
+
+  <script>
+  const form=document.getElementById('postForm');
+  const out=document.getElementById('out');
+  const cmd=document.getElementById('cmd');
+
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const f=new FormData(form);
+    const title=f.get('title'),slug=f.get('slug'),cat=f.get('category'),
+          tags=f.get('tags').split(',').map(s=>s.trim()).filter(Boolean),
+          cover=f.get('cover'),draft=f.get('draft'),desc=f.get('description'),
+          body=f.get('body');
+    const date=new Date().toISOString();
+    const front=`---
+title: ${title}
+published: ${date}
+updated: ${date}${desc?'\ndescription: '+desc:''}${cover?'\nimage: '+cover:''}
+tags: [${tags.join(', ')}]
+category: ${cat}
+draft: ${draft}
+---`;
+    const fileName=`${slug}.md`;
+    const fullMd=front+'\n\n'+body+'\n';
+    // 输出 Markdown 与终端命令
+    out.textContent=fullMd;
+    out.style.display='block';
+    cmd.textContent=`# 保存文件后执行：\necho "${fullMd.replace(/"/g,'\\"')}" > src/content/posts/${fileName} && pnpm build && git add src/content/posts/${fileName} && git commit -m "post: ${title}" && git push`;
+    cmd.style.display='block';
+    // 自动复制终端命令
+    navigator.clipboard.writeText(cmd.textContent.replace('# 保存文件后执行：\n',''));
+  });
+  </script>
+</body>
+</html>

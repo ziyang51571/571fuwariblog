@@ -1,24 +1,9 @@
 # 关于我...
 
-这是测试哦.
+对我其实还没写。
+
+可以去B站看看个性签名
 
 ![example image](../../assets/images/demo-banner.png "An exemplary image")
 
-# 111
-## 222
-### 333
-#### 444
-##### 555
-
-*斜体*
-**粗体**
-***斜粗***
-
-当然:spoiler[可以哦]
-但愿这个spoiler能正常工作.
-
-> ### URL
-> 引用
-> [B站](https://bilibili.com)
-> - 这应该是一个带点的引用
->> 这应该是一个二级引用
+> 横幅图是[鬼针草](https://www.pixiv.net/users/6049901)老师绘制的插图，详见[Pixiv](https://www.pixiv.net/artworks/137722971)
