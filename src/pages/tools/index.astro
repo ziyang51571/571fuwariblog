@@ -1,0 +1,16 @@
+---
+import Layout from '@layouts/Layout.astro'
+import ToolCard from '@components/ToolCard.astro'  // 后面自己封一个卡片组件
+const tools = [
+  { title: '校徽 DIY', desc: '上传图片+模板，一键生成专属校徽', url: '/tools/badge-maker/' },
+  // 以后再往数组里加
+]
+---
+<Layout title="工具箱">
+  <main class="mx-auto max-w-4xl px-6 py-12">
+    <h1 class="text-3xl font-bold mb-8">小工具集合</h1>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {tools.map(t => <ToolCard {...t} />)}
+    </div>
+  </main>
+</Layout>

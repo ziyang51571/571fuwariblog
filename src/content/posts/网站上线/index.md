@@ -1,5 +1,5 @@
 ---
-title: 网站上线阿
+title: 网站上线
 published: 2025-11-23
 description: "现在可以通过ziyang.site来访问本站啦！以及，发现了fuwari中一个与默认主题色相关的漏洞"
 image: "./cover.png"
