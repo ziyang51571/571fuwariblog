@@ -1,5 +1,5 @@
 ---
-title: 网站上线！
+title: 网站上线
 published: 2025-11-23
 description: "现在可以通过ziyang.site来访问本站啦！以及，发现了fuwari中一个与默认主题色相关的漏洞"
 image: "./cover.png"
@@ -23,7 +23,7 @@ draft: false
 
 包括但不限于banner不显示、调色盘不工作、search框消失...
 
-修不好的问题都通过重新克隆仓库解决了 相应也放弃了一些东西 :spoiler[再也不乱弄了呜呜（x]
+修不好的问题都通过重新克隆仓库解决了 相应也放弃了一些东西 :spoiler[再也不乱改了呜呜（x]
 
 ### 也许是漏洞
 
@@ -56,11 +56,9 @@ export function getHue(): number {
 
 ‍
 
-好的
+好的那么
 
-那么
-
-下次再见各位(≧∇≦)
+下次再见各位≧∇≦)
 
 
 
