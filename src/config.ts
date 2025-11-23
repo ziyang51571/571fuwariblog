@@ -7,7 +7,6 @@ import type {
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
-
 export const siteConfig: SiteConfig = {
 	title: "571の小站",
 	subtitle: "Demo",
@@ -33,8 +32,8 @@ export const siteConfig: SiteConfig = {
 	favicon: [
 		// Leave this array empty to use the default favicon
 		{
-		  src: '/favicon/icon.png',    // Path of the favicon, relative to the /public directory
-		}
+			src: "/favicon/icon.png", // Path of the favicon, relative to the /public directory
+		},
 	],
 };
 
@@ -68,7 +67,7 @@ export const profileConfig: ProfileConfig = {
 			icon: "my:phira",
 			url: "https://phira.moe/user/382375",
 		},
-                {
+		{
 			name: "Github",
 			icon: "fa6-brands:github",
 			url: "https://github.com/ziyang51571",
