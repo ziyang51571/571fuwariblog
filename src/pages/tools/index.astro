@@ -1,20 +1,56 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import ToolCard from "@components/ToolCard.astro"; // 后面自己封一个卡片组件
+import MainGridLayout from '@layouts/MainGridLayout.astro';
+import ToolCard from '@components/ToolCard.astro';   // 你之前写的卡片组件
+
 const tools = [
-	{
-		title: "校徽 DIY",
-		desc: "上传图片+模板，一键生成专属校徽",
-		url: "/tools/badge-maker/",
-	},
-	// 以后再往数组里加
+  {
+    title: '571の神秘工具箱',
+    desc: '收集了一些小工具，不定期掉落',
+    url: '',          // 不跳转
+    icon: '🛠️',
+    fullWidth: true,  // 我们自己加的标记
+  },
+  {
+    title: '卡片测试',
+    desc: '点击应该可以正常跳转',
+    url: '/tools/test/',
+    icon: '🔗',
+  },
+  {
+    title: 'Shapez2车厢估算',
+    desc: '估算所需车厢数量',
+    url: '/tools/shapezTrain/',
+    icon: '🚄',
+  },
+  {
+    title: '今日人品',
+    desc: '来看看今日运势ψ(｀∇´)ψ',
+    url: '/tools/jrrp/',
+    icon: '🔮',
+  }
 ];
 ---
-<Layout title="工具箱">
-  <main class="mx-auto max-w-4xl px-6 py-12">
-    <h1 class="text-3xl font-bold mb-8">小工具集合</h1>
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {tools.map(t => <ToolCard {...t} />)}
-    </div>
-  </main>
-</Layout>
+<MainGridLayout title="工具箱">
+  <div slot="top" class="mb-8">
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {tools.map((t) =>
+      t.fullWidth ? (
+        <!-- 横幅卡片 -->
+        <div class="md:col-span-2 lg:col-span-3 card-base rounded-xl border border-base-300 dark:border-base-700 p-6">
+          <div class="flex items-center gap-4">
+            <span class="text-3xl">{t.icon}</span>
+            <div>
+              <h2 class="text-xl font-semibold text-base-content">{t.title}</h2>
+              <p class="mt-1 text-sm text-base-content/70">{t.desc}</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <!-- 普通卡片 -->
+        <ToolCard {...t} />
+      )
+    )}
+  </div>
+</MainGridLayout>

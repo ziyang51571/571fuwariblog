@@ -1,0 +1,300 @@
+<div class="shapez-tool-container">
+  <style>
+    .shapez-tool-container {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: transparent; /* 改透明，让外层主题背景露出来 */
+      display: flex;
+      gap: 20px;
+    }
+    .shapez-tool-container .main-container,
+    .shapez-tool-container .archive-container {
+      background: var(--card-bg, #fff); /* 用主题变量，没有就回退白色 */
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border: 1px solid var(--base-300, #ddd); /* 主题色边框 */
+    }
+    .shapez-tool-container .main-container { flex: 1 }
+    .shapez-tool-container .archive-container { width: 300px }
+    .shapez-tool-container h1,
+    .shapez-tool-container h2 {
+      color: var(--base-content, #333); /* 主题文字色 */
+      text-align: center;
+    }
+    .shapez-tool-container .input-group { margin-bottom: 20px }
+    .shapez-tool-container label {
+      display: inline-block;
+      width: 150px;
+      font-weight: bold;
+      color: var(--base-content, #555);
+    }
+    .shapez-tool-container input[type="number"],
+    .shapez-tool-container input[type="text"] {
+      width: 200px;
+      padding: 8px;
+      border: 1px solid var(--base-300, #ddd);
+      border-radius: 4px;
+      font-size: 14px;
+      background: var(--base-100, #fff); /* 输入框背景随主题 */
+      color: var(--base-content, #000);
+    }
+    .shapez-tool-container input[type="number"]:focus,
+    .shapez-tool-container input[type="text"]:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+    .shapez-tool-container .parameter-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid var(--base-300, #eee);
+    }
+    .shapez-tool-container .parameter-section h3 {
+      color: var(--base-content, #666);
+      margin-bottom: 15px;
+    }
+    .shapez-tool-container button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 12px;
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .shapez-tool-container button:hover { background: #45a049 }
+    .shapez-tool-container #result {
+      margin-top: 20px;
+      padding: 20px;
+      background: var(--base-200, #f0f8ff);
+      border-radius: 5px;
+      text-align: center;
+      font-size: 18px;
+      color: var(--base-content, #333);
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shapez-tool-container .formula {
+      margin-top: 20px;
+      padding: 15px;
+      background: var(--base-100, #f9f9f9);
+      border-radius: 5px;
+      font-size: 12px;
+      color: var(--base-content, #666);
+      text-align: center;
+      line-height: 1.5;
+    }
+    .shapez-tool-container .archive-item {
+      padding: 10px;
+      margin: 10px 0;
+      background: var(--base-200, #f5f5f5);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .shapez-tool-container .archive-item:hover {
+      background: var(--base-300, #e0e0e0);
+    }
+    .shapez-tool-container .archive-item.highlighted {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+    }
+    .shapez-tool-container .archive-item button {
+      float: right;
+      width: auto;
+      margin: 0 0 0 5px;
+      padding: 5px 10px;
+      font-size: 12px;
+      background: #dc3545;
+    }
+    .shapez-tool-container .archive-item button:hover { background: #c82333 }
+    .shapez-tool-container .archive-controls { margin-bottom: 20px }
+  </style>
+
+  <div class="main-container">
+    <h1 class="text-2xl font-bold">Shapez 2 车厢数量估算</h1>
+    <h1 class="text-1xl font">计算结果不能保证准确!</h1>
+    <p>‍ ‍</p>
+    <div class="input-group"><label for="fullLoadAmount">满带数量：</label><input type="number" id="fullLoadAmount" value="100" min="1"></div>
+    <div class="input-group"><label for="layers">启用层数：</label><input type="number" id="layers" value="1" min="1"></div>
+    <div class="input-group"><label for="distance">轨道距离：</label><input type="number" id="distance" value="10" min="1"></div>
+    <div class="input-group"><label for="turns">过弯次数：</label><input type="number" id="turns" value="0" min="0"></div>
+    <div class="parameter-section">
+      <h3>基础参数</h3>
+      <div class="input-group"><label for="fullLoadEfficiency">满带效率：</label><input type="number" id="fullLoadEfficiency" value="2" min="0.1" step="0.1"></div>
+      <div class="input-group"><label for="capacity">单盒容量系数：</label><input type="number" id="capacity" value="100" min="1" max="200">%</div>
+      <div class="input-group"><label for="speed">火车速度系数：</label><input type="number" id="speed" value="100" min="1" max="200">%</div>
+      <div class="input-group"><label for="operationTime">操作时间：</label><input type="number" id="operationTime" value="2" min="0.1" step="0.1"></div>
+      <div class="input-group"><label for="turnTime">过弯时间：</label><input type="number" id="turnTime" value="1.5" min="0" step="0.1"></div>
+    </div>
+    <button onclick="calculate()">计算最优车厢数量</button>
+    <div id="result">请输入参数并点击计算</div>
+    <div class="formula"><strong>公式：</strong>运输效率 = (车厢×层数×单盒) / ((距离×2+车厢×4)/速度 + 操作×2 + (过弯+2)×过弯时间)<br>单盒=180×容量%，速度=12×速度%，满带数量=满带效率×目标数量</div>
+  </div>
+
+  <div class="archive-container">
+    <h2>存档管理</h2>
+    <div class="archive-controls"><input type="text" id="archiveName" placeholder="存档名称"><button onclick="saveArchive()">保存当前配置</button></div>
+    <div id="archiveList"><h3>存档列表</h3><div id="archiveItems"></div></div>
+  </div>
+</div>
+
+<script>
+// ===== 本地存储键名 =====
+const PARAMS_KEY = 'trainCalculator_params';
+const ARCHIVES_KEY = 'trainCalculator_archives';
+
+// ===== 初始加载 =====
+window.addEventListener('DOMContentLoaded', () => {
+  loadParams();
+  loadArchives();
+  calculate();
+  // 参数变化时重新计算并高亮
+  document.querySelectorAll('#fullLoadEfficiency,#capacity,#speed,#operationTime,#turnTime').forEach(el => {
+    el.addEventListener('change', () => { saveParams(); recalcAllArchives(); });
+  });
+});
+
+// ===== 参数读写 =====
+function loadParams() {
+  const p = JSON.parse(localStorage.getItem(PARAMS_KEY) || '{}');
+  Object.entries({
+    fullLoadEfficiency: 2, capacity: 100, speed: 100, operationTime: 2, turnTime: 1.5
+  }).forEach(([k, v]) => { document.getElementById(k).value = p[k] ?? v; });
+}
+function saveParams() {
+  const payload = {};
+  ['fullLoadEfficiency', 'capacity', 'speed', 'operationTime', 'turnTime'].forEach(k => payload[k] = document.getElementById(k).value);
+  localStorage.setItem(PARAMS_KEY, JSON.stringify(payload));
+}
+
+// ===== 存档读写 =====
+let archives = [];
+function initApp() {
+  // 1. 加载存档
+  loadArchives();
+  
+  // 2. 重新绑定事件（Swup 会清除旧监听器）
+  document.getElementById('saveBtn')?.addEventListener('click', saveArchive);
+  // 其他按钮/事件也在这里重新绑定
+}
+function loadArchives() {
+  archives = JSON.parse(localStorage.getItem(ARCHIVES_KEY) || '[]');
+  renderArchives();
+}
+function saveArchive() {
+  const name = document.getElementById('archiveName').value.trim();
+  if (!name) return alert('请输入存档名称');
+  const payload = {
+    name,
+    id: Date.now(),
+    data: {   // 只保存非参数数据
+      fullLoadAmount: document.getElementById('fullLoadAmount').value,
+      layers: document.getElementById('layers').value,
+      distance: document.getElementById('distance').value,
+      turns: document.getElementById('turns').value
+    }
+  };
+  archives.push(payload);
+  localStorage.setItem(ARCHIVES_KEY, JSON.stringify(archives));
+  document.getElementById('archiveName').value = '';
+  renderArchives();
+}
+function deleteArchive(id, ev) {
+  ev.stopPropagation();
+  if (!confirm('删除此存档？')) return;
+  archives = archives.filter(a => a.id !== id);
+  localStorage.setItem(ARCHIVES_KEY, JSON.stringify(archives));
+  renderArchives();
+}
+function loadArchive(id) {
+  const a = archives.find(a => a.id === id);
+  if (!a) return;
+  ['fullLoadAmount', 'layers', 'distance', 'turns'].forEach(k => {
+    document.getElementById(k).value = a.data[k];
+  });
+  calculate();
+}
+
+// ===== 计算核心 =====
+function calcCars(data) {
+  const fullLoadAmount = parseFloat(data.fullLoadAmount);
+  const layers = parseInt(data.layers);
+  const distance = parseInt(data.distance);
+  const turns = parseInt(data.turns);
+  const fullLoadEfficiency = parseFloat(document.getElementById('fullLoadEfficiency').value);
+  const capacity = 180 * (parseFloat(document.getElementById('capacity').value) / 100);
+  const speed = 12 * (parseFloat(document.getElementById('speed').value) / 100);
+  const operationTime = parseFloat(document.getElementById('operationTime').value);
+  const turnTime = parseFloat(document.getElementById('turnTime').value);
+
+  const target = fullLoadAmount * fullLoadEfficiency;
+  for (let cars = 1; cars <= 50; cars++) {
+    const totalTime = (distance * 2 + cars * 4) / speed + operationTime * 2 + (turns + 2) * turnTime;
+    const eff = (cars * layers * capacity) / totalTime;
+    if (eff >= target) return { cars, eff, target };
+  }
+  return { cars: 50, eff: 0, target };
+}
+
+// ===== 主计算 =====
+function calculate() {
+  const res = calcCars({
+    fullLoadAmount: document.getElementById('fullLoadAmount').value,
+    layers: document.getElementById('layers').value,
+    distance: document.getElementById('distance').value,
+    turns: document.getElementById('turns').value
+  });
+  const resultEl = document.getElementById('result');
+  if (res.eff >= res.target) {
+    resultEl.innerHTML = `<strong>推荐车厢数量：${res.cars} 节</strong><br>实际运输效率：${res.eff.toFixed(2)} 单位/秒<br>满带数量：${document.getElementById('fullLoadAmount').value} (效率系数: ${document.getElementById('fullLoadEfficiency').value})<br>满足目标效率要求！`;
+  } else {
+    resultEl.innerHTML = `<strong>警告：即使50节也无法达到目标</strong><br>最大可达效率：${res.eff.toFixed(2)} 单位/秒<br>所需目标效率：${res.target.toFixed(2)} 单位/秒`;
+  }
+}
+
+// ===== 存档重新计算 & 高亮 =====
+function recalcAllArchives() {
+  calculate(); // 主面板
+  archives.forEach(a => {
+    const oldCars = a._lastCars;
+    const { cars } = calcCars(a.data);
+    a._lastCars = cars;
+    a._highlight = oldCars !== undefined && oldCars !== cars;
+  });
+  renderArchives();
+}
+
+// ===== 渲染存档列表 =====
+function renderArchives() {
+  const box = document.getElementById('archiveItems');
+  if (!archives.length) return box.innerHTML = '<p style="text-align:center;color:#666">暂无存档</p>';
+  box.innerHTML = '';
+  archives.forEach(a => {
+    const { cars, eff, target } = calcCars(a.data);
+    a._lastCars = cars;
+    const div = document.createElement('div');
+    div.className = 'archive-item' + (a._highlight ? ' highlighted' : '');
+    div.innerHTML = `<strong>${a.name}</strong><br>所需车厢：${cars} 节<br>实际效率：${eff.toFixed(2)} / ${target.toFixed(2)}<button onclick="deleteArchive(${a.id},event)">删除</button>`;
+    div.onclick = () => loadArchive(a.id);
+    box.appendChild(div);
+  });
+}
+</script>
+
+<!-- 放在 test.html 底部 -->
+<script>
+// 页面初次加载
+initApp();
+
+// Swup 导航后重新初始化
+document.addEventListener('swup:contentReplaced', initApp);
+</script>

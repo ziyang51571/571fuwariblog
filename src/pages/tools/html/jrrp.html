@@ -1,0 +1,87 @@
+<div class="card-base rounded-xl border border-base-300 p-6 text-center">
+  <h2 class="text-2xl font-bold mb-2">🔮今日人品✨</h2>
+  <p class="text-base-content/70 mb-4">来测测今天的运势如何吧</p>
+
+  <div id="jrrp-score" class="text-8xl font-extrabold text-primary my-4">
+    <span id="jrrp-number">--</span>
+  </div>
+  <div id="jrrp-text" class="text-sm text-base-content/80 opacity-0 transition-opacity duration-1000"></div>
+
+</div>
+
+<script>
+// 我要开盒你
+function fingerprint() {
+  const ua = navigator.userAgent;
+  const { width, height } = screen;
+  const lang = navigator.language || '';
+  return `${ua}|${width}x${lang}`;
+}
+
+// 神秘种子随机数
+function sfc32(a, b, c, d) {
+  return function() {
+    a |= 0; b |= 0; c |= 0; d |= 0;
+    let t = (a + b | 0) + d | 0;
+    d = d + 1 | 0;
+    a = b ^ b >>> 9;
+    b = c + (c << 3) | 0;
+    c = (c << 21 | c >>> 11);
+    c = c + t | 0;
+    return (t >>> 0) / 4294967296;
+  };
+}
+
+// 数字滚动
+function rollNumber(el, target, duration, onFinish) {
+  const start = 0;
+  const startTime = performance.now();
+
+  function frame(now) {
+    const t = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 2);
+    const current = Math.floor(start + (target - start) * eased);
+    el.textContent = current;
+    if (t < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      el.textContent = target;
+      if (onFinish) onFinish();
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+function calcJRRP() {
+  const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const seed = date + fingerprint();
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
+  }
+  const rand = sfc32(h, h, h, h);
+  const score = Math.floor(Math.pow(rand(),0.8) * 100) + 1;
+
+  const comments = [
+    [90, 100, '欧 气 爆 棚'],
+    [60, 89,  '运 势 极 佳'],
+    [40, 59,  '平 平 无 奇'],
+    [20, 39,  '小 倒 霉 蛋'],
+    [1, 19,   '非 酋 本 酋']
+  ];
+  const text = comments.find(c => score >= c[0] && score <= c[1])?.[2] || '未知';
+  
+  document.getElementById('jrrp-text').textContent = "‍";
+
+  rollNumber(document.getElementById('jrrp-number'), score, 3000, () => {
+  const textEl = document.getElementById('jrrp-text');
+    textEl.textContent = text;
+    textEl.classList.remove('opacity-0');
+  });
+
+}
+
+calcJRRP();
+document.getElementById('jrrp-again')?.addEventListener('click', calcJRRP);
+</script>
