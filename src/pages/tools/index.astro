@@ -1,33 +1,33 @@
 ---
-import MainGridLayout from '@layouts/MainGridLayout.astro';
-import ToolCard from '@components/ToolCard.astro';   // 你之前写的卡片组件
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import ToolCard from "@components/ToolCard.astro"; // 你之前写的卡片组件
 
 const tools = [
-  {
-    title: '571の神秘工具箱',
-    desc: '收集了一些小工具，不定期掉落',
-    url: '',          // 不跳转
-    icon: '🛠️',
-    fullWidth: true,  // 我们自己加的标记
-  },
-  {
-    title: '卡片测试',
-    desc: '点击应该可以正常跳转',
-    url: '/tools/test/',
-    icon: '🔗',
-  },
-  {
-    title: 'Shapez2车厢估算',
-    desc: '估算所需车厢数量',
-    url: '/tools/shapezTrain/',
-    icon: '🚄',
-  },
-  {
-    title: '今日人品',
-    desc: '来看看今日运势ψ(｀∇´)ψ',
-    url: '/tools/jrrp/',
-    icon: '🔮',
-  }
+	{
+		title: "571の神秘工具箱",
+		desc: "收集了一些小工具，不定期掉落",
+		url: "", // 不跳转
+		icon: "🛠️",
+		fullWidth: true, // 我们自己加的标记
+	},
+	{
+		title: "卡片测试",
+		desc: "点击应该可以正常跳转",
+		url: "/tools/test/",
+		icon: "🔗",
+	},
+	{
+		title: "Shapez2车厢估算",
+		desc: "估算所需车厢数量",
+		url: "/tools/shapezTrain/",
+		icon: "🚄",
+	},
+	{
+		title: "今日人品",
+		desc: "来看看今日运势ψ(｀∇´)ψ",
+		url: "/tools/jrrp/",
+		icon: "🔮",
+	},
 ];
 ---
 <MainGridLayout title="工具箱">

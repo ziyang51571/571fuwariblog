@@ -42,7 +42,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.About,
-                { name: '工具箱', url: '/tools/', external: false },
+		{ name: "工具箱", url: "/tools/", external: false },
 		//{
 		//	name: "Github",
 		//	url: "https://github.com/saicaca/fuwari", // Internal links should not include the base path, as it is automatically added
