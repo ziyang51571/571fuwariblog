@@ -6,13 +6,13 @@ export interface Props {
 	icon?: string;
 }
 
-const { title, desc, url, icon = "🛠️" } = Astro.props;
+const { title, desc, url, icon = "🛠️" } = Astro.props; //嘿嘿
 ---
 
 <a
   href={url}
-  class="block rounded-xl
-         card-base p-6 shadow hover:shadow-lg
+  class="block rounded-xl border border-gray-200 dark:border-gray-700
+         bg-white dark:bg-gray-800 p-6 shadow hover:shadow-lg
          transition-shadow duration-200"
 >
   <div class="flex items-center gap-4">
