@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Frums'">
+        <meta name="description" content="Pictured as Perfect Outro Mimic">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PaP Outro Generator by Team Frums'</title>
+        <meta name="keywords" content="Pictured as Perfect,Frums,Fanwork">
+        <style>
+            body {
+                font-family: sans-serif, Arial;
+                text-align: center;
+                margin: 0px;
+                position: relative;
+            }
+            div {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            h1 {
+                display: inline-block;
+                font-weight: bold;
+                width: max-content;
+                margin: 0px;
+            }
+            input {
+                width: 60px;
+                padding: 0px;
+                font-size: 14px;
+                &[type = checkbox]{
+                    width: auto;
+                }
+            }
+            dialog {
+                height: fit-content;
+                border: 4px solid #ff26ff;
+                h3 {
+                    color: #ff26ff;
+                }
+                p > span {
+                    color: #ff26ff;
+                }
+            }
+            canvas {
+                width: 600px;
+                height: 600px;
+                position: absolute;
+            }
+            hr {
+                width: 630px;
+                margin-left: 0px;
+                color: black;
+                border: 0.7px solid #111;
+            }
+            label {
+                padding-top: 3px;
+                margin-left: 5px;
+            }
+            button {
+                z-index: 5;
+                position: relative;
+            }
+
+
+            .displayedContent {
+                position: relative;
+            }
+            .titleWrapper {
+                z-index: 24;
+                margin-top: 14px;
+                margin-bottom: 7px;
+            }
+            .oriLinkWrapper {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                >p {
+                    width: max-content;
+                    display: inline-block;
+                    margin: 0px;
+                }
+            }
+            .canvasPlaceholder {
+                width: 614px;
+                height: 614px;
+            }
+            .jk {
+                font-size: 6px;
+            }
+            .reminder {
+                font-size: 12px;
+            }
+            .hiddenFeature {
+                display: none;
+                margin: 0px;
+                &>div {
+                    display: inline-block;
+                    margin: 0px;
+                }
+            }
+            .displayedContent {
+                margin: 0px;
+            }
+            .toggledOn {
+                color: #ff26ff;
+            }
+
+
+            #inputArea,
+            #controlArea {
+                margin-top: 7px;
+                margin-bottom: 7px;
+            }
+            #reminderArea > p {
+                margin-top: 3px;
+                margin-bottom: 3px;
+            }
+            #oriLink {
+                color: #ff26ff;
+                text-decoration: none;
+                font-size: 19px;
+                font-family: 'Courier New';
+                cursor: pointer;
+                &:hover {
+                    background-color: black;
+                    .colored {
+                        color: white;
+                        text-decoration-color: #ff26ff;
+                        text-decoration: underline;
+                    }
+                    .uncolored {
+                        color: #ff26ff;
+                        text-decoration-color: white;
+                        text-decoration: underline;
+                    }
+                }
+                .colored {
+                    color: #ff26ff;
+                    text-decoration-color: black;
+                    text-decoration: underline;
+                }
+                .uncolored {
+                    color: black;
+                    text-decoration-color: #ff26ff;
+                    text-decoration: underline;
+                }
+            }
+            #received,
+            #remained {
+                font-style: italic;
+            }
+            #received {
+                color: #ff26ff;
+            }
+            #remained {
+                color: black;
+            }
+            #heart {
+                z-index: 3;
+            }
+            #sectors {
+                z-index: 2;
+            }
+            #credits {
+                color: black;
+                &:hover {
+                    color: #ff26ff;
+                }
+            }
+            #amountReminder {
+                display: none;
+            }
+            #lore {
+                text-align: center;
+            }
+            #controlPanel {
+                border: 1.4px solid black;
+                padding: 6px;
+                text-align: center;
+                width: 586px;
+                display: inline-block;
+            }
+            #buttonOne,
+            #buttonTwo,
+            #blur {
+                width: 70px;
+                height: 24px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="displayedContent">
+            <canvas id="sectors" width="980" height="980"></canvas>
+            <canvas id="heart" width="980" height="980"></canvas>
+            <div class="titleWrapper">
+                <h1><span id="received"></span><span id="remained">Pictured as Perfect</span><br>Outro<span class="jk">Mimic</span>&trade; Generator!</h1>
+            </div>
+            <div class="oriLinkWrapper">
+                <p>Original BGA: <a href="https://www.youtube.com/watch?v=6361EXrvUAQ" title="Original BGA by Frums" id="oriLink"><span class="colored">P</span><span class="uncolored">i</span><span class="colored">c</span><span class="uncolored">t</span><span class="colored">u</span><span class="uncolored">r</span><span class="colored">e</span><span class="uncolored">d</span>&nbsp;<span class="colored">a</span><span class="uncolored">s</span>&nbsp;<span class="colored">P</span><span class="uncolored">e</span><span class="colored">r</span><span class="uncolored">f</span><span class="colored">e</span><span class="uncolored">c</span><span class="colored">t</span></a></p>
+            </div>
+            <div class="canvasPlaceholder"></div>
+            <div id="lore">
+                <div id="controlPanel">
+                    <div id="controlArea">
+                        <button type="button" id="buttonOne">Play</button>
+                        <button type="button" id="buttonTwo">Random</button>
+                        <button type="button" id="blur">Blur: Off</button>
+                    </div>
+                    <div id="inputArea">
+                        <lable for="delta" id="deltaDesc">The length between two adjacent rings:</lable>
+                        <input type="number" id="delta" placeholder="10" max="2047" value="10"/>
+                    </div>
+                    <div id="reminderArea">
+                        <p id="amountReminder" class="reminder">Notice: Naturally, the bigger the number of sectors is, the more renderings are executed.</p>
+                        <p id="friendlyReminder" class="reminder">It is recommended to visit the site using a MacBook.</p>
+                    </div>
+                </div>
+                <div>
+                    <p>A Project of <a href="https://space.bilibili.com/3546379492264645" title="Our Bilibili Account" id="credits">Team Frums'</a> '.</p>
+                </div>
+            </div>
+        </div>
+        <dialog id="numberTooLow">
+            <h3><strong>Warning!</strong></h3>
+            <p>Number <span>less than 6</span> may heavily damage the performance and is <span>not</span> advised.</p>
+            <p>Continue at your own risk.</p>
+            <form method="dialog">
+                <button id="alertAnulled">I Trust My Computer</button>
+                <button autofocus id="deltaReset">Reset The Value</button>
+            </form>
+        </dialog>
+        <dialog id="numberTooHigh">
+            <h3><strong>Please don't do this.</strong></h3>
+            <p>Numbers <span>this big</span> are <span>not</span> accepted due to precision considerations.</p>
+            <form method="dialog">
+                <button autofocus id="tooHigh">Fine</button>
+            </form>
+        </dialog>
+    </body>
+    <script>
+        const p0 = {x: 0, y: 194};
+        const p1 = {x: -98, y: 130};
+        const p2 = {x: -204, y: 38};
+        const p3 = {x: -188, y: -74};
+        const p4 = {x: -171, y: -159};
+        const p5 = {x: -54, y: -175};
+        const p6 = {x: 0, y: -106};
+        const flashOnNumber = [0, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 93, 94, 95, 96, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 148, 150, 152, 154, 156, 158, 162, 164, 166, 168, 174, 180, 184, 188];
+
+        let sectorCnv = document.getElementById("sectors");
+        let sectorCtx = sectorCnv.getContext("2d");
+        let heartCnv = document.getElementById("heart");
+        let heartCtx = heartCnv.getContext("2d");
+
+        let buttonOne = document.getElementById("buttonOne");
+        let buttonTwo = document.getElementById("buttonTwo");
+        let ignoreButton = document.getElementById("alertAnulled");
+        let concedeButton = document.getElementById("deltaReset");
+        let fineButton = document.getElementById("tooHigh");
+
+        const numberTooLow = document.getElementById("numberTooLow");
+        const numberTooHigh = document.getElementById("numberTooHigh");
+        const blurToggle = document.getElementById("blur");
+        const deltaInput = document.getElementById("delta");
+        const linkToOriginal = document.getElementById("oriLink");
+        const oriLinkWrapper = document.querySelector(".oriLinkWrapper");
+        const received = document.getElementById("received");
+        const remained = document.getElementById("remained");
+        const lore = document.getElementById("lore");
+
+        let length = 0;
+        let expLength = 0;
+        let colors;
+        let delta = 10;
+        let start = 10;
+        let end = 10;
+        let duration = 10;
+        let sectorAmount = 128;
+        let alerted = false;
+        let hiddenFeaturesEnabled = false;
+        let letterContinuity = true;
+        let letterCollection = "";
+        let flashIndicator = 0;
+        let yScaler = 1;
+        let transitionScale = 1;
+
+        let endInput = document.createElement("input");
+        let durationInput = document.createElement("input");
+        let sectorAmountInput = document.createElement("input");
+        let amountReminder = document.createElement("p");
+        let hiddenFeatures = document.createElement("div");
+        let labelEnd = document.createElement("label");
+        let labelDuration = document.createElement("label");
+        let labelDivision = document.createElement("label");
+        let labelDivisionSuffix = document.createElement("label");
+        let divEnd = document.createElement("div");
+        let divDuration = document.createElement("div");
+        let divDivision = document.createElement("div");
+
+        let cursorType;
+        let formerCursorType;
+
+        sectorCtx.translate(490, 490);
+        heartCtx.translate(490, 490);
+
+        let timeInterval;
+        let flashInterval;
+
+        function heart(){
+            heartCtx.beginPath();
+            heartCtx.fillStyle = "black";
+            heartCtx.moveTo(p0.x, p0.y);
+            heartCtx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+            heartCtx.bezierCurveTo(p4.x, p4.y, p5.x, p5.y, p6.x, p6.y);
+            heartCtx.bezierCurveTo(-1 * p5.x, p5.y, -1 * p4.x, p4.y, -1 * p3.x, p3.y);
+            heartCtx.bezierCurveTo(-1 * p2.x, p2.y, -1 * p1.x, p1.y, p0.x, p0.y);
+            heartCtx.fill();
+            /*
+            heartCtx.beginPath();
+            heartCtx.moveTo(490, 490);
+            heartCtx.lineTo(490, -490);
+            heartCtx.lineTo(-490, -490);
+            heartCtx.lineTo(-490, 490);
+            heartCtx.lineTo(480, 490);
+            heartCtx.moveTo(480, 480);
+            heartCtx.lineTo(-480, 480);
+            heartCtx.lineTo(-480, -480);
+            heartCtx.lineTo(480, -480);
+            heartCtx.closePath();
+            heartCtx.fill();
+            */
+        }
+
+        function sectors(){
+            sectorCtx.clearRect(-heartCnv.width / 2, -heartCnv.height / 2, heartCnv.width, heartCnv.height);
+
+            length = delta * Math.floor(100 / delta);
+            sectorCtx.lineWidth = 1;
+
+            for (let layers = 0; layers <= Math.ceil(700 / delta) - Math.floor(100 / delta); layers++){
+                for (let sector = 0; sector <= sectorAmount - 1; sector++){
+                    if (
+                    yScaler > 0 &&
+                    !((sectorAmount <= 4 && length > 700) ||
+                    (sectorAmount > 4 && ((sector / sectorAmount * 2 - 1 / 4) * ((sector + 1) / sectorAmount * 2 - 1 / 4) < 0 ||(sector / sectorAmount * 2 - 3 / 4) * ((sector + 1) / sectorAmount * 2 - 3 / 4) < 0 ||(sector / sectorAmount * 2 - 5 / 4) * ((sector + 1) / sectorAmount * 2 - 5 / 4) < 0 ||(sector / sectorAmount * 2 - 7 / 4) * ((sector + 1) / sectorAmount * 2 - 7 / 4) < 0) && length > 700) || 
+                    ((sector / sectorAmount * 2 - 1 / 4) * ((sector + 1) / sectorAmount * 2 - 1 / 4) >= 0 && (sector / sectorAmount * 2 - 3 / 4) * ((sector + 1) / sectorAmount * 2 - 3 / 4) >= 0 &&(sector / sectorAmount * 2 - 5 / 4) * ((sector + 1) / sectorAmount * 2 - 5 / 4) >= 0 && (sector / sectorAmount * 2 - 7 / 4) * ((sector + 1) / sectorAmount * 2 - 7 / 4) >= 0 && length > 490 / Math.cos(Math.PI / 4 - Math.PI * Math.min(Math.abs(sector / sectorAmount * 2 - 1 / 4), Math.abs((sector + 1) / sectorAmount * 2 - 1 / 4), Math.abs(sector / sectorAmount * 2 - 3 / 4), Math.abs((sector + 1) / sectorAmount * 2 - 3 / 4), Math.abs(sector / sectorAmount * 2 - 5 / 4), Math.abs((sector + 1) / sectorAmount * 2 - 5 / 4), Math.abs(sector / sectorAmount * 2 - 7 / 4), Math.abs((sector + 1) / sectorAmount * 2 - 7 / 4)))))
+                    ){
+                        sectorDrawing(sector);
+                    }
+                };
+                length += delta;
+            }
+        }
+
+        function expandSectors(){
+            sectorCtx.clearRect(-heartCnv.width / 2, -heartCnv.height / 2, heartCnv.width, heartCnv.height);
+
+            length = delta * Math.floor(100 / delta);
+            sectorCtx.lineWidth = 1;
+
+            for (let layers = 0; layers <= 79; layers++){
+                for (let sector = 0; sector <= sectorAmount - 1; sector++){
+                    sectorDrawing(sector);
+                };
+                length += delta;
+            }
+        }
+
+        function sectorDrawing(sector){
+            colors = Math.floor(3 * Math.random());
+            sectorCtx.beginPath();
+            sectorCtx.ellipse(0, 0, length, Math.pow(yScaler, 3) * length, 0, 2 * sector / sectorAmount * Math.PI, (sector + 1) / sectorAmount * 2 * Math.PI);
+            sectorCtx.lineTo((length + delta) * Math.cos((sector + 1) / sectorAmount * 2 * Math.PI), Math.pow(yScaler, 3) * (length + delta) * Math.sin((sector + 1) / sectorAmount * 2 * Math.PI));
+            sectorCtx.ellipse(0, 0, length + delta, Math.pow(yScaler, 3) * (length + delta), 0, (sector + 1) / sectorAmount * 2 * Math.PI, 2 * sector / sectorAmount * Math.PI, true);
+            sectorCtx.closePath();
+
+            switch(colors){
+                case 0:
+                    sectorCtx.fillStyle = "black";
+                    sectorCtx.strokeStyle = "black";
+                    break;
+                case 1:
+                    sectorCtx.fillStyle = "white";
+                    sectorCtx.strokeStyle = "white";
+                    break;
+                case 2:
+                    sectorCtx.fillStyle = "#ff26ff";
+                    sectorCtx.strokeStyle = "#ff26ff";
+                    break;
+            }
+            sectorCtx.save();
+            sectorCtx.fill();
+            sectorCtx.restore();
+            sectorCtx.stroke();
+        }
+
+        function outro(){
+            if (delta < 23.95){
+                delta += 0.06;
+                deltaInput.value = Math.round(100 * delta) / 100;
+                expLength += 7;
+            } else if (yScaler > 0.05){
+                lore.style.visibility = "hidden";
+                oriLinkWrapper.style.visibility = "hidden";
+                document.body.style.backgroundColor = "black";
+                yScaler -= 0.165;
+            } else {
+                yScaler = 0;
+                sectorCtx.clearRect(-heartCnv.width / 2, -heartCnv.height / 2, heartCnv.width, heartCnv.height);
+                playStop();
+                document.getElementById("deltaDesc").textContent = "From";
+                delta = 6;
+                deltaInput.value = 6;
+                hiddenFeaturesEnabled = true;
+                setTimeout(() => {
+                    heartCnv.width = 980;
+                    heartCnv.height = 980;
+                    heartCnv.style.width = "600px";
+                    heartCnv.style.height = "600px";
+                    sectorCnv.width = 980;
+                    sectorCnv.height = 980;
+                    sectorCnv.style.width = "600px";
+                    sectorCnv.style.height = "600px";
+                    heartCnv.style.left = (window.innerWidth - heartCnv.clientWidth) / 2 + "px";
+                    sectorCnv.style.left = (window.innerWidth - sectorCnv.clientWidth) / 2 + "px";
+                    heartCnv.style.top = "116px";
+                    sectorCnv.style.top = "116px";
+                    heartCtx.translate(490, 490);
+                    sectorCtx.translate(490, 490);
+                    heart();
+                    sectorCtx.fillStyle = "black";
+                    sectorCtx.fillRect(-490, -490, 980, 980);
+
+                    document.body.style.backgroundColor = "white";
+                    buttonOne.textContent = "Start";
+                    buttonTwo.textContent = "Reset";
+                    blurToggle.textContent = "Blur: On";
+                    deltaInput.disabled = false;
+                    buttonOne.disabled = false;
+                    buttonTwo.disabled = true;
+                    blurToggle.disabled = false;
+                    document.getElementById("friendlyReminder").textContent = "It is still recommended to visit the site using a MacBook.";
+                    revelence();
+                    lore.style.visibility = "visible";
+                    oriLinkWrapper.style.visibility = "visible";
+                    document.getElementById("reminderArea").style.display = "block";
+                    document.getElementById("amountReminder").style.display = "block";
+                    document.querySelector(".hiddenFeature").style.display = "inline-block";
+                    yScaler = 1;
+                }, 24000 / 19)
+            }
+        }
+
+        function perfected() {
+            sectorCtx.clearRect(-490, -490, 980, 980);
+            sectors();
+            if ((end - delta) * (start - delta) < 0 || delta === start){
+                delta += (end - start) / (duration * 30);
+            } else {
+                buttonOne.textContent = "Start";
+                playStop();
+                deltaInput.disabled = false;
+                endInput.disabled = false;
+                durationInput.disabled = false;
+                sectorAmountInput.disabled = false;
+            }
+        }
+
+        function buttonTest(){
+            alert("A button is pressed!");
+        }
+
+        function phase0PlayStart(){
+            buttonOne.textContent = "Stop";
+            
+            if (deltaInput.value){
+                delta = Math.abs(Number(deltaInput.value));
+                deltaInput.value = delta;
+            } else {
+                delta = 10;
+            }
+            timeInterval = setInterval(sectors, 100 / 3);
+        }
+
+        function phase1PlayStart(){
+            buttonOne.textContent = "Pause";
+
+            start = Math.abs(Number(deltaInput.value));
+            deltaInput.value = start;
+            end = Math.abs(Number(endInput.value));
+            endInput.value = end;
+            duration = Math.abs(Number(durationInput.value));
+            durationInput.value = duration;
+            sectorAmount = Math.abs(Math.round(Number(sectorAmountInput.value)));
+            sectorAmountInput.value = sectorAmount;
+            delta = start;
+            deltaInput.disabled = true;
+            endInput.disabled = true;
+            durationInput.disabled = true;
+            sectorAmountInput.disabled = true;
+            buttonTwo.disabled = false;
+            timeInterval = setInterval(perfected, 100 / 3);
+        }
+
+        function playStop(){
+            clearInterval(timeInterval);
+            timeInterval = null;
+        }
+
+        function playPause(){
+            buttonOne.textContent = "Resume";
+            clearInterval(timeInterval);
+            timeInterval = null;
+        }
+
+        function playResume(){
+            buttonOne.textContent = "Pause";
+            timeInterval = setInterval(perfected, 100 / 3);
+        }
+
+        function playReset(){
+            buttonOne.textContent = "Start";
+            playStop();
+            buttonOne.disabled = false;
+            deltaInput.disabled = false;
+            endInput.disabled = false;
+            durationInput.disabled = false;
+            sectorAmountInput.disabled = false;
+            sectorCtx.clearRect(-520, -520, 1040, 1040);
+            buttonTwo.disabled = true;
+            delta = start;
+        }
+
+        function phase0ButtonOnePress(){
+            if (buttonOne.textContent === "Play"){
+                if (alerted === false && deltaInput.value !== "" && Math.abs(Number(deltaInput.value)) < 6){
+                    numberTooLow.showModal();
+                } else if (Math.abs(Number(deltaInput.value)) > 2047){
+                    numberTooHigh.showModal();
+                } else {
+                    phase0PlayStart();
+                }
+            } else {
+                buttonOne.textContent = "Play";
+                playStop();
+            }
+        }
+
+        function phase1ButtonOnePress(){
+            if (alerted === false && deltaInput.value !== "" && (Math.abs(Number(deltaInput.value)) < 6 || Math.abs(Number(endInput.value)) < 6)){
+                numberTooLow.showModal();
+            } else if (Math.abs(Number(deltaInput.value)) > 2047 || Math.abs(Number(endInput.value)) > 2047){
+                numberTooHigh.showModal();
+            } else {
+                switch (buttonOne.textContent){
+                    case "Start":
+                        phase1PlayStart();
+                        break;
+                    case "Pause":
+                        playPause();
+                        break;
+                    case "Resume":
+                        playResume();
+                        break;
+                }
+            }
+        }
+
+        function randomize(){
+            buttonOne.textContent = "Play";
+            playStop();
+            if (deltaInput.value){
+                delta = Number(deltaInput.value);
+            } else {
+                delta = 10;
+            }
+            sectorCtx.clearRect(-490, -490, 980, 980);
+            sectors();
+        }
+
+        function deltaReset(){
+            if (hiddenFeaturesEnabled){
+                delta = 6;
+                start = 6;
+                end = 24;
+                deltaInput.value = 6;
+                endInput.value = 24;
+            } else {
+                delta = 10;
+                deltaInput.value = 10;
+            }
+            numberTooLow.close();
+            numberTooHigh.close();
+        }
+
+        function accumulate(event){
+            if (letterCollection !== "Pictured as Perfected" && letterContinuity){
+                letterContinuity = false;
+                if (letterCollection === "" && event.code === "KeyP"){
+                    letterCollection += "P";
+                    remained.textContent = "ictured as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "P" && event.code === "KeyI"){
+                    letterCollection += "i";
+                    remained.textContent = "ctured as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pi" && event.code === "KeyC"){
+                    letterCollection += "c";
+                    remained.textContent = "tured as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pic" && event.code === "KeyT"){
+                    letterCollection += "t";
+                    remained.textContent = "ured as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pict" && event.code === "KeyU"){
+                    letterCollection += "u";
+                    remained.textContent = "red as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictu" && event.code === "KeyR"){
+                    letterCollection += "r";
+                    remained.textContent = "ed as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictur" && event.code === "KeyE"){
+                    letterCollection += "e";
+                    remained.textContent = "d as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Picture" && event.code === "KeyD"){
+                    letterCollection += "d";
+                    remained.textContent = " as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured" && event.code === "Space"){
+                    letterCollection += " ";
+                    remained.textContent = "as Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured " && event.code === "KeyA"){
+                    letterCollection += "a";
+                    remained.textContent = "s Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured a" && event.code === "KeyS"){
+                    letterCollection += "s";
+                    remained.textContent = " Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured as" && event.code === "Space"){
+                    letterCollection += " ";
+                    remained.textContent = "Perfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured as " && event.code === "KeyP"){
+                    letterCollection += "P";
+                    remained.textContent = "erfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured as P" && event.code === "KeyE"){
+                    letterCollection += "e";
+                    remained.textContent = "rfect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured as Pe" && event.code === "KeyR"){
+                    letterCollection += "r";
+                    remained.textContent = "fect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured as Per" && event.code === "KeyF"){
+                    letterCollection += "f";
+                    remained.textContent = "ect";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured as Perf" && event.code === "KeyE"){
+                    letterCollection += "e";
+                    remained.textContent = "ct";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured as Perfe" && event.code === "KeyC"){
+                    letterCollection += "c";
+                    remained.textContent = "t";
+                    letterContinuity = true;
+                }
+                if (letterCollection === "Pictured as Perfec" && event.code === "KeyT"){
+                    received.textContent += "t";
+                    remained.textContent = "";
+                    letterCollection = "Pictured as Perfected";
+                    letterContinuity = true;
+                    //document.cookie = "perfect=true; Max-Age=2419200";
+                    setTimeout(() => {
+                        alert("Perfect as Pictured.");
+                        //this is how you do it
+                        heartCnv.style.top = "-14px";
+                        heartCnv.style.left = "0px";
+                        sectorCnv.style.top = "-14px";
+                        sectorCnv.style.left = "0px";
+                        heartCnv.width = 980 * window.innerWidth / heartCnv.clientWidth;
+                        heartCnv.height = 980 * window.innerHeight / heartCnv.clientHeight;
+                        sectorCnv.width = 980 * window.innerWidth / sectorCnv.clientWidth;
+                        sectorCnv.height = 980 * window.innerHeight / sectorCnv.clientHeight;
+                        heartCnv.style.width = window.innerWidth + "px";
+                        heartCnv.style.height = window.innerHeight + "px";
+                        heartCtx.translate(heartCnv.width / 2, heartCnv.height / 2);
+                        heart();
+                        sectorCnv.style.width = window.innerWidth + "px";
+                        sectorCnv.style.height = window.innerHeight + "px";
+                        sectorCtx.translate(sectorCnv.width / 2, sectorCnv.height / 2);
+                        expLength = 700;
+                        //heartCtx.translate(heartCnv.style.width, heartCnv.style.height);
+                        //sectorCtx.translate(sectorCnv.style.width, sectorCnv.style.height);
+                        delta = 6;
+                        deltaInput.disabled = true;
+                        alerted = false;
+                        playStop();
+                        document.getElementById("heart").style.filter = "blur(1px)";
+                        document.getElementById("sectors").style.filter = "blur(1px)";
+                        document.getElementById("reminderArea").style.display = "none";
+                        document.getElementById("deltaDesc").textContent = "";
+                        buttonOne.disabled = true;
+                        buttonTwo.disabled = true;
+                        blurToggle.disabled = true;
+                        buttonOne.textContent = "It";
+                        buttonTwo.textContent = "was";
+                        blurToggle.textContent = "Perfect.";
+                        blurToggle.classList.add("toggledOn");
+                        timeInterval = setInterval(() => {
+                            expandSectors();
+                            outro();
+                        }, 100 / 3)
+                    }, 100 / 3)
+                    
+                }
+                if (letterContinuity && letterCollection !== "Pictured as Perfected"){
+                    received.textContent = letterCollection;
+                }
+                if (!letterContinuity){
+                    letterCollection = "";
+                    received.textContent = "";
+                    remained.textContent = "Pictured as Perfect";
+                    letterContinuity = true;
+                }
+            }
+        }
+
+        function revelence(){
+            hiddenFeatures.classList.add("hiddenFeature");
+            divEnd.appendChild(labelEnd);
+            hiddenFeatures.appendChild(divEnd);
+            divDuration.appendChild(labelDuration);
+            hiddenFeatures.appendChild(divDuration);
+            divDivision.appendChild(labelDivision);
+            hiddenFeatures.appendChild(divDivision);
+            labelEnd.textContent = "to ";
+            labelDuration.textContent = "in ";
+            labelDivision.textContent = "seconds with ";
+            labelDivisionSuffix.textContent = "sectors.";
+            amountReminder.textContent = "Notice: Naturally, if the amount of sectors increases, the calculation power required also rises.";
+            labelEnd.appendChild(endInput);
+            labelDuration.appendChild(durationInput);
+            labelDivision.appendChild(sectorAmountInput);
+            labelDivision.after(labelDivisionSuffix);
+            labelDivisionSuffix.setAttribute("for", "division")
+            endInput.setAttribute("type", "number");
+            endInput.setAttribute("id", "end");
+            endInput.setAttribute("placeholder", "24");
+            endInput.setAttribute("max", "2047");
+            endInput.setAttribute("value", "24");
+            durationInput.setAttribute("type", "number");
+            durationInput.setAttribute("id", "duration");
+            durationInput.setAttribute("placeholder", "10");
+            durationInput.setAttribute("max", "86400");
+            durationInput.setAttribute("value", "10");
+            sectorAmountInput.setAttribute("type", "number");
+            sectorAmountInput.setAttribute("id", "division");
+            sectorAmountInput.setAttribute("placeholder", "128");
+            sectorAmountInput.setAttribute("max", "576");
+            sectorAmountInput.setAttribute("value", "128");
+            amountReminder.setAttribute("id", "amountReminder");
+            amountReminder.classList.add("reminder");
+            deltaInput.after(hiddenFeatures);
+        }
+
+        function cycleCursor(){
+            if (flashOnNumber.includes(flashIndicator)){
+                flashCursor();
+            }
+            flashIndicator++;
+            if (flashIndicator === 192){
+                flashIndicator = 0;
+            }
+        }
+
+        function flashCursor(){
+            while (cursorType === formerCursorType){
+                cursorType = Math.floor(34 * Math.random());
+                switch (cursorType){
+                    case 0:
+                        linkToOriginal.style.cursor = "default";
+                        break;
+                    case 1:
+                        linkToOriginal.style.cursor = "context-menu";
+                        break;
+                    case 2:
+                        linkToOriginal.style.cursor = "help";
+                        break;
+                    case 3:
+                        linkToOriginal.style.cursor = "pointer";
+                        break;
+                    case 4:
+                        linkToOriginal.style.cursor = "progress";
+                        break;
+                    case 5:
+                        linkToOriginal.style.cursor = "wait";
+                        break;
+                    case 6:
+                        linkToOriginal.style.cursor = "cell";
+                        break;
+                    case 7:
+                        linkToOriginal.style.cursor = "crosshair";
+                        break;
+                    case 8:
+                        linkToOriginal.style.cursor = "text";
+                        break;
+                    case 9:
+                        linkToOriginal.style.cursor = "vertical-text";
+                        break;
+                    case 10:
+                        linkToOriginal.style.cursor = "alias";
+                        break;
+                    case 11:
+                        linkToOriginal.style.cursor = "copy";
+                        break;
+                    case 12:
+                        linkToOriginal.style.cursor = "move";
+                        break;
+                    case 13:
+                        linkToOriginal.style.cursor = "no-drop";
+                        break;
+                    case 14:
+                        linkToOriginal.style.cursor = "not-allowed";
+                        break;
+                    case 15:
+                        linkToOriginal.style.cursor = "grab";
+                        break;
+                    case 16:
+                        linkToOriginal.style.cursor = "grabbing";
+                        break;
+                    case 17:
+                        linkToOriginal.style.cursor = "all-scroll";
+                        break;
+                    case 18:
+                        linkToOriginal.style.cursor = "col-resize";
+                        break;
+                    case 19:
+                        linkToOriginal.style.cursor = "row-resize";
+                        break;
+                    case 20:
+                        linkToOriginal.style.cursor = "n-resize";
+                        break;
+                    case 21:
+                        linkToOriginal.style.cursor = "e-resize";
+                        break;
+                    case 22:
+                        linkToOriginal.style.cursor = "s-resize";
+                        break;
+                    case 23:
+                        linkToOriginal.style.cursor = "w-resize";
+                        break;
+                    case 24:
+                        linkToOriginal.style.cursor = "ne-resize";
+                        break;
+                    case 25:
+                        linkToOriginal.style.cursor = "nw-resize";
+                        break;
+                    case 26:
+                        linkToOriginal.style.cursor = "se-resize";
+                        break;
+                    case 27:
+                        linkToOriginal.style.cursor = "sw-resize";
+                        break;
+                    case 28:
+                        linkToOriginal.style.cursor = "ew-resize";
+                        break;
+                    case 29:
+                        linkToOriginal.style.cursor = "ns-resize";
+                        break;
+                    case 30:
+                        linkToOriginal.style.cursor = "nesw-resize";
+                        break;
+                    case 31:
+                        linkToOriginal.style.cursor = "nwse-resize";
+                        break;
+                    case 32:
+                        linkToOriginal.style.cursor = "zoom-in";
+                        break;
+                    case 33:
+                        linkToOriginal.style.cursor = "zoom-out";
+                        break;
+                    case 34:
+                        linkToOriginal.style.cursor = "none";
+                        break;
+                }
+            }
+            formerCursorType = cursorType;
+        }
+
+        document.getElementById("controlArea").addEventListener("click", () => {
+            if (blurToggle.classList.contains("toggledOn")){
+                document.getElementById("heart").style.filter = "blur(1.6px)";
+                document.getElementById("sectors").style.filter = "blur(1.6px)";
+            } else {
+                document.getElementById("heart").style.filter = "blur(0px)";
+                document.getElementById("sectors").style.filter = "blur(0px)";
+            }
+        })
+        blurToggle.addEventListener("click", () => {
+            if (!blurToggle.disabled){
+                blurToggle.classList.toggle("toggledOn");
+            }
+            if (blurToggle.classList.contains("toggledOn")){
+                blurToggle.textContent = "Blur: On";
+            } else {
+                blurToggle.textContent = "Blur: Off";
+            }
+        })
+
+        heart();
+        sectorCtx.fillStyle = "black";
+        sectorCtx.fillRect(-490, -490, 980, 980);
+        sectorCnv.style.left = (window.innerWidth - sectorCnv.clientWidth) / 2 + "px";
+        heartCnv.style.left = (window.innerWidth - heartCnv.clientWidth) / 2 + "px";
+        sectorCnv.style.top = "116px";
+        heartCnv.style.top = "116px";
+        /*if (document.cookie.split(";").some((e) => e.trim().startsWith("perfect="))){
+            hiddenFeaturesEnabled = true;
+            document.getElementById("deltaDesc").textContent = "From";
+            remained.textContent = "";
+            received.textContent = "Pictured as Perfect";
+            buttonOne.textContent = "Start";
+            buttonTwo.textContent = "Reset";
+            blurToggle.textContent = "Blur: On";
+            buttonTwo.disabled = true;
+            document.getElementById("friendlyReminder").textContent = "It is still recommended to visit the site using a MacBook.";
+            revelence();
+            document.getElementById("reminderArea").style.display = "block";
+            document.getElementById("amountReminder").style.display = "block";
+            document.querySelector(".hiddenFeature").style.display = "inline-block";
+        }*/
+        screen.orientation.addEventListener("change", () => {
+            sectorCnv.style.left = (window.innerWidth - sectorCnv.clientWidth) / 2 + "px";
+            heartCnv.style.left = (window.innerWidth - heartCnv.clientWidth) / 2 + "px";
+            sectorCnv.style.top = "116px";
+            heartCnv.style.top = "116px";
+        })
+        buttonOne.addEventListener("click", () => {
+            if (hiddenFeaturesEnabled){
+                phase1ButtonOnePress();
+            } else {
+                phase0ButtonOnePress();
+            }
+        });
+        buttonTwo.addEventListener("click", () => {
+            if (hiddenFeaturesEnabled){
+                if (!buttonTwo.disabled){
+                    playReset();
+                }
+            } else {
+                randomize();
+            }
+        });
+        ignoreButton.addEventListener("click", () => {
+            numberTooLow.close();
+            alerted = true;
+        });
+        concedeButton.addEventListener("click", deltaReset);
+        fineButton.addEventListener("click", deltaReset);
+        linkToOriginal.addEventListener("mouseenter", () => {
+            if (hiddenFeaturesEnabled){
+                flashIndicator = 0;
+                flashInterval = setInterval(cycleCursor, 52.63);
+            }
+        })
+        linkToOriginal.addEventListener("mouseleave", () => {
+            clearInterval(flashInterval);
+            flashInterval = null;
+        })
+
+        window.addEventListener("keydown", (f) => {
+            if (!document.cookie.split(";").some((e) => e.trim().startsWith("perfect="))){
+                accumulate(f);
+            }
+        });
+    </script>
+</html>

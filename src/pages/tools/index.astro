@@ -28,6 +28,12 @@ const tools = [
 		url: "/tools/jrrp/",
 		icon: "🔮",
 	},
+	{
+		title: "Pictured as Perfect",
+		desc: "Outro Generator",
+		url: "/tools/pap/",
+		icon: "💗",
+	},
 ];
 ---
 <MainGridLayout title="工具箱">
@@ -38,15 +44,19 @@ const tools = [
     {tools.map((t) =>
       t.fullWidth ? (
         <!-- 横幅卡片 -->
-        <div class="md:col-span-2 lg:col-span-3 card-base rounded-xl border border-base-300 dark:border-base-700 p-6">
-          <div class="flex items-center gap-4">
-            <span class="text-3xl">{t.icon}</span>
-            <div>
-              <h2 class="text-xl font-semibold text-base-content">{t.title}</h2>
-              <p class="mt-1 text-sm text-base-content/70">{t.desc}</p>
-            </div>
-          </div>
-        </div>
+		<div class="md:col-span-2 lg:col-span-3 card-base rounded-xl dark:border-base-700 p-6">
+		  <div class="flex items-center gap-4">
+			<span class="text-3xl">{t.icon}</span>
+			<div>
+			  <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+				{t.title}
+			  </h2>
+			  <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+				{t.desc}
+			  </p>
+			</div>
+		  </div>
+		</div>
       ) : (
         <!-- 普通卡片 -->
         <ToolCard {...t} />

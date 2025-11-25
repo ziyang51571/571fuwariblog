@@ -1,4 +1,4 @@
-<div class="card-base rounded-xl border border-base-300 p-6 text-center">
+<div class="card-base rounded-xl p-6 text-center text-gray-900 dark:text-gray-100">
   <h2 class="text-2xl font-bold mb-2">🔮今日人品✨</h2>
   <p class="text-base-content/70 mb-4">来测测今天的运势如何吧</p>
 
@@ -53,35 +53,58 @@ function rollNumber(el, target, duration, onFinish) {
 }
 
 function calcJRRP() {
-  const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+  const now = new Date();
+  const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  
+  const fingerprint = () => {
+    const { width, height } = screen;
+    const lang = navigator.language || 'en';
+    return `${width}x${height}x${lang}`; // 移除易变的 userAgent
+  };
+  
+  const storageKey = `jrrp_${date}_${fingerprint()}`;
+  const cached = localStorage.getItem(storageKey);
+  
+  if (cached) {
+    const { score, text } = JSON.parse(cached);
+    displayResult(score, text);
+    return;
+  }
+
   const seed = date + fingerprint();
   let h = 2166136261 >>> 0;
   for (let i = 0; i < seed.length; i++) {
     h ^= seed.charCodeAt(i);
-    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
+    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
   }
   const rand = sfc32(h, h, h, h);
-  const score = Math.floor(Math.pow(rand(),0.8) * 100) + 1;
+  const score = Math.floor(Math.pow(rand(), 0.8) * 100) + 1;
 
   const comments = [
     [90, 100, '欧 气 爆 棚'],
-    [60, 89,  '运 势 极 佳'],
-    [40, 59,  '平 平 无 奇'],
-    [20, 39,  '小 倒 霉 蛋'],
-    [1, 19,   '非 酋 本 酋']
+    [60, 89, '运 势 极 佳'],
+    [40, 59, '平 平 无 奇'],
+    [20, 39, '小 倒 霉 蛋'],
+    [1, 19, '非 酋 本 酋']
   ];
   const text = comments.find(c => score >= c[0] && score <= c[1])?.[2] || '未知';
-  
-  document.getElementById('jrrp-text').textContent = "‍";
 
+  localStorage.setItem(storageKey, JSON.stringify({ score, text }));
+  
+  displayResult(score, text);
+}
+
+// 分离显示逻辑
+function displayResult(score, text) {
+  document.getElementById('jrrp-text').textContent = "‍";
+  
   rollNumber(document.getElementById('jrrp-number'), score, 3000, () => {
-  const textEl = document.getElementById('jrrp-text');
+    const textEl = document.getElementById('jrrp-text');
     textEl.textContent = text;
     textEl.classList.remove('opacity-0');
   });
-
 }
 
 calcJRRP();
-document.getElementById('jrrp-again')?.addEventListener('click', calcJRRP);
 </script>

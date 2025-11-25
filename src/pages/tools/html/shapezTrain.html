@@ -15,13 +15,13 @@
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      border: 1px solid var(--base-300, #ddd); /* 主题色边框 */
+
     }
     .shapez-tool-container .main-container { flex: 1 }
     .shapez-tool-container .archive-container { width: 300px }
     .shapez-tool-container h1,
     .shapez-tool-container h2 {
-      color: var(--base-content, #333); /* 主题文字色 */
+
       text-align: center;
     }
     .shapez-tool-container .input-group { margin-bottom: 20px }
@@ -29,7 +29,7 @@
       display: inline-block;
       width: 150px;
       font-weight: bold;
-      color: var(--base-content, #555);
+      color: var(--base-content, #888);
     }
     .shapez-tool-container input[type="number"],
     .shapez-tool-container input[type="text"] {
@@ -39,7 +39,7 @@
       border-radius: 4px;
       font-size: 14px;
       background: var(--base-100, #fff); /* 输入框背景随主题 */
-      color: var(--base-content, #000);
+
     }
     .shapez-tool-container input[type="number"]:focus,
     .shapez-tool-container input[type="text"]:focus {
@@ -117,33 +117,34 @@
     }
     .shapez-tool-container .archive-item button:hover { background: #c82333 }
     .shapez-tool-container .archive-controls { margin-bottom: 20px }
+
   </style>
 
-  <div class="main-container">
+  <div class="main-container text-gray-900 dark:text-gray-100"">
     <h1 class="text-2xl font-bold">Shapez 2 车厢数量估算</h1>
     <h1 class="text-1xl font">计算结果不能保证准确!</h1>
     <p>‍ ‍</p>
-    <div class="input-group"><label for="fullLoadAmount">满带数量：</label><input type="number" id="fullLoadAmount" value="100" min="1"></div>
-    <div class="input-group"><label for="layers">启用层数：</label><input type="number" id="layers" value="1" min="1"></div>
-    <div class="input-group"><label for="distance">轨道距离：</label><input type="number" id="distance" value="10" min="1"></div>
-    <div class="input-group"><label for="turns">过弯次数：</label><input type="number" id="turns" value="0" min="0"></div>
+    <div class="input-group"><label for="fullLoadAmount">满带数量：</label><input type="number" id="fullLoadAmount" value="100" min="1" class="text-gray-900"></div>
+    <div class="input-group"><label for="layers">启用层数：</label><input type="number" id="layers" value="1" min="1" class="text-gray-900"></div>
+    <div class="input-group"><label for="distance">轨道距离：</label><input type="number" id="distance" value="10" min="1" class="text-gray-900"></div>
+    <div class="input-group"><label for="turns">过弯次数：</label><input type="number" id="turns" value="0" min="0" class="text-gray-900"></div>
     <div class="parameter-section">
       <h3>基础参数</h3>
-      <div class="input-group"><label for="fullLoadEfficiency">满带效率：</label><input type="number" id="fullLoadEfficiency" value="2" min="0.1" step="0.1"></div>
-      <div class="input-group"><label for="capacity">单盒容量系数：</label><input type="number" id="capacity" value="100" min="1" max="200">%</div>
-      <div class="input-group"><label for="speed">火车速度系数：</label><input type="number" id="speed" value="100" min="1" max="200">%</div>
-      <div class="input-group"><label for="operationTime">操作时间：</label><input type="number" id="operationTime" value="2" min="0.1" step="0.1"></div>
-      <div class="input-group"><label for="turnTime">过弯时间：</label><input type="number" id="turnTime" value="1.5" min="0" step="0.1"></div>
+      <div class="input-group"><label for="fullLoadEfficiency">满带效率：</label><input type="number" id="fullLoadEfficiency" value="2" min="0.1" step="0.1" class="text-gray-900"></div>
+      <div class="input-group"><label for="capacity">单盒容量系数：</label><input type="number" id="capacity" value="100" min="1" max="200" class="text-gray-900">%</div>
+      <div class="input-group"><label for="speed">火车速度系数：</label><input type="number" id="speed" value="100" min="1" max="200" class="text-gray-900">%</div>
+      <div class="input-group"><label for="operationTime">操作时间：</label><input type="number" id="operationTime" value="2" min="0.1" step="0.1" class="text-gray-900"></div>
+      <div class="input-group"><label for="turnTime">过弯时间：</label><input type="number" id="turnTime" value="1.5" min="0" step="0.1" class="text-gray-900"></div>
     </div>
     <button onclick="calculate()">计算最优车厢数量</button>
     <div id="result">请输入参数并点击计算</div>
     <div class="formula"><strong>公式：</strong>运输效率 = (车厢×层数×单盒) / ((距离×2+车厢×4)/速度 + 操作×2 + (过弯+2)×过弯时间)<br>单盒=180×容量%，速度=12×速度%，满带数量=满带效率×目标数量</div>
   </div>
 
-  <div class="archive-container">
+  <div class="archive-container text-gray-900 dark:text-gray-100">
     <h2>存档管理</h2>
     <div class="archive-controls"><input type="text" id="archiveName" placeholder="存档名称"><button onclick="saveArchive()">保存当前配置</button></div>
-    <div id="archiveList"><h3>存档列表</h3><div id="archiveItems"></div></div>
+    <div id="archiveList"><h3>存档列表</h3><div id="archiveItems" class="text-gray-900"></div></div>
   </div>
 </div>
 

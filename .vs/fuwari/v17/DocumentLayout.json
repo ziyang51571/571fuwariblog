@@ -3,44 +3,44 @@
   "WorkspaceRootPath": "D:\\fuwari\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\html\\jrrp.html||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\html\\jrrp.html||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\index.astro||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\index.astro||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\jrrp.astro||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\jrrp.astro||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\html\\shapezTrain.html||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\html\\shapezTrain.html||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\test.astro||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\test.astro||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\components\\ToolCard.astro||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ToolCard.astro||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\shapezTrain.astro||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\shapezTrain.astro||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF\\index.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF\\index.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\content\\spec\\about.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\content\\spec\\about.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\html\\shapezTrain.html||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\html\\shapezTrain.html||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\html\\test.html||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\html\\test.html||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\html\\jrrp.html||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\html\\jrrp.html||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\jrrp.astro||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\jrrp.astro||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\pages\\tools\\test.astro||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\tools\\test.astro||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\content\\spec\\about.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\content\\spec\\about.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\fuwari\\src\\layouts\\MainGridLayout.astro||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -54,84 +54,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "test.astro",
-              "DocumentMoniker": "D:\\fuwari\\src\\pages\\tools\\test.astro",
-              "RelativeDocumentMoniker": "src\\pages\\tools\\test.astro",
-              "ToolTip": "D:\\fuwari\\src\\pages\\tools\\test.astro",
-              "RelativeToolTip": "src\\pages\\tools\\test.astro",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAARAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-11-24T15:10:06.031Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "jrrp.astro",
               "DocumentMoniker": "D:\\fuwari\\src\\pages\\tools\\jrrp.astro",
               "RelativeDocumentMoniker": "src\\pages\\tools\\jrrp.astro",
               "ToolTip": "D:\\fuwari\\src\\pages\\tools\\jrrp.astro",
               "RelativeToolTip": "src\\pages\\tools\\jrrp.astro",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAwAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-11-24T15:09:27.06Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "jrrp.html",
               "DocumentMoniker": "D:\\fuwari\\src\\pages\\tools\\html\\jrrp.html",
               "RelativeDocumentMoniker": "src\\pages\\tools\\html\\jrrp.html",
               "ToolTip": "D:\\fuwari\\src\\pages\\tools\\html\\jrrp.html",
               "RelativeToolTip": "src\\pages\\tools\\html\\jrrp.html",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABEAAAAiAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-11-24T15:09:12.497Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "shapezTrain.astro",
               "DocumentMoniker": "D:\\fuwari\\src\\pages\\tools\\shapezTrain.astro",
               "RelativeDocumentMoniker": "src\\pages\\tools\\shapezTrain.astro",
               "ToolTip": "D:\\fuwari\\src\\pages\\tools\\shapezTrain.astro",
               "RelativeToolTip": "src\\pages\\tools\\shapezTrain.astro",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAARAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-11-24T15:07:23.512Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "index.md",
-              "DocumentMoniker": "D:\\fuwari\\src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF\\index.md",
-              "RelativeDocumentMoniker": "src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF\\index.md",
-              "ToolTip": "D:\\fuwari\\src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF\\index.md",
-              "RelativeToolTip": "src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF\\index.md",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAACMAAAAbAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-11-24T14:58:45.313Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "index.md",
               "DocumentMoniker": "D:\\fuwari\\src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md",
               "RelativeDocumentMoniker": "src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md",
               "ToolTip": "D:\\fuwari\\src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md",
               "RelativeToolTip": "src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABIAAAAGAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
               "WhenOpened": "2025-11-24T14:46:40.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ToolCard.astro",
+              "DocumentMoniker": "D:\\fuwari\\src\\components\\ToolCard.astro",
+              "RelativeDocumentMoniker": "src\\components\\ToolCard.astro",
+              "ToolTip": "D:\\fuwari\\src\\components\\ToolCard.astro",
+              "RelativeToolTip": "src\\components\\ToolCard.astro",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-25T04:27:03.855Z",
               "EditorCaption": ""
             },
             {
@@ -142,33 +129,33 @@
               "RelativeDocumentMoniker": "src\\pages\\tools\\index.astro",
               "ToolTip": "D:\\fuwari\\src\\pages\\tools\\index.astro",
               "RelativeToolTip": "src\\pages\\tools\\index.astro",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAVAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACAAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-11-23T18:11:38.536Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "about.md",
-              "DocumentMoniker": "D:\\fuwari\\src\\content\\spec\\about.md",
-              "RelativeDocumentMoniker": "src\\content\\spec\\about.md",
-              "ToolTip": "D:\\fuwari\\src\\content\\spec\\about.md",
-              "RelativeToolTip": "src\\content\\spec\\about.md",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-11-24T14:36:09.26Z",
+              "DocumentIndex": 5,
+              "Title": "test.html",
+              "DocumentMoniker": "D:\\fuwari\\src\\pages\\tools\\html\\test.html",
+              "RelativeDocumentMoniker": "src\\pages\\tools\\html\\test.html",
+              "ToolTip": "D:\\fuwari\\src\\pages\\tools\\html\\test.html",
+              "RelativeToolTip": "src\\pages\\tools\\html\\test.html",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAABFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-11-24T12:51:50.293Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "shapezTrain.html",
               "DocumentMoniker": "D:\\fuwari\\src\\pages\\tools\\html\\shapezTrain.html",
               "RelativeDocumentMoniker": "src\\pages\\tools\\html\\shapezTrain.html",
               "ToolTip": "D:\\fuwari\\src\\pages\\tools\\html\\shapezTrain.html",
               "RelativeToolTip": "src\\pages\\tools\\html\\shapezTrain.html",
-              "ViewState": "AQIAAHsAAAAAAAAAAAAAAHoAAAAyAAAA",
+              "ViewState": "AQIAAHIAAAAAAAAAAAAAAIgAAACZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-11-24T12:52:02.194Z",
               "EditorCaption": ""
@@ -176,15 +163,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "test.html",
-              "DocumentMoniker": "D:\\fuwari\\src\\pages\\tools\\html\\test.html",
-              "RelativeDocumentMoniker": "src\\pages\\tools\\html\\test.html",
-              "ToolTip": "D:\\fuwari\\src\\pages\\tools\\html\\test.html",
-              "RelativeToolTip": "src\\pages\\tools\\html\\test.html",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAABLAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-11-24T12:51:50.293Z",
-              "EditorCaption": ""
+              "Title": "about.md",
+              "DocumentMoniker": "D:\\fuwari\\src\\content\\spec\\about.md",
+              "RelativeDocumentMoniker": "src\\content\\spec\\about.md",
+              "ToolTip": "D:\\fuwari\\src\\content\\spec\\about.md",
+              "RelativeToolTip": "src\\content\\spec\\about.md",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-11-24T14:36:09.26Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "test.astro",
+              "DocumentMoniker": "D:\\fuwari\\src\\pages\\tools\\test.astro",
+              "RelativeDocumentMoniker": "src\\pages\\tools\\test.astro",
+              "ToolTip": "D:\\fuwari\\src\\pages\\tools\\test.astro",
+              "RelativeToolTip": "src\\pages\\tools\\test.astro",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-24T15:10:06.031Z"
             },
             {
               "$type": "Document",
@@ -196,8 +194,7 @@
               "RelativeToolTip": "src\\layouts\\MainGridLayout.astro",
               "ViewState": "AQIAAGgAAAAAAAAAAAAqwHIAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-11-24T12:41:50.518Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-24T12:41:50.518Z"
             }
           ]
         }
