@@ -4,7 +4,7 @@ published: 2025-11-23
 description: "现在可以通过ziyang.site来访问本站啦！以及，发现了fuwari中一个与默认主题色相关的漏洞"
 image: "./cover.png"
 tags: ["记录", "漏洞"]
-category: 杂项
+category: 更新
 draft: false
 ---
 > [うえのみぎ](https://www.pixiv.net/users/37886530)老师绘制的插图，详见[Pixiv](https://www.pixiv.net/artworks/121356693)

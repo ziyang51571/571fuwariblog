@@ -79,14 +79,15 @@ function calcJRRP() {
     h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
   }
   const rand = sfc32(h, h, h, h);
-  const score = Math.floor(Math.pow(rand(), 0.8) * 100) + 1;
+  const score = Math.floor(Math.pow(rand(), 0.85) * 100) + 1;
 
   const comments = [
-    [90, 100, '欧 气 爆 棚'],
-    [60, 89, '运 势 极 佳'],
-    [40, 59, '平 平 无 奇'],
-    [20, 39, '小 倒 霉 蛋'],
-    [1, 19, '非 酋 本 酋']
+    [90, 100, '我草，欧皇降临'],
+    [80, 89, '运势极佳'],
+    [60, 79, '小有好运'],
+    [40, 59, '运途平稳'],
+    [20, 39, '火候未足'],
+    [1, 19, '小倒霉蛋']
   ];
   const text = comments.find(c => score >= c[0] && score <= c[1])?.[2] || '未知';
 

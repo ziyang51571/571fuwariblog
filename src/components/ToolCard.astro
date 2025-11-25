@@ -4,16 +4,48 @@ export interface Props {
 	desc: string;
 	url: string;
 	icon?: string;
+	isEasterEgg?: boolean;
+	realUrl?: string;
+	realTitle?: string;
+	realDesc?: string;
+	realIcon?: string;
 }
 
-const { title, desc, url, icon = "🛠️" } = Astro.props; //嘿嘿
+const { 
+  title, 
+  desc, 
+  url, 
+  icon = "🛠️",
+  isEasterEgg = false,
+  realUrl = "/tools/secret-tool/",
+  realTitle = "神秘工具",
+  realDesc = "已解锁的隐藏功能",
+  realIcon = "🔧"
+} = Astro.props;
+
+// 生成唯一ID
+const cardId = `tool-card-${title.replace(/\s+/g, '-').toLowerCase()}`;
 ---
 
 <a
+  id={cardId}
   href={url}
-  class="block rounded-xl border border-gray-200 dark:border-gray-700
-         bg-white dark:bg-gray-800 p-6 shadow hover:shadow-lg
-         transition-shadow duration-200"
+  class:list={[
+    "block rounded-xl card-base p-6 shadow hover:shadow-lg transition-shadow duration-200",
+    isEasterEgg && "easter-egg-card",
+    isEasterEgg && "animate-pulse opacity-50"
+  ]}
+  {...(isEasterEgg && {
+    "data-is-easter-egg": "true",
+    "data-locked-url": url,
+    "data-real-url": realUrl,
+    "data-icon": icon,
+    "data-real-icon": realIcon,
+    "data-title": title,
+    "data-real-title": realTitle,
+    "data-desc": desc,
+    "data-real-desc": realDesc,
+  })}
 >
   <div class="flex items-center gap-4">
     <span class="text-3xl">{icon}</span>

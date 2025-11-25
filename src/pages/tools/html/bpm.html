@@ -1,0 +1,146 @@
+<div class="card-base rounded-xl p-6 text-center text-gray-900 dark:text-gray-100">
+  <h2 class="text-2xl font-bold mb-2">🎵 BPM测量工具</h2>
+  <br>
+  <p class="text-base-content/70 mb-4">连续点击<strong>按钮</strong>或<strong>空格键</strong>以获取BPM</p>
+  <div id="bpm-display" class="text-1xl text-primary my-4">
+    <span class="text-1xl text-base-content/70 mb-4">三秒内无输入时重置</span><br><br>
+    <span id="bpm-number">---</span><br>
+    <span id="bpm-integer" class="text-4xl font-bold text-primary my-4">---</span>
+  </div>
+  <br>
+  <div class="mb-4">
+    <button id="tap-button" 
+        class="relative px-8 py-4 text-xl font-bold 
+               bg-primary/10 text-primary 
+               border-2 border-gray-400
+               rounded-lg
+               transition-all duration-100
+               active:scale-95
+            ">
+      ♪(´◹ ` )
+    </button>
+  </div>
+  <div class="mt-4 text-xs text-base-content/60">
+    <span id="tap-count">0</span> 次点击 | 最后点击: <span id="last-tap">--</span>秒前
+  </div>
+</div>
+
+<script>
+
+class BPMDetector {
+  constructor() {
+    this.taps = [];
+    this.resetTimeout = 3571;
+    this.resetTimer = null;
+    
+    this.init();
+  }
+  
+  init() {
+    this.setupEventListeners();
+    this.updateDisplay();
+  }
+  
+  setupEventListeners() {
+    const tapButton = document.getElementById('tap-button');
+    
+    // 点击事件
+    tapButton.addEventListener('click', () => this.handleTap());
+    
+    // 键盘事件
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        this.handleTap();
+      }
+    });
+  }
+  
+  handleTap() {
+    const now = Date.now();
+    
+    // 清除重置计时器
+    if (this.resetTimer) {
+      clearTimeout(this.resetTimer);
+    }
+    
+    // 添加新的点击时间
+    this.taps.push(now);
+    
+    
+    // 设置重置计时器
+    this.resetTimer = setTimeout(() => {
+      this.reset();
+    }, this.resetTimeout);
+    
+    this.calculateBPM();
+    this.updateDisplay();
+  }
+  
+  calculateBPM() {
+    if (this.taps.length < 1) return;
+    if (this.taps.length == 1) {this.displayBPM("---", "---"); return;}
+    // 计算间隔时间
+    const intervals = [];
+    for (let i = 1; i < this.taps.length; i++) {
+      intervals.push(this.taps[i] - this.taps[i-1]);
+    }
+    
+    // 移除异常值（使用IQR方法）
+    intervals.sort((a, b) => a - b);
+    const q1 = intervals[Math.floor(intervals.length * 0.25)];
+    const q3 = intervals[Math.floor(intervals.length * 0.75)];
+    const iqr = q3 - q1;
+    const lowerBound = q1 - 1.5 * iqr;
+    const upperBound = q3 + 1.5 * iqr;
+    
+    const filteredIntervals = intervals.filter(interval => 
+      interval >= lowerBound && interval <= upperBound
+    );
+    
+    if (filteredIntervals.length === 0) return;
+    
+    // 计算平均间隔
+    const avgInterval = filteredIntervals.reduce((a, b) => a + b, 0) / filteredIntervals.length;
+    
+    // 转换为BPM
+    const bpm = (60000 / avgInterval).toFixed(2);
+    const intBpm = Math.round(60000 / avgInterval);
+
+    this.displayBPM(bpm, intBpm);
+  }
+  
+  displayBPM(bpm, intBpm) {
+    const bpmNumber = document.getElementById('bpm-number');
+    const bpmNumberInteger = document.getElementById('bpm-integer');
+    
+    // 更新BPM数字
+    bpmNumber.textContent = bpm;
+    bpmNumberInteger.textContent = intBpm;
+  }
+  
+ 
+  updateDisplay() {
+    const tapCount = document.getElementById('tap-count');
+    const lastTap = document.getElementById('last-tap');
+    
+    tapCount.textContent = this.taps.length;
+    
+    if (this.taps.length > 0) {
+      const secondsAgo = Math.floor((Date.now() - this.taps[this.taps.length - 1]) / 1000);
+      lastTap.textContent = secondsAgo;
+    }
+    
+    // 更新最后点击时间
+    requestAnimationFrame(() => this.updateDisplay());
+  }
+  
+  reset() {
+    this.taps = [];
+    document.getElementById('bpm-status').textContent = '等待输入...';
+    document.getElementById('bpm-status').classList.add('opacity-0');
+  }
+}
+
+new BPMDetector();
+</script>

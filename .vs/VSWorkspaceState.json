@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\components",
     "\\src\\content",
     "\\src\\content\\posts",
     "\\src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF",
     "\\src\\content\\spec",
+    "\\src\\layouts",
     "\\src\\pages",
     "\\src\\pages\\tools",
     "\\src\\pages\\tools\\html"
   ],
-  "SelectedNode": "\\src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF\\index.md",
+  "SelectedNode": "\\src\\layouts\\MainGridLayout.astro",
   "PreviewInSolutionExplorer": false
 }

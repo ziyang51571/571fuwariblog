@@ -22,6 +22,6 @@ draft: false
 
 `251125` 修复了工具箱卡片不适配暗色模式；
 
-`251125` 添加了由[Dodddsqa](https://space.bilibili.com/3546893917358324)制作的**Pictured as Perfect Outro Generator**；:spoiler[*我喜欢你><*]
+`251125` 添加了**‍???** by [Dodddsqa](https://space.bilibili.com/3546893917358324)；:spoiler[*我喜欢你><*]
 
-
+`251125` 添加了**BPM测量工具**;

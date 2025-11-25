@@ -28,39 +28,58 @@ const tools = [
 		url: "/tools/jrrp/",
 		icon: "🔮",
 	},
+	{ 
+		title: "???", 
+		desc: "线索丢失", 
+		url: "#",
+		icon: "❓",
+		
+		isEasterEgg: true,
+
+		realTitle: "Pictured as Perfect",
+		realDesc: "Outro Generator",
+		realUrl: "/tools/pap/",
+		realIcon: "💗"
+    },
 	{
-		title: "Pictured as Perfect",
-		desc: "Outro Generator",
-		url: "/tools/pap/",
-		icon: "💗",
+		title: "BPM测量工具",
+		desc: "手动敲击 自动计算",
+		url: "/tools/bpm/",
+		icon: "🎵",
 	},
 ];
+
+
+
 ---
+
+
 <MainGridLayout title="工具箱">
   <div slot="top" class="mb-8">
+    <h1 class="text-3xl font-bold">571の神秘工具箱</h1>
   </div>
 
-  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-    {tools.map((t) =>
-      t.fullWidth ? (
-        <!-- 横幅卡片 -->
-		<div class="md:col-span-2 lg:col-span-3 card-base rounded-xl dark:border-base-700 p-6">
-		  <div class="flex items-center gap-4">
-			<span class="text-3xl">{t.icon}</span>
-			<div>
-			  <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-				{t.title}
-			  </h2>
-			  <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-				{t.desc}
-			  </p>
-			</div>
-		  </div>
-		</div>
-      ) : (
-        <!-- 普通卡片 -->
-        <ToolCard {...t} />
-      )
-    )}
+  <!-- 工具网格容器 -->
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" id="tools-grid">
+    {tools.map((t, index) => {
+      // 处理横幅卡片：占满整行的大卡片
+      if (t.fullWidth) {
+        return (
+          <div class="md:col-span-2 lg:col-span-3 card-base rounded-xl p-6">
+            <div class="flex items-center gap-4">
+              <span class="text-3xl">{t.icon}</span>
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{t.title}</h2>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{t.desc}</p>
+              </div>
+            </div>
+          </div>
+        );
+      }
+      
+      // 处理普通工具和彩蛋卡片
+      // 彩蛋卡片的 isEasterEgg=true 会触发特殊渲染逻辑
+      return <ToolCard {...t} />;
+    })}
   </div>
 </MainGridLayout>
