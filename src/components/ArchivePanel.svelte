@@ -7,7 +7,7 @@ import { getPostUrlBySlug } from "../utils/url-utils";
 
 export let tags: string[];
 export let categories: string[];
-export let sortedPosts: Post[] = [];
+export const sortedPosts: Post[] = [];
 
 const params = new URLSearchParams(window.location.search);
 tags = params.has("tag") ? params.getAll("tag") : [];
