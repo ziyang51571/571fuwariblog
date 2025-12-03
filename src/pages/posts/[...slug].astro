@@ -127,30 +127,31 @@ const jsonLd = {
 
 			<script is:inline>
 			(function () {
-			  const giscus = document.querySelector('script[src*="giscus.app"]');
-			  if (!giscus) return;
-			  function sendTheme() {
-			    const isDark = document.documentElement.classList.contains('dark');
-			    const theme = isDark ? 'noborder_dark' : 'noborder_light';
-
+			  const sendTheme = () => {
 			    const iframe = document.querySelector('iframe.giscus-frame');
-			    if (iframe?.contentWindow) {
-			      iframe.contentWindow.postMessage(
-			        { giscus: { setConfig: { theme } } },
-			        'https://giscus.app'
-			      );
-			    }
-			  }
-			  sendTheme();
-			  const observer = new MutationObserver(sendTheme);
-			  observer.observe(document.documentElement, {
+			    if (!iframe) return;
+			    const isDark = document.documentElement.classList.contains('dark');
+			    iframe.contentWindow?.postMessage(
+			      { giscus: { setConfig: { theme: isDark ? 'dark' : 'light' } } },
+			      'https://giscus.app'
+			    );
+			  };
+			  const htmlObserver = new MutationObserver(sendTheme);
+			  htmlObserver.observe(document.documentElement, {
 			    attributes: true,
 			    attributeFilter: ['class']
 			  });
-			  if (window.swup) {
-			    window.addEventListener('swup:contentReplaced', () => {
-			      setTimeout(sendTheme, 100);
-			    });
+			  const bodyObserver = new MutationObserver(() => {
+			    setTimeout(sendTheme, 0);
+			  });
+			  bodyObserver.observe(document.body, { childList: true, subtree: true });
+			  window.addEventListener('storage', (e) => {
+			    if (e.key === 'theme') sendTheme();
+			  });
+			  if (document.readyState === 'loading') {
+			    document.addEventListener('DOMContentLoaded', sendTheme);
+			  } else {
+			    sendTheme();
 			  }
 			})();
 			</script>
