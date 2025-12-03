@@ -1,3 +1,5 @@
+> This repository is based on [Fuwari](https://github.com/saicaca/fuwari) by [saicaca](https://github.com/saicaca).
+
 # 🍥Fuwari  
 ![Node.js >= 20](https://img.shields.io/badge/node.js-%3E%3D20-brightgreen) 
 ![pnpm >= 9](https://img.shields.io/badge/pnpm-%3E%3D9-blue) 
