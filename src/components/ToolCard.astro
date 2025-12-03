@@ -11,19 +11,19 @@ export interface Props {
 	realIcon?: string;
 }
 
-const { 
-  title, 
-  desc, 
-  url, 
-  icon = "🛠️",
-  isEasterEgg = false,
-  realUrl = "/tools/secret-tool/",
-  realTitle = "神秘工具",
-  realDesc = "解锁",
-  realIcon = "🔧"
+const {
+	title,
+	desc,
+	url,
+	icon = "🛠️",
+	isEasterEgg = false,
+	realUrl = "/tools/secret-tool/",
+	realTitle = "神秘工具",
+	realDesc = "解锁",
+	realIcon = "🔧",
 } = Astro.props;
 
-const cardId = `tool-card-${title.replace(/\s+/g, '-').toLowerCase()}`;
+const cardId = `tool-card-${title.replace(/\s+/g, "-").toLowerCase()}`;
 ---
 
 <a

@@ -1,6 +1,6 @@
 <div class="card-base rounded-xl p-6 text-gray-900 dark:text-gray-100">
   <h2 class="text-xl font-bold mb-4">测试工具</h2>
-  <p class="text-base-content/70">可以在下方输入文本，没有任何作用，<em>除非表现得完美无瑕...</em></p>
+  <p class="text-base-content/70">可以在下方输入文本，没有任何作用<em>...吗？</em></p>
 
   <input id="txt" class="input input-bordered w-full mt-4" placeholder="轻触以键入文本...">
 </div>
@@ -9,12 +9,10 @@
 const UNLOCK_CODE = "Pictured as Perfect";
 const RESET_CODE = "Therefore never perfect";
 // <em>　　　除非是她的无瑕妙笔...</em>
-
-/** 绑定解锁/重置逻辑（可重复调用） */
 function bindUnlock() {
   const input = document.getElementById('txt');
   if (!input) return;
-  input.removeEventListener('input', handleUnlock); // 防重复
+  input.removeEventListener('input', handleUnlock);
   input.addEventListener('input', handleUnlock);
 }
 
@@ -31,10 +29,8 @@ function handleUnlock(e) {
   }
 }
 
-// 首次绑定
 bindUnlock();
 
-// Swup 导航回来后重新绑定
 if (window.swup) {
   window.addEventListener('swup:contentReplaced', bindUnlock);
 }

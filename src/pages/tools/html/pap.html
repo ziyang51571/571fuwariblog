@@ -247,16 +247,16 @@
         const p6 = {x: 0, y: -106};
         const flashOnNumber = [0, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 93, 94, 95, 96, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 148, 150, 152, 154, 156, 158, 162, 164, 166, 168, 174, 180, 184, 188];
 
-        let sectorCnv = document.getElementById("sectors");
-        let sectorCtx = sectorCnv.getContext("2d");
-        let heartCnv = document.getElementById("heart");
-        let heartCtx = heartCnv.getContext("2d");
+        const sectorCnv = document.getElementById("sectors");
+        const sectorCtx = sectorCnv.getContext("2d");
+        const heartCnv = document.getElementById("heart");
+        const heartCtx = heartCnv.getContext("2d");
 
-        let buttonOne = document.getElementById("buttonOne");
-        let buttonTwo = document.getElementById("buttonTwo");
-        let ignoreButton = document.getElementById("alertAnulled");
-        let concedeButton = document.getElementById("deltaReset");
-        let fineButton = document.getElementById("tooHigh");
+        const buttonOne = document.getElementById("buttonOne");
+        const buttonTwo = document.getElementById("buttonTwo");
+        const ignoreButton = document.getElementById("alertAnulled");
+        const concedeButton = document.getElementById("deltaReset");
+        const fineButton = document.getElementById("tooHigh");
 
         const numberTooLow = document.getElementById("numberTooLow");
         const numberTooHigh = document.getElementById("numberTooHigh");
@@ -269,7 +269,7 @@
         const lore = document.getElementById("lore");
 
         let length = 0;
-        let expLength = 0;
+        let _expLength = 0;
         let colors;
         let delta = 10;
         let start = 10;
@@ -282,20 +282,20 @@
         let letterCollection = "";
         let flashIndicator = 0;
         let yScaler = 1;
-        let transitionScale = 1;
+        const _transitionScale = 1;
 
-        let endInput = document.createElement("input");
-        let durationInput = document.createElement("input");
-        let sectorAmountInput = document.createElement("input");
-        let amountReminder = document.createElement("p");
-        let hiddenFeatures = document.createElement("div");
-        let labelEnd = document.createElement("label");
-        let labelDuration = document.createElement("label");
-        let labelDivision = document.createElement("label");
-        let labelDivisionSuffix = document.createElement("label");
-        let divEnd = document.createElement("div");
-        let divDuration = document.createElement("div");
-        let divDivision = document.createElement("div");
+        const endInput = document.createElement("input");
+        const durationInput = document.createElement("input");
+        const sectorAmountInput = document.createElement("input");
+        const amountReminder = document.createElement("p");
+        const hiddenFeatures = document.createElement("div");
+        const labelEnd = document.createElement("label");
+        const labelDuration = document.createElement("label");
+        const labelDivision = document.createElement("label");
+        const labelDivisionSuffix = document.createElement("label");
+        const divEnd = document.createElement("div");
+        const divDuration = document.createElement("div");
+        const divDivision = document.createElement("div");
 
         let cursorType;
         let formerCursorType;
@@ -330,6 +330,20 @@
             heartCtx.fill();
             */
         }
+        function expandSectors(){
+            sectorCtx.clearRect(-heartCnv.width / 2, -heartCnv.height / 2, heartCnv.width, heartCnv.height);
+
+            length = delta * Math.floor(100 / delta);
+            sectorCtx.lineWidth = 1;
+
+            for (let layers = 0; layers <= 79; layers++){
+                for (let sector = 0; sector <= sectorAmount - 1; sector++){
+                    sectorDrawing(sector);
+                };
+                length += delta;
+            }
+        }
+
 
         function sectors(){
             sectorCtx.clearRect(-heartCnv.width / 2, -heartCnv.height / 2, heartCnv.width, heartCnv.height);
@@ -352,26 +366,14 @@
             }
         }
 
-        function expandSectors(){
-            sectorCtx.clearRect(-heartCnv.width / 2, -heartCnv.height / 2, heartCnv.width, heartCnv.height);
-
-            length = delta * Math.floor(100 / delta);
-            sectorCtx.lineWidth = 1;
-
-            for (let layers = 0; layers <= 79; layers++){
-                for (let sector = 0; sector <= sectorAmount - 1; sector++){
-                    sectorDrawing(sector);
-                };
-                length += delta;
-            }
-        }
+        
 
         function sectorDrawing(sector){
             colors = Math.floor(3 * Math.random());
             sectorCtx.beginPath();
-            sectorCtx.ellipse(0, 0, length, Math.pow(yScaler, 3) * length, 0, 2 * sector / sectorAmount * Math.PI, (sector + 1) / sectorAmount * 2 * Math.PI);
-            sectorCtx.lineTo((length + delta) * Math.cos((sector + 1) / sectorAmount * 2 * Math.PI), Math.pow(yScaler, 3) * (length + delta) * Math.sin((sector + 1) / sectorAmount * 2 * Math.PI));
-            sectorCtx.ellipse(0, 0, length + delta, Math.pow(yScaler, 3) * (length + delta), 0, (sector + 1) / sectorAmount * 2 * Math.PI, 2 * sector / sectorAmount * Math.PI, true);
+            sectorCtx.ellipse(0, 0, length, yScaler ** 3 * length, 0, 2 * sector / sectorAmount * Math.PI, (sector + 1) / sectorAmount * 2 * Math.PI);
+            sectorCtx.lineTo((length + delta) * Math.cos((sector + 1) / sectorAmount * 2 * Math.PI), yScaler ** 3 * (length + delta) * Math.sin((sector + 1) / sectorAmount * 2 * Math.PI));
+            sectorCtx.ellipse(0, 0, length + delta, yScaler ** 3 * (length + delta), 0, (sector + 1) / sectorAmount * 2 * Math.PI, 2 * sector / sectorAmount * Math.PI, true);
             sectorCtx.closePath();
 
             switch(colors){
@@ -388,17 +390,15 @@
                     sectorCtx.strokeStyle = "#ff26ff";
                     break;
             }
-            sectorCtx.save();
             sectorCtx.fill();
-            sectorCtx.restore();
             sectorCtx.stroke();
         }
 
         function outro(){
-            if (delta < 23.95){
+            if (delta < 23.95){ 
                 delta += 0.06;
                 deltaInput.value = Math.round(100 * delta) / 100;
-                expLength += 7;
+                _expLength += 7;
             } else if (yScaler > 0.05){
                 lore.style.visibility = "hidden";
                 oriLinkWrapper.style.visibility = "hidden";
@@ -421,8 +421,8 @@
                     sectorCnv.height = 980;
                     sectorCnv.style.width = "600px";
                     sectorCnv.style.height = "600px";
-                    heartCnv.style.left = (window.innerWidth - heartCnv.clientWidth) / 2 + "px";
-                    sectorCnv.style.left = (window.innerWidth - sectorCnv.clientWidth) / 2 + "px";
+                    heartCnv.style.left = `${(window.innerWidth - heartCnv.clientWidth) / 2}px`;
+                    sectorCnv.style.left = `${(window.innerWidth - sectorCnv.clientWidth) / 2}px`;
                     heartCnv.style.top = "116px";
                     sectorCnv.style.top = "116px";
                     heartCtx.translate(490, 490);
@@ -466,7 +466,7 @@
             }
         }
 
-        function buttonTest(){
+        function _buttonTest(){
             alert("A button is pressed!");
         }
 
@@ -703,14 +703,14 @@
                         heartCnv.height = 980 * window.innerHeight / heartCnv.clientHeight;
                         sectorCnv.width = 980 * window.innerWidth / sectorCnv.clientWidth;
                         sectorCnv.height = 980 * window.innerHeight / sectorCnv.clientHeight;
-                        heartCnv.style.width = window.innerWidth + "px";
-                        heartCnv.style.height = window.innerHeight + "px";
+                        heartCnv.style.width = `${window.innerWidth}px`;
+                        heartCnv.style.height = `${window.innerHeight}px`;
                         heartCtx.translate(heartCnv.width / 2, heartCnv.height / 2);
                         heart();
-                        sectorCnv.style.width = window.innerWidth + "px";
-                        sectorCnv.style.height = window.innerHeight + "px";
+                        sectorCnv.style.width = `${window.innerWidth}px`;
+                        sectorCnv.style.height = `${window.innerHeight}px`;
                         sectorCtx.translate(sectorCnv.width / 2, sectorCnv.height / 2);
-                        expLength = 700;
+                        _expLength = 700;
                         //heartCtx.translate(heartCnv.style.width, heartCnv.style.height);
                         //sectorCtx.translate(sectorCnv.style.width, sectorCnv.style.height);
                         delta = 6;
@@ -932,8 +932,8 @@
         heart();
         sectorCtx.fillStyle = "black";
         sectorCtx.fillRect(-490, -490, 980, 980);
-        sectorCnv.style.left = (window.innerWidth - sectorCnv.clientWidth) / 2 + "px";
-        heartCnv.style.left = (window.innerWidth - heartCnv.clientWidth) / 2 + "px";
+        sectorCnv.style.left = `${(window.innerWidth - sectorCnv.clientWidth) / 2}px`;
+        heartCnv.style.left = `${(window.innerWidth - heartCnv.clientWidth) / 2}px`;
         sectorCnv.style.top = "116px";
         heartCnv.style.top = "116px";
         /*if (document.cookie.split(";").some((e) => e.trim().startsWith("perfect="))){
@@ -952,8 +952,8 @@
             document.querySelector(".hiddenFeature").style.display = "inline-block";
         }*/
         screen.orientation.addEventListener("change", () => {
-            sectorCnv.style.left = (window.innerWidth - sectorCnv.clientWidth) / 2 + "px";
-            heartCnv.style.left = (window.innerWidth - heartCnv.clientWidth) / 2 + "px";
+            sectorCnv.style.left = `${(window.innerWidth - sectorCnv.clientWidth) / 2}px`;
+            heartCnv.style.left = `${(window.innerWidth - heartCnv.clientWidth) / 2}px`;
             sectorCnv.style.top = "116px";
             heartCnv.style.top = "116px";
         })

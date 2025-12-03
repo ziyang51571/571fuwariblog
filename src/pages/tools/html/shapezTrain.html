@@ -5,13 +5,13 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
-      background: transparent; /* 改透明，让外层主题背景露出来 */
+      background: transparent;
       display: flex;
       gap: 20px;
     }
     .shapez-tool-container .main-container,
     .shapez-tool-container .archive-container {
-      background: var(--card-bg, #fff); /* 用主题变量，没有就回退白色 */
+      background: var(--card-bg, #fff);
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -38,7 +38,7 @@
       border: 1px solid var(--base-300, #ddd);
       border-radius: 4px;
       font-size: 14px;
-      background: var(--base-100, #fff); /* 输入框背景随主题 */
+      background: var(--base-100, #fff);
 
     }
     .shapez-tool-container input[type="number"]:focus,
@@ -149,22 +149,18 @@
 </div>
 
 <script>
-// ===== 本地存储键名 =====
 const PARAMS_KEY = 'trainCalculator_params';
 const ARCHIVES_KEY = 'trainCalculator_archives';
 
-// ===== 初始加载 =====
 window.addEventListener('DOMContentLoaded', () => {
   loadParams();
   loadArchives();
   calculate();
-  // 参数变化时重新计算并高亮
   document.querySelectorAll('#fullLoadEfficiency,#capacity,#speed,#operationTime,#turnTime').forEach(el => {
     el.addEventListener('change', () => { saveParams(); recalcAllArchives(); });
   });
 });
 
-// ===== 参数读写 =====
 function loadParams() {
   const p = JSON.parse(localStorage.getItem(PARAMS_KEY) || '{}');
   Object.entries({
@@ -177,15 +173,10 @@ function saveParams() {
   localStorage.setItem(PARAMS_KEY, JSON.stringify(payload));
 }
 
-// ===== 存档读写 =====
 let archives = [];
-function initApp() {
-  // 1. 加载存档
+function _initApp() {
   loadArchives();
-  
-  // 2. 重新绑定事件（Swup 会清除旧监听器）
   document.getElementById('saveBtn')?.addEventListener('click', saveArchive);
-  // 其他按钮/事件也在这里重新绑定
 }
 function loadArchives() {
   archives = JSON.parse(localStorage.getItem(ARCHIVES_KEY) || '[]');
@@ -197,7 +188,7 @@ function saveArchive() {
   const payload = {
     name,
     id: Date.now(),
-    data: {   // 只保存非参数数据
+    data: {
       fullLoadAmount: document.getElementById('fullLoadAmount').value,
       layers: document.getElementById('layers').value,
       distance: document.getElementById('distance').value,
@@ -209,7 +200,7 @@ function saveArchive() {
   document.getElementById('archiveName').value = '';
   renderArchives();
 }
-function deleteArchive(id, ev) {
+function _deleteArchive(id, ev) {
   ev.stopPropagation();
   if (!confirm('删除此存档？')) return;
   archives = archives.filter(a => a.id !== id);
@@ -225,17 +216,16 @@ function loadArchive(id) {
   calculate();
 }
 
-// ===== 计算核心 =====
 function calcCars(data) {
-  const fullLoadAmount = parseFloat(data.fullLoadAmount);
-  const layers = parseInt(data.layers);
-  const distance = parseInt(data.distance);
-  const turns = parseInt(data.turns);
-  const fullLoadEfficiency = parseFloat(document.getElementById('fullLoadEfficiency').value);
-  const capacity = 180 * (parseFloat(document.getElementById('capacity').value) / 100);
-  const speed = 12 * (parseFloat(document.getElementById('speed').value) / 100);
-  const operationTime = parseFloat(document.getElementById('operationTime').value);
-  const turnTime = parseFloat(document.getElementById('turnTime').value);
+  const fullLoadAmount = Number.parseFloat(data.fullLoadAmount);
+  const layers = Number.parseInt(data.layers, 10);
+  const distance = Number.parseInt(data.distance, 10);
+  const turns = Number.parseInt(data.turns, 10);
+  const fullLoadEfficiency = Number.parseFloat(document.getElementById('fullLoadEfficiency').value);
+  const capacity = 180 * (Number.parseFloat(document.getElementById('capacity').value) / 100);
+  const speed = 12 * (Number.parseFloat(document.getElementById('speed').value) / 100);
+  const operationTime = Number.parseFloat(document.getElementById('operationTime').value);
+  const turnTime = Number.parseFloat(document.getElementById('turnTime').value);
 
   const target = fullLoadAmount * fullLoadEfficiency;
   for (let cars = 1; cars <= 50; cars++) {
@@ -246,7 +236,6 @@ function calcCars(data) {
   return { cars: 50, eff: 0, target };
 }
 
-// ===== 主计算 =====
 function calculate() {
   const res = calcCars({
     fullLoadAmount: document.getElementById('fullLoadAmount').value,
@@ -262,9 +251,8 @@ function calculate() {
   }
 }
 
-// ===== 存档重新计算 & 高亮 =====
 function recalcAllArchives() {
-  calculate(); // 主面板
+  calculate();
   archives.forEach(a => {
     const oldCars = a._lastCars;
     const { cars } = calcCars(a.data);
@@ -274,7 +262,6 @@ function recalcAllArchives() {
   renderArchives();
 }
 
-// ===== 渲染存档列表 =====
 function renderArchives() {
   const box = document.getElementById('archiveItems');
   if (!archives.length) return box.innerHTML = '<p style="text-align:center;color:#666">暂无存档</p>';
@@ -283,7 +270,7 @@ function renderArchives() {
     const { cars, eff, target } = calcCars(a.data);
     a._lastCars = cars;
     const div = document.createElement('div');
-    div.className = 'archive-item' + (a._highlight ? ' highlighted' : '');
+    div.className = `archive-item${a._highlight ? ' highlighted' : ''}`;
     div.innerHTML = `<strong>${a.name}</strong><br>所需车厢：${cars} 节<br>实际效率：${eff.toFixed(2)} / ${target.toFixed(2)}<button onclick="deleteArchive(${a.id},event)">删除</button>`;
     div.onclick = () => loadArchive(a.id);
     box.appendChild(div);

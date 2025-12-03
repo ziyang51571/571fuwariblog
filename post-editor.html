@@ -86,12 +86,10 @@ draft: ${draft}
 ---`;
     const fileName=`${slug}.md`;
     const fullMd=front+'\n\n'+body+'\n';
-    // 输出 Markdown 与终端命令
     out.textContent=fullMd;
     out.style.display='block';
     cmd.textContent=`# 保存文件后执行：\necho "${fullMd.replace(/"/g,'\\"')}" > src/content/posts/${fileName} && pnpm build && git add src/content/posts/${fileName} && git commit -m "post: ${title}" && git push`;
     cmd.style.display='block';
-    // 自动复制终端命令
     navigator.clipboard.writeText(cmd.textContent.replace('# 保存文件后执行：\n',''));
   });
   </script>

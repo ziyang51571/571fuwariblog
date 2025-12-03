@@ -35,7 +35,7 @@ draft: false
 
 翻了翻源码，问题出在`src\utils\setting-utils.ts`中下面这一段：
 
-```TypeScript
+```JavaScript
 export function getHue(): number {
 	const stored = localStorage.getItem("hue");
 	return stored ? Number.parseInt(stored, 10) : getDefaultHue();

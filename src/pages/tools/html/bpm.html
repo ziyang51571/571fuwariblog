@@ -44,10 +44,7 @@ class BPMDetector {
   setupEventListeners() {
     const tapButton = document.getElementById('tap-button');
     
-    // 点击事件
     tapButton.addEventListener('click', () => this.handleTap());
-    
-    // 键盘事件
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
         e.preventDefault();
@@ -58,17 +55,10 @@ class BPMDetector {
   
   handleTap() {
     const now = Date.now();
-    
-    // 清除重置计时器
     if (this.resetTimer) {
       clearTimeout(this.resetTimer);
     }
-    
-    // 添加新的点击时间
     this.taps.push(now);
-    
-    
-    // 设置重置计时器
     this.resetTimer = setTimeout(() => {
       this.reset();
     }, this.resetTimeout);
@@ -79,14 +69,11 @@ class BPMDetector {
   
   calculateBPM() {
     if (this.taps.length < 1) return;
-    if (this.taps.length == 1) {this.displayBPM("---", "---"); return;}
-    // 计算间隔时间
+    if (this.taps.length === 1) {this.displayBPM("---", "---"); return;}
     const intervals = [];
     for (let i = 1; i < this.taps.length; i++) {
       intervals.push(this.taps[i] - this.taps[i-1]);
     }
-    
-    // 移除异常值（使用IQR方法）
     intervals.sort((a, b) => a - b);
     const q1 = intervals[Math.floor(intervals.length * 0.25)];
     const q3 = intervals[Math.floor(intervals.length * 0.75)];
@@ -100,10 +87,8 @@ class BPMDetector {
     
     if (filteredIntervals.length === 0) return;
     
-    // 计算平均间隔
     const avgInterval = filteredIntervals.reduce((a, b) => a + b, 0) / filteredIntervals.length;
     
-    // 转换为BPM
     const bpm = (60000 / avgInterval).toFixed(2);
     const intBpm = Math.round(60000 / avgInterval);
 
@@ -114,7 +99,6 @@ class BPMDetector {
     const bpmNumber = document.getElementById('bpm-number');
     const bpmNumberInteger = document.getElementById('bpm-integer');
     
-    // 更新BPM数字
     bpmNumber.textContent = bpm;
     bpmNumberInteger.textContent = intBpm;
   }
@@ -131,7 +115,6 @@ class BPMDetector {
       lastTap.textContent = secondsAgo;
     }
     
-    // 更新最后点击时间
     requestAnimationFrame(() => this.updateDisplay());
   }
   

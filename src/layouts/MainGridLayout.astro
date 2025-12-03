@@ -16,12 +16,13 @@ import {
 import Layout from "./Layout.astro";
 
 interface Props {
+    id?: string;
 	title?: string;
 	banner?: string;
 	description?: string;
 	lang?: string;
 	setOGTypeArticle?: boolean;
-	headings?: MarkdownHeading[];
+	headings?: Markdown Heading[];
 	hideSideBar?: boolean;
 }
 
@@ -32,7 +33,6 @@ const {
 	lang,
 	setOGTypeArticle,
 	headings = [],
-	hideSideBar = false,
 } = Astro.props;
 const hasBannerCredit =
 	siteConfig.banner.enable && siteConfig.banner.credit.enable;
@@ -68,7 +68,7 @@ const mainPanelTop = siteConfig.banner.enable
 
         <div id="main-grid"
      class="transition duration-700 w-full left-0 right-0 grid
-            grid-cols-[17.5rem_auto]          <!-- 固定两列 -->
+            grid-cols-[17.5rem_auto]
             grid-rows-[auto_1fr_auto] lg:grid-rows-[auto]
             mx-auto gap-4 px-0 md:px-4">
 
@@ -88,12 +88,12 @@ const mainPanelTop = siteConfig.banner.enable
 
 
             <SideBar
-  id="sidebar"
-  class:list={[
-    "mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation"
-  ]}
-  headings={headings}
-/>
+              id="sidebar"
+              class:list={[
+                "mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation"
+              ]}
+              headings={headings}
+            />
 
             <main id="swup-container" class="transition-swup-fade col-span-2 lg:col-span-1 overflow-hidden">
                 <div id="content-wrapper" class="onload-animation">
@@ -122,18 +122,16 @@ function updateSidebar() {
   if (bar && grid) {
     if (isToolPage) {
       bar.style.display = 'none';
-      grid.style.gridTemplateColumns = '1fr'; // 单列占满
+      grid.style.gridTemplateColumns = '1fr'; // 单列
     } else {
       bar.style.display = '';
-      grid.style.gridTemplateColumns = '17.5rem auto'; // 恢复原两列
+      grid.style.gridTemplateColumns = '17.5rem auto'; // 恢复
     }
   }
 }
 
-// 初次加载
 updateSidebar();
 
-// Swup 导航完成后重新执行
 document.addEventListener('swup:contentReplaced', updateSidebar);
 </script>
 
@@ -145,7 +143,6 @@ document.addEventListener('swup:contentReplaced', updateSidebar);
 
 <script is:inline>
 function updateSidebar() {
-  // 每次重新获取，不缓存
   const bar = document.getElementById('sidebar');
   const grid = document.getElementById('main-grid');
   if (!bar || !grid) return;
@@ -162,7 +159,6 @@ function updateSidebar() {
   }
 }
 
-// 页面加载时（包括硬刷新）
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(updateSidebar); // 延迟到渲染后
@@ -171,7 +167,6 @@ if (document.readyState === 'loading') {
   requestAnimationFrame(updateSidebar);
 }
 
-// Swup 导航后
 document.addEventListener('swup:contentReplaced', () => {
   requestAnimationFrame(updateSidebar);
 });
@@ -200,12 +195,12 @@ document.addEventListener('swup:contentReplaced', () => {
     </div>
 </div>
 
-<!-- 神秘隐藏组件卡渲染脚本 -->
+<!-- 隐藏工具卡 -->
 <script is:inline>
 (function initEasterEgg() {
   const STORAGE_KEY = 'UNLOCKED_CARDS';
   
-  // 检查并更新所有彩蛋卡片
+  // 检查更新
   function updateAllEasterEggCards() {
     const unlocked = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     const isUnlocked = unlocked.includes('secret-tool');
@@ -218,14 +213,14 @@ document.addEventListener('swup:contentReplaced', () => {
       const descP = card.querySelector('p');
       
       if (isUnlocked) {
-        // 已解锁
+        // 解锁
         card.href = card.dataset.realUrl;
         if (iconSpan) iconSpan.textContent = card.dataset.realIcon || '🔧';
         if (titleH3) titleH3.textContent = card.dataset.realTitle || '神秘工具';
         if (descP) descP.textContent = card.dataset.realDesc || '已解锁的隐藏功能';
         card.classList.remove('animate-pulse', 'opacity-50');
       } else {
-        // 未解锁
+        // 未
         card.href = '#';
         if (iconSpan) iconSpan.textContent = '❓';
         if (titleH3) titleH3.textContent = '???';
@@ -235,18 +230,18 @@ document.addEventListener('swup:contentReplaced', () => {
     });
   }
   
-  // 立即执行一次
+  // 立即
   updateAllEasterEggCards();
   
-  // Swup 导航完成后执行
+  // Swup后
   if (window.swup) {
     window.addEventListener('swup:contentReplaced', () => {
-      // 延迟执行，确保 DOM 稳定
+      // 延迟
       setTimeout(updateAllEasterEggCards, 50);
     });
   }
   
-  // 监听 localStorage 变化（多标签页同步）
+  // 监听
   window.addEventListener('storage', (e) => {
     if (e.key === STORAGE_KEY) {
       setTimeout(updateAllEasterEggCards, 50);
