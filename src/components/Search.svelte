@@ -6,8 +6,8 @@ import { url } from "@utils/url-utils.ts";
 import { onMount } from "svelte";
 import type { SearchResult } from "@/global";
 
-const keywordDesktop = "";
-const keywordMobile = "";
+let keywordDesktop = "";
+let keywordMobile = "";
 let result: SearchResult[] = [];
 let isSearching = false;
 let pagefindLoaded = false;
