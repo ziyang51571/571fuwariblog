@@ -1,11 +1,7 @@
-
 ---
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import content from "./html/shapezTrain.html?raw";
 ---
 <MainGridLayout title="Shapez2车厢估算" hideSideBar={true}>
-  <div slot="top" class="mb-6">
-    <h1 class="text-2xl font-bold">Shapez2车厢估算</h1>
-  </div>
   <Fragment set:html={content} />
 </MainGridLayout>

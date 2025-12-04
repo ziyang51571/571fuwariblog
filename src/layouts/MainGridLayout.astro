@@ -204,20 +204,28 @@ document.addEventListener('swup:contentReplaced', () => {
   function updateAllEasterEggCards() {
     const unlocked = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     const isUnlocked = unlocked.includes('secret-tool');
-    
+    const realData = [
+        {
+		    title: "Pictured as Perfect",
+		    desc: "Outro Generator",
+		    url: "/tools/pap/",
+		    icon: "💗",
+	    },
+    ]
     document.querySelectorAll('[data-is-easter-egg="true"]').forEach(card => {
       if (!card) return;
       
       const iconSpan = card.querySelector('span');
       const titleH3 = card.querySelector('h3');
       const descP = card.querySelector('p');
-      
+      const idx = card.dataset.key;
+
       if (isUnlocked) {
         // 解锁
-        card.href = card.dataset.realUrl;
-        if (iconSpan) iconSpan.textContent = card.dataset.realIcon || '🔧';
-        if (titleH3) titleH3.textContent = card.dataset.realTitle || '神秘工具';
-        if (descP) descP.textContent = card.dataset.realDesc || '已解锁的隐藏功能';
+        card.href = realData[idx].url;
+        if (iconSpan) iconSpan.textContent = realData[idx].icon || '🔧';
+        if (titleH3) titleH3.textContent = realData[idx].title || '神秘工具';
+        if (descP) descP.textContent = realData[idx].desc || '已解锁的隐藏功能';
         card.classList.remove('animate-pulse', 'opacity-50');
       } else {
         // 未

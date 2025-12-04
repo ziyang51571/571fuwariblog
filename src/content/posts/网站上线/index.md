@@ -4,7 +4,7 @@ published: 2025-11-23
 description: "现在可以通过ziyang.site来访问本站啦！以及，发现了fuwari中一个与默认主题色相关的漏洞"
 image: "./cover.png"
 tags: ["记录", "漏洞"]
-category: 更新
+category: 站点
 draft: false
 ---
 > [うえのみぎ](https://www.pixiv.net/users/37886530)老师绘制的插图，详见[Pixiv](https://www.pixiv.net/artworks/121356693)
@@ -35,7 +35,7 @@ draft: false
 
 翻了翻源码，问题出在`src\utils\setting-utils.ts`中下面这一段：
 
-```JavaScript
+```typescript
 export function getHue(): number {
 	const stored = localStorage.getItem("hue");
 	return stored ? Number.parseInt(stored, 10) : getDefaultHue();

@@ -1,11 +1,7 @@
-
 ---
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import content from "./html/jrrp.html?raw";
 ---
 <MainGridLayout title="今日人品" hideSideBar={true}>
-  <div slot="top" class="mb-6">
-    <h1 class="text-2xl font-bold">今日人品</h1>
-  </div>
   <Fragment set:html={content} />
 </MainGridLayout>
