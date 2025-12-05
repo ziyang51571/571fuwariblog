@@ -1,16 +1,17 @@
 {
   "ExpandedNodes": [
     "",
+    "\\public",
     "\\src",
-    "\\src\\components",
     "\\src\\content",
     "\\src\\content\\posts",
-    "\\src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1",
     "\\src\\content\\posts\\\u7F51\u7AD9\u4E0A\u7EBF",
     "\\src\\layouts",
     "\\src\\pages",
-    "\\src\\pages\\tools"
+    "\\src\\pages\\posts",
+    "\\src\\pages\\tools",
+    "\\src\\plugins"
   ],
-  "SelectedNode": "\\src\\content\\posts\\\u66F4\u65B0\uFF1A\u5DE5\u5177\u7BB1\\index.md",
+  "SelectedNode": "\\src\\components\\ParticleCanvas.astro",
   "PreviewInSolutionExplorer": false
 }

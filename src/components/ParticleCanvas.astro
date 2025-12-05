@@ -1,0 +1,57 @@
+<!-- src/components/ParticleCanvas.astro -->
+<canvas id="particle-canvas" class="fixed inset-0 z-[9999] pointer-events-none"></canvas>
+
+<script>
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let W = innerWidth, H = innerHeight;
+let parts = [];
+
+function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+addEventListener('resize', resize); resize();
+
+class Part {
+  constructor(x, y) {
+    this.x = x; this.y = y;
+    this.vx = (Math.random() - 0.5) * 3;
+    this.vy = (Math.random() - 0.8) * 3;
+    this.life = 1;
+    this.decay = Math.random() * 0.01 + 0.02;
+    this.size = Math.random() * 2.5 + 1;
+    //this.color = `hsl(${Math.random() * 40 + 200} , 80%, 60%)`;
+    this.color = `hsl(${Math.random() * 30 + 20} , 80%, 60%)`;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    this.vy += 0.13;
+    this.life -= this.decay;
+    if (this.life <= 0) parts.splice(parts.indexOf(this), 1);
+  }
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = Math.max(this.life, 0);
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+
+  parts.forEach(p => p.update());
+  parts = parts.filter(p => p.life > 0);
+  parts.forEach(p => p.draw());
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+addEventListener('mousedown', e => {
+    for (let i = 0; i < Math.random() * 2 + 7; i ++){
+        parts.push(new Part(e.clientX, e.clientY));
+    };
+});
+
+</script>
