@@ -1,7 +1,7 @@
 <!-- src/components/ParticleCanvas.astro -->
 <canvas id="particle-canvas" class="fixed inset-0 z-[9999] pointer-events-none"></canvas>
 
-<script>
+<script is:inline>
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 let W = innerWidth, H = innerHeight;
