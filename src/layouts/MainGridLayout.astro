@@ -219,6 +219,7 @@ document.addEventListener('swup:contentReplaced', () => {
       const titleH3 = card.querySelector('h3');
       const descP = card.querySelector('p');
       const idx = card.dataset.key;
+      const cardData = card.dataset;
 
       if (isUnlocked) {
         // 解锁
@@ -227,13 +228,6 @@ document.addEventListener('swup:contentReplaced', () => {
         if (titleH3) titleH3.textContent = realData[idx].title || '神秘工具';
         if (descP) descP.textContent = realData[idx].desc || '已解锁的隐藏功能';
         card.classList.remove('animate-pulse', 'opacity-50');
-      } else {
-        // 未
-        card.href = '#';
-        if (iconSpan) iconSpan.textContent = '❓';
-        if (titleH3) titleH3.textContent = '???';
-        if (descP) descP.textContent = '线索丢失';
-        card.classList.add('animate-pulse', 'opacity-50');
       }
     });
   }

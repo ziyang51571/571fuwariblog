@@ -1,0 +1,8 @@
+
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import content from "./html/lost.html?raw";
+---
+<MainGridLayout title = "线索" hideSideBar={true}>
+  <Fragment set:html={content} />
+</MainGridLayout>
