@@ -1,10 +1,10 @@
 ---
 title: 更新：工具箱
 published: 2025-11-24
-description: '可以从导航栏进入，不定期掉落小工具喔.'
+description: '可以从导航栏进入，不定期掉落小工具喔. 本帖也会记录一些后续的改动.'
 image: "./cover.png"
 tags: ["更新", "工具箱"]
-category: 更新
+category: 站点
 draft: false
 ---
 
@@ -20,8 +20,10 @@ draft: false
 
 ### 追加
 
-`251125` 修复了工具箱卡片不适配暗色模式；
+`251125`ㅤ[ 工具箱 ]ㅤ修复了工具箱卡片不适配暗色模式；
 
-`251125` 添加了**‍???** by [Dodddsqa](https://space.bilibili.com/3546893917358324)；:spoiler[*我喜欢你><*]
+`251125`ㅤ[ 工具箱 ]ㅤ添加了**‍???** by [Dodddsqa](https://space.bilibili.com/3546893917358324)；:spoiler[*我喜欢你><*]
 
-`251125` 添加了**BPM测量工具**;
+`251125`ㅤ[ 工具箱 ]ㅤ添加了**BPM测量工具**；
+
+`251204`ㅤ[ 文章 ]ㅤ添加了giscus评论区；

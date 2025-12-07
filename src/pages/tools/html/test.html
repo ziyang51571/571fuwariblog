@@ -1,14 +1,16 @@
 <div class="card-base rounded-xl p-6 text-gray-900 dark:text-gray-100">
   <h2 class="text-xl font-bold mb-4">测试工具</h2>
-  <p class="text-base-content/70">可以在下方输入文本，没有任何作用<em>...吗？</em></p>
-
+  <p class="text-base-content/70">可以在下方输入文本，大概没有任何作用...<em>吧?</em></p>
+  
   <input id="txt" class="input input-bordered w-full mt-4" placeholder="轻触以键入文本...">
 </div>
 
 <script>
 const UNLOCK_CODE = "Pictured as Perfect";
-const RESET_CODE = "Therefore never perfect";
+const RESET_CODE = "Therefore never perfect.";
 // <em>　　　除非是她的无瑕妙笔...</em>
+// very fun-y :]
+
 function bindUnlock() {
   const input = document.getElementById('txt');
   if (!input) return;
@@ -18,19 +20,21 @@ function bindUnlock() {
 
 function handleUnlock(e) {
   const val = e.target.value;
-  if (val === UNLOCK_CODE) {
+  const unlocked = JSON.parse(localStorage.getItem('UNLOCKED_CARDS') || '[]');
+  const isLocked = !unlocked.includes('secret-tool');
+
+  if (val === UNLOCK_CODE && isLocked) {
     localStorage.setItem('UNLOCKED_CARDS', JSON.stringify(['secret-tool']));
-    alert('Pictured as Perfect.');
+    alert('Something became known to you.');
     setTimeout(() => window.location.href = '/tools/', 1200);
-  } else if (val === RESET_CODE) {
+  } else if (val === RESET_CODE && !isLocked) {
     localStorage.removeItem('UNLOCKED_CARDS');
-    alert('Unlock has been reset.');
+    alert('Something became alien to you.');
     setTimeout(() => window.location.href = '/tools/', 1200);
   }
 }
 
 bindUnlock();
-
 if (window.swup) {
   window.addEventListener('swup:contentReplaced', bindUnlock);
 }
