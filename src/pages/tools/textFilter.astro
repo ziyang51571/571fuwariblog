@@ -1,0 +1,8 @@
+
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import content from "./html/textFilter.html?raw";
+---
+<MainGridLayout title="进制转化工具" hideSideBar={true}>
+  <Fragment set:html={content} />
+</MainGridLayout>

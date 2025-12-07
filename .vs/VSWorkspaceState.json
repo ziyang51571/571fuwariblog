@@ -1,17 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
-    "\\public\\images",
-    "\\public\\images\\lost",
     "\\src",
     "\\src\\assets",
     "\\src\\assets\\images",
     "\\src\\components",
+    "\\src\\constants",
     "\\src\\pages",
     "\\src\\pages\\tools",
-    "\\src\\pages\\tools\\html"
+    "\\src\\pages\\tools\\html",
+    "\\src\\styles"
   ],
-  "SelectedNode": "\\src\\pages\\tools\\html\\pap.html",
+  "SelectedNode": "\\src\\pages\\tools\\html\\baseConvertor.html",
   "PreviewInSolutionExplorer": false
 }

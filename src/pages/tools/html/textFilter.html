@@ -1,0 +1,189 @@
+<div class="card-base rounded-xl p-6 text-gray-900 dark:text-gray-100">
+    <style>
+        /* 颜色配置 */
+        :root {
+            /* 按钮样式 */
+            --btn-bg-light: #ffffff;
+            --btn-bg-dark: #432;
+            --btn-border-light: #dbd5d1;
+            --btn-border-dark: #ffffff00;
+            
+            /* 输入框样式 */
+            --input-bg-light: #ffffff;
+            --input-bg-dark: #141008;
+            --input-border-light: #dbd5d1;
+            --input-border-dark: #ffffff00;
+            
+            /* 勾选框样式 */
+            --checkbox-bg-light: #ffffff;
+            --checkbox-bg-dark: #514137;
+            --checkbox-checked-color: #aa7c00;
+            
+            /* 高亮颜色 */
+            --highlight-color: #fabc35;
+            
+            /* 文字颜色 */
+            --text-dark: #111827;
+            --text-light: #f3f4f6;
+        }
+
+        /* 按钮基础样式 */
+        .custom-btn {
+            background-color: var(--btn-bg-light);
+            border-color: var(--btn-border-light);
+            color: var(--text-dark);
+            transition: all 0.1s;
+        }
+        .dark .custom-btn {
+            background-color: var(--btn-bg-dark);
+            border-color: var(--btn-border-dark);
+            color: var(--text-light);
+        }
+        .custom-btn:hover {
+            box-shadow: 0 0 0 1px var(--highlight-color);
+        }
+        .custom-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 输入框基础样式 */
+        .custom-input {
+            background-color: var(--input-bg-light);
+            border-color: var(--input-border-light);
+            color: var(--text-dark);
+        }
+        .dark .custom-input {
+            background-color: var(--input-bg-dark);
+            border-color: var(--input-border-dark);
+            color: var(--text-light);
+        }
+        .custom-input:focus {
+            box-shadow: 0 0 0 1px var(--highlight-color);
+        }
+
+        /* 勾选框基础样式 */
+        .custom-checkbox {
+            background-color: var(--checkbox-bg-light);
+            border-color: var(--btn-border-light);
+            accent-color: var(--checkbox-checked-color);
+        }
+        .dark .custom-checkbox {
+            background-color: var(--checkbox-bg-dark);
+            border-color: var(--btn-border-dark);
+            accent-color: var(--checkbox-checked-color);
+        }
+    </style>
+
+    <h2 class="text-2xl font-bold mb-4 text-primary">文本筛选工具</h2>
+    
+    <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">输入文本：</label>
+        <textarea id="inputText" class="w-full h-32 border rounded-lg focus:outline-none p-3 custom-input" placeholder="请在此输入需要筛选的文本..."></textarea>
+    </div>
+    
+    <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">选择要提取的内容类型：</label>
+        <div id="optionsContainer" class="flex flex-wrap gap-4"></div>
+    </div>
+    
+    <div class="flex gap-3 mb-4" id="buttonsContainer"></div>
+    
+    <div>
+        <label class="block text-sm font-medium mb-2">提取结果：</label>
+        <textarea id="outputText" class="w-full h-32 border rounded-lg focus:outline-none p-3 custom-input" readonly placeholder="提取结果将显示在这里..."></textarea>
+    </div>
+</div>
+
+<script>
+
+(function initFilter() {
+  
+  window.optData = [
+    { id: 'chinese', label: '汉字', pattern: /[\u4e00-\u9fa5]/g },
+    { id: 'uppercase', label: '大写字母', pattern: /[A-Z]/g },
+    { id: 'lowercase', label: '小写字母', pattern: /[a-z]/g },
+    { id: 'numbers', label: '数字', pattern: /[0-9]/g },
+    { id: 'symbols', label: '符号', pattern: /[^\w\u4e00-\u9fa5\s]/g }
+  ];
+
+  const btnData = [
+    { id: 'clearBtn', label: '清空', variant: 'btn-error' },
+    { id: 'copyBtn', label: '复制结果', variant: 'btn-secondary' },
+    { id: 'extractBtn', label: '开始提取', variant: 'btn-primary' }
+  ];
+
+  const optContainer = document.getElementById('optionsContainer');
+  optContainer.innerHTML = '';
+  window.optData.forEach(o => {
+    const lbl = document.createElement('label');
+    lbl.className = 'flex items-center gap-2 cursor-pointer';
+    lbl.innerHTML = `
+      <input type="checkbox" id="${o.id}" class="checkbox checkbox-primary rounded custom-checkbox" checked>
+      <span class="text-sm text-base-content">${o.label}</span>
+    `;
+    optContainer.appendChild(lbl);
+  });
+
+  const btnContainer = document.getElementById('buttonsContainer');
+  btnContainer.innerHTML = '';
+  btnData.forEach(b => {
+    const btn = document.createElement('button');
+    btn.id = b.id;
+    btn.textContent = b.label;
+    btn.className = `btn ${b.variant} px-4 py-2 border rounded-lg custom-btn focus:outline-none`;
+    btnContainer.appendChild(btn);
+  });
+
+  document.removeEventListener('click', handleFilter);
+  document.addEventListener('click', handleFilter);
+})();
+
+function handleFilter(e) {
+  const id = e.target.id;
+  const inputEl = document.getElementById('inputText');
+  const outputEl = document.getElementById('outputText');
+  
+  if (id === 'clearBtn') {
+    inputEl.value = '';
+    outputEl.value = '';
+  }
+  
+  if (id === 'copyBtn') {
+    const out = outputEl.value;
+    if (out) {
+      navigator.clipboard.writeText(out).then(() => alert('已复制！'));
+    } else {
+      alert('没有可复制的内容！');
+    }
+  }
+  
+  if (id === 'extractBtn') {
+    const sourceText = inputEl.value;
+    if (!sourceText) { alert('请先输入文本！'); return; }
+    
+    const selectedPatterns = [];
+    window.optData.forEach(opt => {
+      const checkbox = document.getElementById(opt.id);
+      if (checkbox?.checked) {
+        selectedPatterns.push(opt.pattern);
+      }
+    });
+    
+    if (selectedPatterns.length === 0) {
+      outputEl.value = '';
+      return;
+    }
+    
+    const combinedRegex = new RegExp(
+      selectedPatterns.map(p => p.source).join('|'), 
+      'g'
+    );
+    
+    const matches = sourceText.match(combinedRegex);
+    outputEl.value = matches ? matches.join('') : '';
+  }
+}
+
+if (window.swup) window.addEventListener('swup:contentReplaced', initFilter);
+
+</script>

@@ -166,6 +166,34 @@ const bannerOffset =
 	'banner-height-home': `${BANNER_HEIGHT_HOME}vh`,
 	'banner-height': `${BANNER_HEIGHT}vh`,
 }}>
+
+/*#banner {
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+}*/
+
+:root {
+  --page-bg: #ffffff;
+  transition: --page-bg 0.3s ease;
+}
+
+#banner-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 90%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--page-bg) 100%
+  );
+}
+
+
+
 @tailwind components;
 @layer components {
 	.enable-banner.is-home #banner-wrapper {
