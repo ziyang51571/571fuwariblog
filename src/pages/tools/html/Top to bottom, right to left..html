@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta author="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing clue.</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: black;
+        }
+
+        p-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        p-grid svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        p-grid svg path {
+            stroke-width: 1px;
+        }
+    </style>
+</head>
+<body>
+    <p-grid>
+        <svg></svg>
+    </p-grid>
+</body>
+<script>
+    const colors = ["black", "white", "#ff26ff"];
+    const code = [2, 0, 2, 0, 0, 2, 1, 0, 1, 1, 0, 1, 2, 0, 0, 2, 0, 0, 1, 0, 1, 1, 2, 0, 1, 2, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 2, 2, 0, 0, 0, 2, 0, 1, 0, 2, 0, 0, 0, 0, 2, 2, 2, 0, 1, 1];
+    
+    class Grid extends HTMLElement {
+        connectedCallback() {
+            this.svg = this.querySelector("svg");
+            this.cursor = {x: 0, y: 0, lx: 0, ly: 0, v: 0};
+            this.column = [];
+            this.squares = [];
+            this.paths = [];
+            this.observer();
+            this.resize();
+            this.setUpGrid();
+            requestAnimationFrame(this.tick.bind(this));
+        }
+        observer() {
+            window.addEventListener("resize", () => {
+                this.resize();
+                this.setUpGrid()
+            });
+            window.addEventListener("mousemove", (e) => {
+                this.updateCursorPosition(e.pageX, e.pageY);
+            });
+            this.addEventListener("touchmove", (e) => {
+                e.preventDefault();
+                this.updateCursorPosition(e.touches[0].clientX, e.touches[0].clientY);
+            });
+        }
+        resize() {
+            this.bounding = this.getBoundingClientRect();
+            this.svg.style.width = `${this.bounding.width}px`;
+            this.svg.style.height = `${this.bounding.height}px`;
+        }
+        setUpGrid() {
+            this.column = [];
+            this.squares = [];
+            this.paths.forEach(path => {
+                path.remove();
+            })
+            this.paths = [];
+
+            const {width, height} = this.bounding;
+
+            this.side = (width < 480 || height < 160) ? Math.min(Math.floor(width / 24), Math.floor(height / 8)) : 20;
+            this.totalX = Math.ceil(width / this.side) + 2;
+            this.totalY = Math.ceil(height / this.side) + 2;
+            
+            const xStartPos = (width - this.totalX * this.side) / 2;
+            const yStartPos = (height - this.totalY * this.side) / 2;
+
+            this.hiddenX = Math.floor((this.totalX - 19) * Math.random());
+            this.hiddenY = Math.floor((this.totalY - 3) * Math.random());
+            console.log(`hiddenX to look for: ${this.hiddenX}; hiddenY to look for: ${this.hiddenY}`);
+
+            for (let i = 0; i < this.totalX; i++) {
+                const column = [];
+                for (let j = 0; j < this.totalY; j++) {
+                    const square = {
+                        corners: {
+                            x00: xStartPos + i * this.side,
+                            y00: yStartPos + j * this.side,
+                            x10: xStartPos + (i + 1) * this.side,
+                            y10: yStartPos + j * this.side,
+                            x11: xStartPos + (i + 1) * this.side,
+                            y11: yStartPos + (j + 1) * this.side,
+                            x01: xStartPos + i * this.side,
+                            y01: yStartPos + (j + 1) * this.side
+                        },
+                        center: {
+                            x: xStartPos + (i + 0.5) * this.side,
+                            y: yStartPos + (j + 0.5) * this.side
+                        },
+                        color: "",
+                        colorChange: false,
+                        cursorRel: {
+                            x: 0, y: 0, dx: 0, dy: 0
+                        },
+                        timeTriggered: 0,
+                        triggered: false,
+                        codeNode: false
+                    };
+                    square.codeNode = i >= this.hiddenX && i <= this.hiddenX + 18 && j >= this.hiddenY && j <= this.hiddenY + 2;
+                    square.color = square.codeNode ? colors[code[i - this.hiddenX + (j - this.hiddenY) * 19]] : colors[Math.floor(3 * Math.random())];
+                    column.push(square);
+                    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    this.svg.appendChild(path);
+                    this.paths.push(path);
+                };
+
+                this.squares.push(column);
+            };
+        }
+        updateCursorPosition(x, y) {
+            const {cursor} = this;
+            cursor.x = x - this.bounding.left + window.scrollX;
+            cursor.y = y - this.bounding.top + window.scrollY;
+        }
+        recolor(time) {
+            const {squares, cursor} = this;
+
+            squares.forEach(column => {
+                column.forEach(square => {
+                    const d = Math.hypot((square.center.x - cursor.x), (square.center.y - cursor.y));
+                    square.colorChange = cursor.v === 0 ? d < 2 * this.side : d < this.side * Math.min(cursor.v * 0.5, 10);
+                    if (!square.triggered && square.colorChange && !square.codeNode) {
+                        square.timeTriggered = time;
+                        square.triggered = true;
+                    } else if (square.triggered && square.colorChange && (time - square.timeTriggered) >= 88.83){
+                        square.color = colors[Math.floor(3 * Math.random())];
+                        square.timeTriggered = time;
+                    } else if (!square.colorChange){
+                        square.triggered = false;
+                    }
+                })
+            })
+        }
+        drawGrid() {
+            const {squares, paths, totalY} = this
+
+            squares.forEach((column, cIndex) => {
+                column.forEach((square, rIndex) => {
+                    const d = `M ${square.corners.x00} ${square.corners.y00} L ${square.corners.x10} ${square.corners.y10} L ${square.corners.x11} ${square.corners.y11} L ${square.corners.x01} ${square.corners.y01} z`;
+                    paths[cIndex * this.totalY + rIndex].setAttribute("d", d);
+                    paths[cIndex * this.totalY + rIndex].setAttribute("fill", `${square.color}`);
+                    paths[cIndex * this.totalY + rIndex].setAttribute("stroke", `${square.color}`);
+                })
+            })
+        }
+        tick(time) {
+            const {cursor} = this;
+            
+            cursor.v = Math.hypot((cursor.x - cursor.lx), (cursor.y - cursor.ly));
+
+            cursor.lx = cursor.x;
+            cursor.ly = cursor.y;
+
+            this.recolor(time);
+            this.drawGrid();
+            requestAnimationFrame(this.tick.bind(this))
+        }
+    };
+    window.customElements.define("p-grid", Grid)
+    //Credits: See BV1ABC7BYEky by JIEJOE_轻敲代码. Done under debugging by ChatGPT in the process.
+    //ziyang_51571 I'm affectionate towards you.
+</script>
+</html>
