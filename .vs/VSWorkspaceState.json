@@ -1,16 +1,17 @@
 {
   "ExpandedNodes": [
     "",
+    "\\public",
+    "\\public\\images",
+    "\\public\\images\\lost",
     "\\src",
     "\\src\\assets",
     "\\src\\assets\\images",
-    "\\src\\assets\\images\\html",
+    "\\src\\components",
     "\\src\\pages",
     "\\src\\pages\\tools",
-    "\\src\\pages\\tools\\html",
-    "\\src\\pages\\tools\\html\\assets",
-    "\\src\\pages\\tools\\html\\assets\\images"
+    "\\src\\pages\\tools\\html"
   ],
-  "SelectedNode": "\\src\\components\\ParticleCanvas.astro",
+  "SelectedNode": "\\src\\pages\\tools\\html\\pap.html",
   "PreviewInSolutionExplorer": false
 }

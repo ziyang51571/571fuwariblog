@@ -32,6 +32,24 @@
                     width: auto;
                 }
             }
+
+            /* 修复按钮 */
+            #controlPanel button,
+            #controlPanel input[type="number"],
+            #controlPanel input[type="checkbox"] {
+                border: 1px solid #ccc;
+                background: #eee;
+                color: #000;
+                border-radius: 5px;
+            }
+            html.dark #controlPanel button,
+            html.dark #controlPanel input[type="number"],
+            html.dark #controlPanel input[type="checkbox"] {
+                background: #302818;
+                color: #fff;
+                border-color: #542;
+            }
+
             dialog {
                 height: fit-content;
                 border: 4px solid #ff26ff;
@@ -80,6 +98,14 @@
                     margin: 0px;
                 }
             }
+            .oriLinkWrapper { opacity:1 !important; }
+            /* 暗色 */
+            html.dark .oriLinkWrapper #oriLink { background: transparent; }
+            html.dark .oriLinkWrapper #oriLink .colored   { color: #ff26ff; }
+            html.dark .oriLinkWrapper #oriLink .uncolored { color: #fff; }
+            html.dark .oriLinkWrapper #oriLink:hover { background: #fff; }
+            html.dark .oriLinkWrapper #oriLink:hover .uncolored { color: #000; }
+
             .canvasPlaceholder {
                 width: 614px;
                 height: 614px;
@@ -152,6 +178,9 @@
             #remained {
                 color: black;
             }
+            /* 暗色 */
+            html.dark #remained { color: #fff; }
+
             #heart {
                 z-index: 3;
             }
@@ -164,6 +193,10 @@
                     color: #ff26ff;
                 }
             }
+            /* 暗色 */
+            html.dark #credits { color: #fff; }
+            html.dark #credits:hover { color: #ff26ff; }
+
             #amountReminder {
                 display: none;
             }
@@ -171,17 +204,30 @@
                 text-align: center;
             }
             #controlPanel {
-                border: 1.4px solid black;
+                border: 1.4px solid #986;
                 padding: 6px;
                 text-align: center;
                 width: 586px;
                 display: inline-block;
+                border-radius: 8px;
             }
             #buttonOne,
             #buttonTwo,
             #blur {
                 width: 70px;
                 height: 24px;
+            }
+            /* 也许可以 */
+            .canvas-box {
+                position: relative;
+                height: 614px;
+                margin: 0 auto;
+            }
+            #sectors, #heart {
+                position: absolute;
+                top: 150px;
+                left: 50%;
+                transform: translate(-50%, 0);
             }
         </style>
     </head>
@@ -235,6 +281,8 @@
         </dialog>
     </body>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
         const p0 = {x: 0, y: 194};
         const p1 = {x: -98, y: 130};
         const p2 = {x: -204, y: 38};
@@ -441,10 +489,13 @@
                     sectorCnv.height = 980;
                     sectorCnv.style.width = "600px";
                     sectorCnv.style.height = "600px";
-                    heartCnv.style.left = `${(window.innerWidth - heartCnv.clientWidth) / 2}px`;
+                    /* heartCnv.style.left = `${(window.innerWidth - heartCnv.clientWidth) / 2}px`;
                     sectorCnv.style.left = `${(window.innerWidth - sectorCnv.clientWidth) / 2}px`;
                     heartCnv.style.top = "116px";
-                    sectorCnv.style.top = "116px";
+                    sectorCnv.style.top = "116px"; */
+                    
+                    /* 修复画布居中 */
+
                     heartCtx.translate(490, 490);
                     sectorCtx.translate(490, 490);
                     heart();
@@ -713,21 +764,32 @@
                     setTimeout(() => {
                         alert("Perfect as Pictured.");
                         //this is how you do it
-                        heartCnv.style.top = "-14px";
+                        /*heartCnv.style.top = "-14px";
                         heartCnv.style.left = "0px";
                         sectorCnv.style.top = "-14px";
-                        sectorCnv.style.left = "0px";
+                        sectorCnv.style.left = "0px";*/
                         heartCnv.width = 980 * window.innerWidth / heartCnv.clientWidth;
                         heartCnv.height = 980 * window.innerHeight / heartCnv.clientHeight;
                         sectorCnv.width = 980 * window.innerWidth / sectorCnv.clientWidth;
                         sectorCnv.height = 980 * window.innerHeight / sectorCnv.clientHeight;
-                        heartCnv.style.width = `${window.innerWidth}px`;
+
+                        /*heartCnv.style.width = `${window.innerWidth}px`;
                         heartCnv.style.height = `${window.innerHeight}px`;
-                        heartCtx.translate(heartCnv.width / 2, heartCnv.height / 2);
-                        heart();
                         sectorCnv.style.width = `${window.innerWidth}px`;
-                        sectorCnv.style.height = `${window.innerHeight}px`;
+                        sectorCnv.style.height = `${window.innerHeight}px`;*/
+                        heartCtx.translate(heartCnv.width / 2, heartCnv.height / 2);
                         sectorCtx.translate(sectorCnv.width / 2, sectorCnv.height / 2);
+
+                        heartCnv.style.width  = window.innerWidth  + 'px';
+                        heartCnv.style.height = window.innerHeight + 'px';
+                        sectorCnv.style.width = window.innerWidth  + 'px';
+                        sectorCnv.style.height= window.innerHeight + 'px';
+
+                        heartCtx.setTransform(1, 0, 0, 1, 0, 0);
+                        heartCtx.translate(heartCnv.width / 2, heartCnv.height / 2);
+
+                        heart();
+                        
                         _expLength = 700;
                         //heartCtx.translate(heartCnv.style.width, heartCnv.style.height);
                         //sectorCtx.translate(sectorCnv.style.width, sectorCnv.style.height);
@@ -844,10 +906,10 @@
         heart();
         sectorCtx.fillStyle = "black";
         sectorCtx.fillRect(-490, -490, 980, 980);
-        sectorCnv.style.left = `${(window.innerWidth - sectorCnv.clientWidth) / 2}px`;
+        /*sectorCnv.style.left = `${(window.innerWidth - sectorCnv.clientWidth) / 2}px`;
         heartCnv.style.left = `${(window.innerWidth - heartCnv.clientWidth) / 2}px`;
         sectorCnv.style.top = "116px";
-        heartCnv.style.top = "116px";
+        heartCnv.style.top = "116px";*/
         /*if (document.cookie.split(";").some((e) => e.trim().startsWith("perfect="))){
             hiddenFeaturesEnabled = true;
             document.getElementById("deltaDesc").textContent = "From";
@@ -862,13 +924,13 @@
             document.getElementById("reminderArea").style.display = "block";
             document.getElementById("amountReminder").style.display = "block";
             document.querySelector(".hiddenFeature").style.display = "inline-block";
-        }*/
+        }
         screen.orientation.addEventListener("change", () => {
             sectorCnv.style.left = `${(window.innerWidth - sectorCnv.clientWidth) / 2}px`;
             heartCnv.style.left = `${(window.innerWidth - heartCnv.clientWidth) / 2}px`;
             sectorCnv.style.top = "116px";
             heartCnv.style.top = "116px";
-        })
+        })*/
         buttonOne.addEventListener("click", () => {
             if (hiddenFeaturesEnabled){
                 phase1ButtonOnePress();
@@ -907,5 +969,12 @@
                 accumulate(f);
             }
         });
+
+
+        });
+
+
+
     </script>
+
 </html>
