@@ -1,0 +1,8 @@
+
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import content from "./html/Top to bottom, right to left..html?raw";
+---
+<MainGridLayout title = "CLUE" hideSideBar={true}>
+  <Fragment set:html={content} />
+</MainGridLayout>
