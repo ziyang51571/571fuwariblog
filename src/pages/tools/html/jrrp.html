@@ -1,108 +1,105 @@
 <div class="card-base rounded-xl p-6 text-center text-gray-900 dark:text-gray-100">
-  <h2 class="text-2xl font-bold mb-2">🔮今日人品✨</h2>
-  <p class="text-base-content/70 mb-4">来测测今天的运势如何吧</p>
+    <h2 class="text-2xl font-bold mb-2">🔮今日人品✨</h2>
+    <p class="text-base-content/70 mb-4">来测测今天的运势如何吧</p>
 
-  <div id="jrrp-score" class="text-8xl font-extrabold text-primary my-4">
-    <span id="jrrp-number">--</span>
-  </div>
-  <div id="jrrp-text" class="text-sm text-base-content/80 opacity-0 transition-opacity duration-1000"></div>
-
+    <div id="jrrp-score" class="text-8xl font-extrabold text-primary my-4">
+        <span id="jrrp-number">--</span>
+    </div>
+    <div id="jrrp-text" class="text-sm text-base-content/80 opacity-0 transition-opacity duration-1000"></div>
 </div>
 
 <script>
+
 // 我要开盒你
 function _fingerprint() {
-  const ua = navigator.userAgent;
-  const { width, height } = screen;
-  const lang = navigator.language || '';
-  return `${ua}|${width}x${lang}`;
+    const ua = navigator.userAgent;
+    const { width, height } = screen;
+    const lang = navigator.language || '';
+    return `${ua}|${width}x${height}|${lang}`;
 }
 
 function sfc32(a, b, c, d) {
-  return () => {
-    a |= 0; b |= 0; c |= 0; d |= 0;
-    const t = (a + b | 0) + d | 0;
-    d = d + 1 | 0;
-    a = b ^ b >>> 9;
-    b = c + (c << 3) | 0;
-    c = (c << 21 | c >>> 11);
-    c = c + t | 0;
-    return (t >>> 0) / 4294967296;
-  };
+    return () => {
+        a |= 0; b |= 0; c |= 0; d |= 0;
+        const t = (a + b | 0) + d | 0;
+        d = d + 1 | 0;
+        a = b ^ b >>> 9;
+        b = c + (c << 3) | 0;
+        c = (c << 21 | c >>> 11);
+        c = c + t | 0;
+        return (t >>> 0) / 4294967296;
+    };
 }
 
 function rollNumber(el, target, duration, onFinish) {
-  const start = 0;
-  const startTime = performance.now();
-
-  function frame(now) {
-    const t = Math.min((now - startTime) / duration, 1);
-    const eased = 1 - (1 - t) ** 2;
-    const current = Math.floor(start + (target - start) * eased);
-    el.textContent = current;
-    if (t < 1) {
-      requestAnimationFrame(frame);
-    } else {
-      el.textContent = target;
-      if (onFinish) onFinish();
+    const start = 0;
+    const startTime = performance.now();
+    function frame(now) {
+        const t = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - (1 - t) ** 2;
+        const current = Math.floor(start + (target - start) * eased);
+        el.textContent = current;
+        if (t < 1) {
+            requestAnimationFrame(frame);
+        } else {
+            el.textContent = target;
+            if (onFinish) onFinish();
+        }
     }
-  }
-  requestAnimationFrame(frame);
+    requestAnimationFrame(frame);
 }
 
 function calcJRRP() {
+    const now = new Date();
+    const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
-  const now = new Date();
-  const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-  
-  const fingerprint = () => {
-    const { width, height } = screen;
-    const lang = navigator.language || 'en';
-    return `${width}x${height}x${lang}`;
-  };
-  
-  const storageKey = `jrrp_${date}_${fingerprint()}`;
-  const cached = localStorage.getItem(storageKey);
-  
-  if (cached) {
-    const { score, text } = JSON.parse(cached);
+    const fingerprint = () => {
+        const { width, height } = screen;
+        const lang = navigator.language || 'en';
+        return `${width}x${height}x${lang}`;
+    };
+
+    const storageKey = `jrrp_${date}_${fingerprint()}`;
+    const cached = localStorage.getItem(storageKey);
+
+    if (cached) {
+        const { score, text } = JSON.parse(cached);
+        displayResult(score, text);
+        return;
+    }
+
+    const seed = date + fingerprint();
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < seed.length; i++) {
+        h ^= seed.charCodeAt(i);
+        h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+    }
+    const rand = sfc32(h, h, h, h);
+    const score = Math.floor(rand() ** 0.85 * 100) + 1;
+
+    const comments = [
+        [90, 100, '我草，欧皇降临'],
+        [80, 89, '运势极佳'],
+        [60, 79, '小有好运'],
+        [40, 59, '运途平稳'],
+        [20, 39, '火候未足'],
+        [1, 19, '小倒霉蛋']
+    ];
+    const text = comments.find(c => score >= c[0] && score <= c[1])?.[2] || '未知';
+
+    localStorage.setItem(storageKey, JSON.stringify({ score, text }));
     displayResult(score, text);
-    return;
-  }
-
-  const seed = date + fingerprint();
-  let h = 2166136261 >>> 0;
-  for (let i = 0; i < seed.length; i++) {
-    h ^= seed.charCodeAt(i);
-    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
-  }
-  const rand = sfc32(h, h, h, h);
-  const score = Math.floor(rand() ** 0.85 * 100) + 1;
-
-  const comments = [
-    [90, 100, '我草，欧皇降临'],
-    [80, 89, '运势极佳'],
-    [60, 79, '小有好运'],
-    [40, 59, '运途平稳'],
-    [20, 39, '火候未足'],
-    [1, 19, '小倒霉蛋']
-  ];
-  const text = comments.find(c => score >= c[0] && score <= c[1])?.[2] || '未知';
-
-  localStorage.setItem(storageKey, JSON.stringify({ score, text }));
-  
-  displayResult(score, text);
 }
 
 function displayResult(score, text) {
-  document.getElementById('jrrp-text').textContent = "‍";
-  
-  rollNumber(document.getElementById('jrrp-number'), score, 3000, () => {
-    const textEl = document.getElementById('jrrp-text');
-    textEl.textContent = text;
-    textEl.classList.remove('opacity-0');
-  });
+    document.getElementById('jrrp-text').textContent = "‍";
+    rollNumber(document.getElementById('jrrp-number'), score, 3000, () => {
+        const textEl = document.getElementById('jrrp-text');
+        textEl.textContent = text;
+        textEl.classList.remove('opacity-0');
+    });
 }
 
 calcJRRP();
+
 </script>
