@@ -5,10 +5,7 @@ export interface Props {
 	url: string;
 	icon?: string;
 	isEasterEgg?: boolean;
-	realUrl?: string;
-	realTitle?: string;
-	realDesc?: string;
-	realIcon?: string;
+	key?: number;
 }
 
 const {
@@ -17,10 +14,7 @@ const {
 	url,
 	icon = "🛠️",
 	isEasterEgg = false,
-	realUrl = "/tools/secret-tool/",
-	realTitle = "神秘工具",
-	realDesc = "解锁",
-	realIcon = "🔧",
+    key,
 } = Astro.props;
 
 const cardId = `tool-card-${title.replace(/\s+/g, "-").toLowerCase()}`;
@@ -36,14 +30,7 @@ const cardId = `tool-card-${title.replace(/\s+/g, "-").toLowerCase()}`;
   ]}
   {...(isEasterEgg && {
     "data-is-easter-egg": "true",
-    "data-locked-url": url,
-    "data-real-url": realUrl,
-    "data-icon": icon,
-    "data-real-icon": realIcon,
-    "data-title": title,
-    "data-real-title": realTitle,
-    "data-desc": desc,
-    "data-real-desc": realDesc,
+    "data-key": key,        // ★ 把下标写进 HTML
   })}
 >
   <div class="flex items-center gap-4">

@@ -2,8 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\layouts"
+    "\\src\\assets",
+    "\\src\\assets\\images",
+    "\\src\\assets\\images\\html",
+    "\\src\\pages",
+    "\\src\\pages\\tools",
+    "\\src\\pages\\tools\\html",
+    "\\src\\pages\\tools\\html\\assets",
+    "\\src\\pages\\tools\\html\\assets\\images"
   ],
-  "SelectedNode": "\\src\\layouts\\MainGridLayout.astro",
+  "SelectedNode": "\\src\\components\\ParticleCanvas.astro",
   "PreviewInSolutionExplorer": false
 }

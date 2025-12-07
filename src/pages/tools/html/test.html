@@ -10,6 +10,7 @@ const UNLOCK_CODE = "Pictured as Perfect";
 const RESET_CODE = "Therefore never perfect.";
 // <em>　　　除非是她的无瑕妙笔...</em>
 // very fun-y :]
+
 function bindUnlock() {
   const input = document.getElementById('txt');
   if (!input) return;
@@ -19,11 +20,14 @@ function bindUnlock() {
 
 function handleUnlock(e) {
   const val = e.target.value;
-  if (val === UNLOCK_CODE) {
+  const unlocked = JSON.parse(localStorage.getItem('UNLOCKED_CARDS') || '[]');
+  const isLocked = !unlocked.includes('secret-tool');
+
+  if (val === UNLOCK_CODE && isLocked) {
     localStorage.setItem('UNLOCKED_CARDS', JSON.stringify(['secret-tool']));
     alert('Something became known to you.');
     setTimeout(() => window.location.href = '/tools/', 1200);
-  } else if (val === RESET_CODE) {
+  } else if (val === RESET_CODE && !isLocked) {
     localStorage.removeItem('UNLOCKED_CARDS');
     alert('Something became alien to you.');
     setTimeout(() => window.location.href = '/tools/', 1200);
@@ -31,7 +35,6 @@ function handleUnlock(e) {
 }
 
 bindUnlock();
-
 if (window.swup) {
   window.addEventListener('swup:contentReplaced', bindUnlock);
 }
