@@ -10,7 +10,7 @@ draft: false
 
 ### 概况
 
-`工具箱`栏目被加入啦，可以在顶部导航栏找到入口
+`工具箱` 栏目被加入啦，可以在顶部导航栏找到入口
 
 在此页面你可以看到一系列工具卡片，点击就可以使用了
 
@@ -20,12 +20,12 @@ draft: false
 
 ### 追加
 
-`251125`ㅤ[ 工具箱 ]ㅤ修复了工具箱卡片不适配暗色模式的bug；
+`251125` `工具箱`ㅤ修复了工具箱卡片不适配暗色模式的bug；
 
-`251125`ㅤ[ 工具箱 ]ㅤ添加了[**‍???**](https://ziyang.site/tools/#) by [Dodddsqa](https://space.bilibili.com/3546893917358324)；:spoiler[*我喜欢你><*]
+`251125` `工具箱`ㅤ添加了[**‍???**](https://ziyang.site/tools/#) by [Dodddsqa](https://space.bilibili.com/3546893917358324)；:spoiler[*我喜欢你><*]
 
-`251125`ㅤ[ 工具箱 ]ㅤ添加了[**BPM测量工具**](https://ziyang.site/tools/bpm/)；
+`251125` `工具箱`ㅤ添加了[**BPM测量工具**](https://ziyang.site/tools/bpm/)；
 
-`251204`ㅤ[ 文章 ]ㅤ添加了giscus评论区；
+`251204` `文章`ㅤ添加了giscus评论区；
 
-`251208`ㅤ[ 工具箱 ] & [ 文章 ]ㅤ统一了本文的格式 ←_← ：类型由中括号包裹，工具名为粗体并附有链接；此次更新还添加了两个新工具：[**进制转化**](https://ziyang.site/tools/baseConvertor/)以及[**文本筛选**](https://ziyang.site/tools/textFilter/)
+`251208` `工具箱` `文章`ㅤ统一了本文的格式 ←_← ：高光类名，工具名为粗体并附有链接；此次更新还添加了两个新工具：[**进制转化**](https://ziyang.site/tools/baseConvertor/)以及[**文本筛选**](https://ziyang.site/tools/textFilter/)
