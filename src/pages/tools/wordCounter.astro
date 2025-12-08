@@ -1,0 +1,8 @@
+
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import content from "./html/wordCounter.html?raw";
+---
+<MainGridLayout title="字数统计工具" hideSideBar={true}>
+  <Fragment set:html={content} />
+</MainGridLayout>

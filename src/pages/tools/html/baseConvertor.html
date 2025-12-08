@@ -1,271 +1,312 @@
-<div class="card-base rounded-xl p-6 text-gray-900 dark:text-gray-100" id="tool-root">
-    <style>
-        :root {
-            --btn-bg-light: #ffffff;
-            --btn-bg-dark: #432;
-            --btn-border-light: #dbd5d1;
-            --btn-border-dark: #ffffff00;
-            --input-bg-light: #ffffff;
-            --input-bg-dark: #141008;
-            --input-border-light: #dbd5d1;
-            --input-border-dark: #ffffff00;
-            --checkbox-bg-light: #ffffff;
-            --checkbox-bg-dark: #514137;
-            --checkbox-checked-color: #aa7c00;
-            --highlight-color: #fabc35;
-            --text-dark: #111827;
-            --text-light: #f3f4f6;
-            --radius: 0.5rem;
-            --transition-duration: 0.1s;
-        }
-        .dark {
-            --btn-bg-light: var(--btn-bg-dark);
-            --btn-border-light: var(--btn-border-dark);
-            --input-bg-light: var(--input-bg-dark);
-            --input-border-light: var(--input-border-dark);
-            --checkbox-bg-light: var(--checkbox-bg-dark);
-        }
-        .custom-btn {
-            background-color: var(--btn-bg-light);
-            border: 1px solid var(--btn-border-light);
-            color: var(--text-dark);
-            border-radius: var(--radius);
-            transition: all var(--transition-duration);
-        }
-        .dark .custom-btn {
-            background-color: var(--btn-bg-dark);
-            border-color: var(--btn-border-dark);
-            color: var(--text-light);
-        }
-        .custom-btn:hover {
-            box-shadow: 0 0 0 1px var(--highlight-color);
-        }
-        .custom-btn:active {
-            transform: scale(0.95);
-        }
-        .custom-btn.active {
-            box-shadow: 0 0 0 2px var(--highlight-color);
-        }
-        .custom-input {
-            background-color: var(--input-bg-light);
-            border: 1px solid var(--input-border-light);
-            color: var(--text-dark);
-            border-radius: var(--radius);
-        }
-        .dark .custom-input {
-            background-color: var(--input-bg-dark);
-            border-color: var(--input-border-dark);
-            color: var(--text-light);
-        }
-        .custom-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 1px var(--highlight-color);
-        }
-        .text-sm {
-            font-size: 0.875rem;
-        }
-        .text-gray-500 {
-            color: #6b7280;
-        }
-        .text-red-500 {
-            color: #ef4444;
-        }
-        .hidden {
-            display: none;
-        }
-        .w-20 {
-            width: 5rem;
-        }
-        .mt-1 {
-            margin-top: 0.25rem;
-        }
-        .mb-2 {
-            margin-bottom: 0.5rem;
-        }
-    </style>
-
-    <h2 class="text-2xl font-bold mb-4 text-primary">进制转换器</h2>
-    <input type="text" class="custom-input p-3 mb-4 w-full" placeholder="输入数字" autocomplete="off" id="number-input">
-    
-    <div class="mb-4">
-        <label class="block text-sm font-medium mb-2">源进制:</label>
-        <div class="flex flex-wrap gap-2" id="from-buttons"></div>
-    </div>
-    
-    <div class="mb-4">
-        <label class="block text-sm font-medium mb-2">目标进制:</label>
-        <div class="flex flex-wrap gap-2" id="target-buttons"></div>
-    </div>
-    
-    <div class="mt-4" id="results"></div>
-
-    <script>
-        const toolTitle = '进制转换器';
-        const toolOptions = {};
-        const toolButtons = [];
-
-        function bindTool() {
-            const root = document.getElementById('tool-root');
-            const numberInput = root.querySelector('#number-input');
-            const fromButtons = root.querySelector('#from-buttons');
-            const targetButtons = root.querySelector('#target-buttons');
-            const results = root.querySelector('#results');
-
-            let state = {
-                number: '',
-                fromBase: 10,
-                targetBase: 'all'
-            };
-
-            function createButton(text, onClick, isActive = false) {
-                const btn = document.createElement('button');
-                btn.textContent = text;
-                btn.className = 'custom-btn px-3 py-2' + (isActive ? ' active' : '');
-                btn.addEventListener('click', onClick);
-                return btn;
-            }
-
-            function createCustomInputGroup(isFrom = true) {
-                const container = document.createElement('div');
-                container.className = 'flex flex-col';
-                
-                const inputWrapper = document.createElement('div');
-                inputWrapper.className = 'flex items-center gap-2';
-                
-                const btn = createButton('自定义', () => {
-                    input.classList.toggle('hidden');
-                    hint.classList.toggle('hidden');
-                    if (!input.classList.contains('hidden')) input.focus();
-                });
-                
-                const input = document.createElement('input');
-                input.type = 'number';
-                input.min = 2;
-                input.max = 36;
-                input.placeholder = '2~36';
-                input.autocomplete = 'off';
-                input.className = 'custom-input p-2 w-20 hidden';
-                
-                const hint = document.createElement('p');
-                hint.textContent = '输入后按回车确定';
-                hint.className = 'text-sm text-gray-500 mt-1 hidden';
-                
-                input.addEventListener('keydown', e => {
-                    if (e.key === 'Enter') {
-                        const v = parseInt(input.value, 10);
-                        if (v >= 2 && v <= 36) {
-                            if (isFrom) {
-                                state.fromBase = v;
-                                fromButtons.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-                                btn.classList.add('active');
-                                btn.textContent = v + '进制';
-                            } else {
-                                state.targetBase = v;
-                                targetButtons.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-                                btn.classList.add('active');
-                                btn.textContent = v + '进制';
-                            }
-                            input.classList.add('hidden');
-                            hint.classList.add('hidden');
-                            convert();
-                        }
-                    }
-                });
-                
-                input.addEventListener('blur', () => {
-                    input.classList.add('hidden');
-                    hint.classList.add('hidden');
-                });
-                
-                inputWrapper.appendChild(btn);
-                inputWrapper.appendChild(input);
-                container.appendChild(inputWrapper);
-                container.appendChild(hint);
-                
-                return container;
-            }
-
-            fromButtons.innerHTML = '';
-            targetButtons.innerHTML = '';
-            results.innerHTML = '';
-
-            const fromBases = [2, 10, 16];
-            fromBases.forEach(base => {
-                const button = createButton(base + '进制', () => {
-                    state.fromBase = base;
-                    fromButtons.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-                    button.classList.add('active');
-                    convert();
-                }, base === state.fromBase);
-                fromButtons.appendChild(button);
-            });
-            fromButtons.appendChild(createCustomInputGroup(true));
-
-            const allBtn = createButton('全部', () => {
-                state.targetBase = 'all';
-                targetButtons.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-                allBtn.classList.add('active');
-                convert();
-            }, true);
-            targetButtons.appendChild(allBtn);
-
-            const targetBases = [2, 10, 16];
-            targetBases.forEach(base => {
-                const button = createButton(base + '进制', () => {
-                    state.targetBase = base;
-                    targetButtons.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-                    button.classList.add('active');
-                    convert();
-                });
-                targetButtons.appendChild(button);
-            });
-            targetButtons.appendChild(createCustomInputGroup(false));
-
-            function convert() {
-                const num = numberInput.value.trim();
-                results.innerHTML = '';
-                if (!num) return;
-                try {
-                    const decimal = parseInt(num, state.fromBase);
-                    if (isNaN(decimal)) throw new Error('无效数字');
-                    
-                    if (state.targetBase === 'all') {
-                        for (let base = 2; base <= 36; base++) {
-                            if (base === state.fromBase) continue;
-                            const str = decimal.toString(base).toUpperCase();
-                            const item = document.createElement('div');
-                            item.className = 'custom-btn p-2 cursor-pointer mb-2';
-                            item.style.textAlign = 'left';
-                            item.textContent = `${base} 进制: ${str}`;
-                            item.title = '点击复制';
-                            item.addEventListener('click', () => navigator.clipboard.writeText(str));
-                            results.appendChild(item);
-                        }
-                    } else {
-                        const str = decimal.toString(state.targetBase).toUpperCase();
-                        const item = document.createElement('div');
-                        item.className = 'custom-btn p-2 cursor-pointer';
-                        item.style.textAlign = 'left';
-                        item.textContent = str;
-                        item.title = '点击复制';
-                        item.addEventListener('click', () => navigator.clipboard.writeText(str));
-                        results.appendChild(item);
-                    }
-                } catch (e) {
-                    const err = document.createElement('div');
-                    err.textContent = '转换失败：' + e.message;
-                    err.className = 'text-red-500';
-                    results.appendChild(err);
-                }
-            }
-
-            numberInput.addEventListener('input', convert);
-            convert();
-        }
-
-        bindTool();
-        if (window.swup) {
-            window.addEventListener('swup:contentReplaced', bindTool);
-        }
-    </script>
+<div class="card-base rounded-xl p-6 text-gray-900 dark:text-gray-100" data-tool-convertor>
+  <h2 class="text-2xl font-bold mb-4 text-primary">进制转换器</h2>
+  <input type="text" class="bc-input p-3 mb-4 w-full" placeholder="输入数字" autocomplete="off" data-bc-input>
+  
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-2">源进制:</label>
+    <div class="flex flex-wrap gap-2" data-bc-from-buttons></div>
+  </div>
+  
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-2">目标进制:</label>
+    <div class="flex flex-wrap gap-2" data-bc-target-buttons></div>
+  </div>
+  
+  <div class="mt-4" data-bc-results></div>
 </div>
+
+<style is:scoped>
+  :root {
+    --bc-btn-bg-light: #ffffff;
+    --bc-btn-bg-dark: #432;
+    --bc-btn-border-light: #dbd5d1;
+    --bc-btn-border-dark: #ffffff00;
+    --bc-input-bg-light: #ffffff;
+    --bc-input-bg-dark: #141008;
+    --bc-input-border-light: #dbd5d1;
+    --bc-input-border-dark: #ffffff00;
+    --bc-checkbox-bg-light: #ffffff;
+    --bc-checkbox-bg-dark: #514137;
+    --bc-checkbox-checked-color: #aa7c00;
+    --bc-highlight-color: #fabc35;
+    --bc-text-dark: #111827;
+    --bc-text-light: #f3f4f6;
+    --bc-radius: 0.5rem;
+    --bc-transition-duration: 0.1s;
+  }
+
+  [data-tool-convertor][data-astro-cid-123456] .dark,
+  .dark [data-tool-convertor][data-astro-cid-123456] {
+    --bc-btn-bg-light: var(--bc-btn-bg-dark);
+    --bc-btn-border-light: var(--bc-btn-border-dark);
+    --bc-input-bg-light: var(--bc-input-bg-dark);
+    --bc-input-border-light: var(--bc-input-border-dark);
+    --bc-checkbox-bg-light: var(--bc-checkbox-bg-dark);
+  }
+
+  .bc-btn {
+    background-color: var(--bc-btn-bg-light);
+    border: 1px solid var(--bc-btn-border-light);
+    color: var(--bc-text-dark);
+    border-radius: var(--bc-radius);
+    transition: all var(--bc-transition-duration);
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+  }
+
+  .dark .bc-btn {
+    background-color: var(--bc-btn-bg-dark);
+    border-color: var(--bc-btn-border-dark);
+    color: var(--bc-text-light);
+  }
+
+  .bc-btn:hover {
+    box-shadow: 0 0 0 1px var(--bc-highlight-color);
+  }
+
+  .bc-btn:active {
+    transform: scale(0.95);
+  }
+
+  .bc-btn.active {
+    box-shadow: 0 0 0 2px var(--bc-highlight-color);
+  }
+
+  .bc-btn:focus {
+    outline: none;
+  }
+
+  .bc-input {
+    background-color: var(--bc-input-bg-light);
+    border: 1px solid var(--bc-input-border-light);
+    color: var(--bc-text-dark);
+    border-radius: var(--bc-radius);
+    padding: 0.75rem;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .dark .bc-input {
+    background-color: var(--bc-input-bg-dark);
+    border-color: var(--bc-input-border-dark);
+    color: var(--bc-text-light);
+  }
+
+  .bc-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px var(--bc-highlight-color);
+  }
+
+  .bc-custom-input {
+    width: 5rem;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .bc-text-sm {font-size: 0.875rem;}
+  .bc-text-gray {color: #6b7280;}
+  .bc-text-red {color: #ef4444;}
+  .bc-hidden {display: none;}
+  .bc-mt-1 {margin-top: 0.25rem;}
+  .bc-mb-2 {margin-bottom: 0.5rem;}
+  .bc-flex {display: flex;}
+  .bc-items-center {align-items: center;}
+  .bc-gap-2 {gap: 0.5rem;}
+  .bc-flex-col {flex-direction: column;}
+  .bc-cursor-pointer {cursor: pointer;}
+  .bc-text-left {text-align: left;}
+</style>
+
+<script>
+  function withErrorBoundary(fn, componentName) {
+    return function(...args) {
+      try {
+        return fn.apply(this, args);
+      } catch (error) {
+        console.error(`[${componentName}] 错误捕获:`, error);
+        return null;
+      }
+    };
+  }
+
+  function bindTool() {
+    const component = document.querySelector('[data-tool-convertor]');
+    if (!component || component.dataset.initialized === 'true') {
+      return;
+    }
+
+    component.dataset.initialized = 'true';
+
+    const numberInput = component.querySelector('[data-bc-input]');
+    const fromButtons = component.querySelector('[data-bc-from-buttons]');
+    const targetButtons = component.querySelector('[data-bc-target-buttons]');
+    const results = component.querySelector('[data-bc-results]');
+
+    if (!numberInput || !fromButtons || !targetButtons || !results) {
+      console.warn('BaseConvertor: 必要的 DOM 元素缺失');
+      return;
+    }
+
+    let state = {
+      number: '',
+      fromBase: 10,
+      targetBase: 'all'
+    };
+
+    const createButton = withErrorBoundary((text, onClick, isActive = false) => {
+      const btn = document.createElement('button');
+      btn.textContent = text;
+      btn.className = 'bc-btn' + (isActive ? ' active' : '');
+      btn.addEventListener('click', withErrorBoundary(onClick, 'button-click'));
+      return btn;
+    }, 'createButton');
+
+    const createCustomInputGroup = withErrorBoundary((isFrom = true) => {
+      const container = document.createElement('div');
+      container.className = 'bc-flex bc-flex-col';
+      
+      const inputWrapper = document.createElement('div');
+      inputWrapper.className = 'bc-flex bc-items-center bc-gap-2';
+      
+      const btn = createButton('自定义', () => {
+        input.classList.toggle('bc-hidden');
+        hint.classList.toggle('bc-hidden');
+        if (!input.classList.contains('bc-hidden')) input.focus();
+      });
+      
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.min = 2;
+      input.max = 36;
+      input.placeholder = '2~36';
+      input.autocomplete = 'off';
+      input.className = 'bc-input bc-custom-input bc-hidden';
+      
+      const hint = document.createElement('p');
+      hint.textContent = '输入后按回车确定';
+      hint.className = 'bc-text-sm bc-text-gray bc-mt-1 bc-hidden';
+      
+      input.addEventListener('keydown', withErrorBoundary((e) => {
+        if (e.key === 'Enter') {
+          const v = parseInt(input.value, 10);
+          if (v >= 2 && v <= 36) {
+            if (isFrom) {
+              state.fromBase = v;
+              fromButtons.querySelectorAll('.bc-btn').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              btn.textContent = v + '进制';
+            } else {
+              state.targetBase = v;
+              targetButtons.querySelectorAll('.bc-btn').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              btn.textContent = v + '进制';
+            }
+            input.classList.add('bc-hidden');
+            hint.classList.add('bc-hidden');
+            convert();
+          }
+        }
+      }, 'input-keydown'));
+      
+      input.addEventListener('blur', () => {
+        input.classList.add('bc-hidden');
+        hint.classList.add('bc-hidden');
+      });
+      
+      inputWrapper.appendChild(btn);
+      inputWrapper.appendChild(input);
+      container.appendChild(inputWrapper);
+      container.appendChild(hint);
+      
+      return container;
+    }, 'createCustomInputGroup');
+
+    fromButtons.innerHTML = '';
+    targetButtons.innerHTML = '';
+    results.innerHTML = '';
+
+    const fromBases = [2, 10, 16];
+    fromBases.forEach(base => {
+      const button = createButton(base + '进制', () => {
+        state.fromBase = base;
+        fromButtons.querySelectorAll('.bc-btn').forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+        convert();
+      }, base === state.fromBase);
+      fromButtons.appendChild(button);
+    });
+    fromButtons.appendChild(createCustomInputGroup(true));
+
+    const allBtn = createButton('全部', () => {
+      state.targetBase = 'all';
+      targetButtons.querySelectorAll('.bc-btn').forEach(b => b.classList.remove('active'));
+      allBtn.classList.add('active');
+      convert();
+    }, true);
+    targetButtons.appendChild(allBtn);
+
+    const targetBases = [2, 10, 16];
+    targetBases.forEach(base => {
+      const button = createButton(base + '进制', () => {
+        state.targetBase = base;
+        targetButtons.querySelectorAll('.bc-btn').forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+        convert();
+      });
+      targetButtons.appendChild(button);
+    });
+    targetButtons.appendChild(createCustomInputGroup(false));
+
+    const convert = withErrorBoundary(() => {
+      const num = numberInput.value.trim();
+      results.innerHTML = '';
+      if (!num) return;
+      
+      try {
+        const decimal = parseInt(num, state.fromBase);
+        if (isNaN(decimal)) throw new Error('无效数字');
+        
+        if (state.targetBase === 'all') {
+          for (let base = 2; base <= 36; base++) {
+            if (base === state.fromBase) continue;
+            const str = decimal.toString(base).toUpperCase();
+            const item = document.createElement('div');
+            item.className = 'bc-btn bc-cursor-pointer bc-mb-2 bc-text-left';
+            item.textContent = `${base} 进制: ${str}`;
+            item.title = '点击复制';
+            item.addEventListener('click', () => navigator.clipboard.writeText(str));
+            results.appendChild(item);
+          }
+        } else {
+          const str = decimal.toString(state.targetBase).toUpperCase();
+          const item = document.createElement('div');
+          item.className = 'bc-btn bc-cursor-pointer bc-text-left';
+          item.textContent = str;
+          item.title = '点击复制';
+          item.addEventListener('click', () => navigator.clipboard.writeText(str));
+          results.appendChild(item);
+        }
+      } catch (e) {
+        const err = document.createElement('div');
+        err.textContent = '转换失败：' + e.message;
+        err.className = 'bc-text-red';
+        results.appendChild(err);
+      }
+    }, 'convert');
+
+    numberInput.addEventListener('input', convert);
+    convert();
+  }
+
+  withErrorBoundary(bindTool, 'BaseConvertor')();
+
+  if (window.swup) {
+    document.addEventListener('swup:contentReplaced', () => {
+      const component = document.querySelector('[data-tool-convertor]');
+      if (component) {
+        component.dataset.initialized = 'false';
+      }
+      withErrorBoundary(bindTool, 'BaseConvertor')();
+    });
+  }
+</script>

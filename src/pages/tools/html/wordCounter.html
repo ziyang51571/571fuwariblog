@@ -1,0 +1,387 @@
+<div class="card-base rounded-xl p-6 text-gray-900 dark:text-gray-100" data-tool-word-counter>
+    <h2 class="text-2xl font-bold mb-4 bc-tool-title">字数统计工具</h2>
+    
+    <div class="mb-4">
+        <label for="bc-text-input" class="block text-sm font-medium mb-2">请输入文本：</label>
+        <textarea 
+            data-bc-input="text"
+            id="bc-text-input"
+            rows="8" 
+            class="w-full p-3 border rounded-lg bc-input-field"
+            placeholder="在此输入或粘贴您的文本..."
+        ></textarea>
+    </div>
+
+    <div class="flex flex-wrap gap-3 mb-4">
+        <button data-bc-btn="count" class="px-4 py-2 bc-custom-btn bc-btn-primary">
+            统计
+        </button>
+        <button data-bc-btn="reset" class="px-4 py-2 bc-custom-btn bc-btn-secondary">
+            重置
+        </button>
+        <button data-bc-btn="copy" class="px-4 py-2 bc-custom-btn bc-btn-success" disabled>
+            复制结果
+        </button>
+    </div>
+
+    <div data-bc-result="container" class="mt-4 p-4 rounded-lg border bc-result-container">
+        <div class="text-sm text-gray-500 bc-result-placeholder">点击"统计"按钮查看结果</div>
+        <div data-bc-result="content" class="hidden space-y-2 bc-result-content"></div>
+    </div>
+</div>
+
+<style is:scoped>
+:scope {
+    --bc-btn-bg-light: #ffffff;
+    --bc-btn-bg-dark: #432;
+    --bc-btn-border-light: #dbd5d1;
+    --bc-btn-border-dark: #ffffff00;
+    --bc-input-bg-light: #ffffff;
+    --bc-input-bg-dark: #141008;
+    --bc-input-border-light: #dbd5d1;
+    --bc-input-border-dark: #ffffff00;
+    --bc-checkbox-bg-light: #ffffff;
+    --bc-checkbox-bg-dark: #514137;
+    --bc-checkbox-checked-color: #aa7c00;
+    --bc-highlight-color: #fabc35;
+    --bc-text-dark: #111827;
+    --bc-text-light: #f3f4f6;
+    --bc-radius: 0.5rem;
+    --bc-transition-duration: 0.1s;
+
+    --bc-result-bg-light: #ffffff;
+    --bc-result-bg-dark: #141008;
+    --bc-result-border-light: #dbd5d1;
+    --bc-result-border-dark: #ffffff00;
+}
+
+.bc-tool-title {
+    color: var(--bc-text-dark);
+    transition: color var(--bc-transition-duration);
+}
+
+.dark [data-tool-word-counter] .bc-tool-title {
+    color: var(--bc-text-light);
+}
+
+.bc-custom-btn {
+    background-color: var(--bc-btn-bg-light);
+    border: 1px solid var(--bc-btn-border-light);
+    color: var(--bc-text-dark);
+    border-radius: var(--bc-radius);
+    transition: all var(--bc-transition-duration);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.dark [data-tool-word-counter] .bc-custom-btn {
+    background-color: var(--bc-btn-bg-dark);
+    border-color: var(--bc-btn-border-dark);
+    color: var(--bc-text-light);
+}
+
+.bc-custom-btn:hover {
+    box-shadow: 0 0 0 1px var(--bc-highlight-color);
+    transform: translateY(-1px);
+}
+
+.bc-custom-btn:active {
+    transform: scale(0.95);
+}
+
+.bc-custom-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.bc-input-field {
+    background-color: var(--bc-input-bg-light);
+    border-color: var(--bc-input-border-light);
+    border-radius: var(--bc-radius);
+    transition: all var(--bc-transition-duration);
+}
+
+.dark [data-tool-word-counter] .bc-input-field {
+    background-color: var(--bc-input-bg-dark);
+    border-color: var(--bc-input-border-dark);
+}
+
+.bc-input-field:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bc-highlight-color);
+    border-color: var(--bc-highlight-color);
+}
+
+.bc-result-container {
+    background-color: var(--bc-result-bg-light);
+    border-color: var(--bc-result-border-light);
+    transition: all var(--bc-transition-duration);
+}
+
+.dark [data-tool-word-counter] .bc-result-container {
+    background-color: var(--bc-result-bg-dark);
+    border-color: var(--bc-result-border-dark);
+}
+
+.bc-result-placeholder {
+    color: #9ca3af;
+}
+
+.bc-result-content {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.875rem;
+}
+
+.bc-result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed var(--bc-result-border-light);
+}
+
+.dark [data-tool-word-counter] .bc-result-item {
+    border-bottom-color: var(--bc-result-border-dark);
+}
+
+.bc-result-item:last-child {
+    border-bottom: none;
+}
+
+.bc-result-label {
+    font-weight: 500;
+    color: var(--bc-text-dark);
+}
+
+.dark [data-tool-word-counter] .bc-result-label {
+    color: var(--bc-text-light);
+}
+
+.bc-result-value {
+    font-weight: 700;
+
+}
+</style>
+
+<script>
+const withErrorBoundary = (fn, name) => (...args) => {
+    try {
+        return fn(...args);
+    } catch (e) {
+        console.error(`[${name}]`, e);
+        const container = document.querySelector('[data-bc-result="content"]');
+        if (container) {
+            container.innerHTML = '<div class="text-red-500">工具运行时出错，请检查控制台</div>';
+            container.classList.remove('hidden');
+        }
+    }
+};
+
+class WordCounter {
+    constructor(rootElement) {
+        this.root = rootElement;
+        this.textarea = rootElement.querySelector('[data-bc-input="text"]');
+        this.resultContainer = rootElement.querySelector('[data-bc-result="container"]');
+        this.resultContent = rootElement.querySelector('[data-bc-result="content"]');
+        this.copyBtn = rootElement.querySelector('[data-bc-btn="copy"]');
+        this.lastResult = null;
+        
+        this.init();
+    }
+
+    init() {
+        this.textarea.addEventListener('input', withErrorBoundary(() => {
+            this.performCount();
+        }, 'input'));
+    }
+
+    countText(text) {
+        const result = {};
+        
+        result.characters = text.length;
+        result.charsNoSpaces = text.replace(/\s/g, '').length;
+
+        const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+        result.words = text.trim() === '' ? 0 : words.length;
+
+        const lines = text.split('\n').filter(line => line.trim().length > 0);
+        result.lines = text.trim() === '' ? 0 : lines.length;
+
+        const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+        result.paragraphs = text.trim() === '' ? 0 : paragraphs.length;
+
+        return result;
+    }
+
+    formatResult(result) {
+        const items = [];
+        
+        items.push({ label: '总字符数', value: result.characters });
+        items.push({ label: '不含空格', value: result.charsNoSpaces });
+        items.push({ label: '单词数', value: result.words });
+        items.push({ label: '行数', value: result.lines });
+        items.push({ label: '段落数', value: result.paragraphs });
+        
+        return items;
+    }
+
+    performCount() {
+        const text = this.textarea.value;
+        const result = this.countText(text);
+        this.lastResult = result;
+        this.displayResult(result);
+    }
+
+    displayResult(result) {
+        const items = this.formatResult(result);
+        
+        const html = items.map(item => `
+            <div class="bc-result-item">
+                <span class="bc-result-label">${item.label}:</span>
+                <span class="bc-result-value">${item.value.toLocaleString()}</span>
+            </div>
+        `).join('');
+
+        this.resultContent.innerHTML = html;
+        this.resultContent.classList.remove('hidden');
+        
+        const placeholder = this.resultContainer.querySelector('.bc-result-placeholder');
+        if (placeholder) {
+            placeholder.classList.add('hidden');
+        }
+
+        if (this.copyBtn) {
+            this.copyBtn.disabled = false;
+        }
+    }
+
+    showError(message) {
+        this.resultContent.innerHTML = `<div class="text-red-500">${message}</div>`;
+        this.resultContent.classList.remove('hidden');
+        
+        const placeholder = this.resultContainer.querySelector('.bc-result-placeholder');
+        if (placeholder) {
+            placeholder.classList.add('hidden');
+        }
+    }
+
+    reset() {
+        this.textarea.value = '';
+        this.resultContent.innerHTML = '';
+        this.resultContent.classList.add('hidden');
+        
+        const placeholder = this.resultContainer.querySelector('.bc-result-placeholder');
+        if (placeholder) {
+            placeholder.classList.remove('hidden');
+        }
+
+        if (this.copyBtn) {
+            this.copyBtn.disabled = true;
+        }
+        
+        this.lastResult = null;
+    }
+
+    async copyResult() {
+        if (!this.lastResult) {
+            this.showError('暂无结果可复制');
+            return;
+        }
+
+        const text = this.formatResult(this.lastResult)
+            .map(item => `${item.label}: ${item.value}`)
+            .join('\n');
+
+        try {
+            await navigator.clipboard.writeText(text);
+            
+            const originalText = this.copyBtn.innerHTML;
+            this.copyBtn.innerHTML = '已复制';
+            this.copyBtn.classList.add('bc-btn-success');
+            
+            setTimeout(() => {
+                this.copyBtn.innerHTML = originalText;
+                this.copyBtn.classList.remove('bc-btn-success');
+            }, 2000);
+            
+        } catch (err) {
+            console.error('复制失败:', err);
+            this.showError('复制失败，请手动选择复制');
+        }
+    }
+}
+
+function handleToolEvents(e) {
+    const component = e.target.closest('[data-tool-word-counter]');
+    if (!component) return;
+
+    const action = e.target.closest('[data-bc-btn]')?.dataset.bcBtn;
+    if (!action) return;
+
+    if (!component._wordCounterInstance) {
+        component._wordCounterInstance = new WordCounter(component);
+    }
+
+    const counter = component._wordCounterInstance;
+
+    switch (action) {
+        case 'count':
+            withErrorBoundary(() => counter.performCount(), 'count')();
+            break;
+        case 'reset':
+            withErrorBoundary(() => counter.reset(), 'reset')();
+            break;
+        case 'copy':
+            withErrorBoundary(() => counter.copyResult(), 'copy')();
+            break;
+    }
+}
+
+const bindTool = withErrorBoundary(() => {
+    const tools = document.querySelectorAll('[data-tool-word-counter]:not([data-initialized])');
+    
+    tools.forEach(tool => {
+        tool.dataset.initialized = 'true';
+    });
+
+    if (!document._wordCounterBound) {
+        document.addEventListener('click', handleToolEvents);
+        document._wordCounterBound = true;
+    }
+}, 'bindTool');
+
+bindTool();
+
+if (window.swup) {
+    window.addEventListener('swup:contentReplaced', () => {
+        document.querySelectorAll('[data-tool-word-counter]').forEach(tool => {
+            delete tool._wordCounterInstance;
+        });
+        bindTool();
+    });
+}
+
+if (typeof MutationObserver !== 'undefined') {
+    const observer = new MutationObserver(withErrorBoundary((mutations) => {
+        const shouldReinit = mutations.some(mutation => 
+            Array.from(mutation.addedNodes).some(node => 
+                node.nodeType === 1 && node.matches?.('[data-tool-word-counter]')
+            )
+        );
+        
+        if (shouldReinit && document.querySelectorAll('[data-tool-word-counter]:not([data-initialized])').length > 0) {
+            bindTool();
+        }
+    }, 'mutationObserver'));
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+</script>
