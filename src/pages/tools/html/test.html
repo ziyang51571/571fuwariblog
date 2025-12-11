@@ -6,13 +6,13 @@
 </div>
 
 <script>
+const input = document.getElementById('txt');
 const UNLOCK_CODE = "Pictured as Perfect";
 const RESET_CODE = "Therefore never perfect.";
 // <em>　　　除非是她的无瑕妙笔...</em>
 // very fun-y :]
 
 function bindUnlock() {
-  const input = document.getElementById('txt');
   if (!input) return;
   input.removeEventListener('input', handleUnlock);
   input.addEventListener('input', handleUnlock);
@@ -25,12 +25,18 @@ function handleUnlock(e) {
 
   if (val === UNLOCK_CODE && isLocked) {
     localStorage.setItem('UNLOCKED_CARDS', JSON.stringify(['secret-tool']));
-    alert('Something became known to you.');
-    setTimeout(() => window.location.href = '/tools/', 1200);
+    input.blur();
+		setTimeOut(() => {
+    	alert('A concept became known by you.');
+    	setTimeout(() => window.location.href = '/tools/', 1200);
+    }, 50)
   } else if (val === RESET_CODE && !isLocked) {
     localStorage.removeItem('UNLOCKED_CARDS');
-    alert('Something became alien to you.');
-    setTimeout(() => window.location.href = '/tools/', 1200);
+    input.blur();
+    setTimeOut(() => {
+    	alert('Something became alien to you.');
+    	setTimeout(() => window.location.href = '/tools/', 1200);
+    }, 50)
   }
 }
 
