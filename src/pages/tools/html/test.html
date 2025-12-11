@@ -8,7 +8,7 @@
 <script>
 const input = document.getElementById('txt');
 const UNLOCK_CODE = "Pictured as Perfect";
-const RESET_CODE = "Therefore never perfect.";
+const RELOCK_CODE = "Therefore never perfect.";
 // <em>　　　除非是她的无瑕妙笔...</em>
 // very fun-y :]
 
@@ -23,17 +23,17 @@ function handleUnlock(e) {
   const unlocked = JSON.parse(localStorage.getItem('UNLOCKED_CARDS') || '[]');
   const isLocked = !unlocked.includes('secret-tool');
 
-  if (val === UNLOCK_CODE && isLocked) {
+  if (val.toUpperCase() === UNLOCK_CODE.toUpperCase() && isLocked) {
     localStorage.setItem('UNLOCKED_CARDS', JSON.stringify(['secret-tool']));
     input.blur();
-		setTimeOut(() => {
+		setTimeout(() => {
     	alert('A concept became known by you.');
     	setTimeout(() => window.location.href = '/tools/', 1200);
     }, 50)
-  } else if (val === RESET_CODE && !isLocked) {
+  } else if (val.toUpperCase() === RELOCK_CODE.substring(0, 23).toUpperCase() && !isLocked) {
     localStorage.removeItem('UNLOCKED_CARDS');
     input.blur();
-    setTimeOut(() => {
+    setTimeout(() => {
     	alert('Something became alien to you.');
     	setTimeout(() => window.location.href = '/tools/', 1200);
     }, 50)
