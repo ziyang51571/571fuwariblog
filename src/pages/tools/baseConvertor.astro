@@ -1,7 +1,7 @@
 
 ---
 import MainGridLayout from "@layouts/MainGridLayout.astro";
-import content from "./html/baseConvertor.html?raw";
+import content from "../../tools/html/baseConvertor.html?raw";
 ---
 <MainGridLayout title="文本筛选工具" hideSideBar={true}>
   <Fragment set:html={content} />
