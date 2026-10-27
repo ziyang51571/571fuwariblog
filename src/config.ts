@@ -53,6 +53,7 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	showAvatar: false, // 隐藏侧边栏大头像，仅保留名字/简介/链接
 	name: "ziyang_51571",
 	bio: "兴趣使然",
 	links: [

@@ -62,6 +62,7 @@ export type NavBarConfig = {
 
 export type ProfileConfig = {
 	avatar?: string;
+	showAvatar?: boolean; // 设为 false 可在侧边栏/资料卡隐藏头像，仅保留名字等信息
 	name: string;
 	bio?: string;
 	links: {
