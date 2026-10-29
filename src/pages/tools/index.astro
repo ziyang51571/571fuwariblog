@@ -7,32 +7,27 @@ const tools = [
 		title: "神秘工具箱",
 		desc: "收集了一些小工具，不定期掉落",
 		url: "",
-		icon: "🛠️",
 		fullWidth: true,
 	},
 	{
 		title: "卡片测试",
 		desc: "点击应该可以正常跳转",
 		url: "/tools/test/",
-		icon: "🔗",
 	},
 	{
 		title: "Shapez2车厢估算",
 		desc: "估算所需车厢数量",
 		url: "/tools/shapezTrain/",
-		icon: "🚄",
 	},
 	{
 		title: "今日人品",
 		desc: "来看看今日运势ψ(｀∇´)ψ",
 		url: "/tools/jrrp/",
-		icon: "🔮",
 	},
 	{
 		title: "???",
 		desc: "线索丢失",
 		url: "/tools/lost/",
-		icon: "❓",
 
 		isEasterEgg: true,
 		key: 0,
@@ -41,25 +36,21 @@ const tools = [
 		title: "BPM测量",
 		desc: "手动敲击 自动计算",
 		url: "/tools/bpm/",
-		icon: "🎵",
 	},
 	{
 		title: "文本筛选",
 		desc: "提取或剔除目标字符种类",
 		url: "/tools/textFilter/",
-		icon: "💬",
 	},
 	{
 		title: "进制转换",
 		desc: "将数字转换为目标进制",
 		url: "/tools/baseConvertor/",
-		icon: "🔃",
 	},
 	/*{
 		title: "字数统计",
 		desc: "将数字转化为目标进制",
 		url: "/tools/wordCounter/",
-		icon: "📃",
 	},*/
 ];
 ---
@@ -78,7 +69,6 @@ const tools = [
         return (
           <div class="md:col-span-2 lg:col-span-3 card-base rounded-xl p-6">
             <div class="flex items-center gap-4">
-              <span class="text-3xl">{t.icon}</span>
               <div>
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{t.title}</h2>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{t.desc}</p>

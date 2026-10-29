@@ -209,7 +209,6 @@ document.addEventListener('swup:contentReplaced', () => {
 		    title: "Pictured as Perfect",
 		    desc: "Coda Animation Player",
 		    url: "/tools/pap/",
-		    icon: "💗",
 	},
     ]
     document.querySelectorAll('[data-is-easter-egg="true"]').forEach(card => {
@@ -224,7 +223,6 @@ document.addEventListener('swup:contentReplaced', () => {
       if (isUnlocked) {
         // 解锁
         card.href = realData[idx].url;
-        if (iconSpan) iconSpan.textContent = realData[idx].icon || '🔧';
         if (titleH3) titleH3.textContent = realData[idx].title || '神秘工具';
         if (descP) descP.textContent = realData[idx].desc || '已解锁的隐藏功能';
         card.classList.remove('animate-pulse', 'opacity-50');

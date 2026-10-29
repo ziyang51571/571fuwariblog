@@ -3,7 +3,6 @@ export interface Props {
 	title: string;
 	desc: string;
 	url: string;
-	icon?: string;
 	isEasterEgg?: boolean;
 	key?: number;
 }
@@ -12,7 +11,6 @@ const {
 	title,
 	desc,
 	url,
-	icon = "🛠️",
 	isEasterEgg = false,
     key,
 } = Astro.props;
@@ -34,7 +32,6 @@ const cardId = `tool-card-${title.replace(/\s+/g, "-").toLowerCase()}`;
   })}
 >
   <div class="flex items-center gap-4">
-    <span class="text-3xl">{icon}</span>
     <div>
       <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
         {title}
