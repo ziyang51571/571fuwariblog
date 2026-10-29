@@ -1,10 +1,20 @@
 ---
 import MainGridLayout from "@layouts/MainGridLayout.astro";
-import content from "./html/pap.html?raw";
 ---
+
 <MainGridLayout title="PaP CAP" hideSideBar={true}>
   <div slot="top" class="mb-6">
     <h1 class="text-2xl font-bold">PaP CAP</h1>
   </div>
-  <Fragment set:html={content} />
+  <div class="w-full overflow-visible">
+    {/* 通过 iframe 嵌入已验证可用的裸页面，规避 Swup 在 SPA 跳转时不重跑内联脚本的问题，
+        同时避免整篇 HTML 文档被 set:html 嵌套进主页面导致的结构/裁剪问题 */}
+    <iframe
+      src="/tools/html/pap/"
+      title="PaP CAP - Pictured as Perfect Player"
+      loading="lazy"
+      class="w-full border-0 rounded-xl"
+      style="height: min(900px, 110vh);"
+    ></iframe>
+  </div>
 </MainGridLayout>
